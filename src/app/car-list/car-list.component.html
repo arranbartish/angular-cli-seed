@@ -1,10 +1,10 @@
 <div class="car-list">
   <div class="row">
-    <div class="car-list__car">
-      <div class="car-list__brand col-md-3">Toyota</div>
-      <div class="car-list__model col-md-3">Camery</div>
-      <div class="car-list__year col-md-3">2011</div>
-      <div class="car-list__condition col-md-3">Excellent</div>
+    <div *ngFor="let car of carList" class="car-list__car">
+      <div class="car-list__brand col-md-3">{{car.brand}}</div>
+      <div class="car-list__model col-md-3">{{car.model}}</div>
+      <div class="car-list__year col-md-3">{{car.year}}</div>
+      <div class="car-list__condition col-md-3">{{car.condition}}</div>
     </div>
   </div>
 </div>

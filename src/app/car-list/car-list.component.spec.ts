@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CarListComponent } from './car-list.component';
 
-describe('ListComponent', () => {
+describe('CarListComponent', () => {
   let component: CarListComponent;
   let fixture: ComponentFixture<CarListComponent>;
 
@@ -18,6 +18,11 @@ describe('ListComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
+  it('will be populated with card', () => {
+      expect(component.carList.length).toBeGreaterThan(0);
+  });
+
 
   it('should create', () => {
     expect(component).toBeTruthy();
