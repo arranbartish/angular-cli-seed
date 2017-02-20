@@ -6,6 +6,7 @@ import { HelloWorldModule } from './hello-world/hello-world.module';
 
 import { AppComponent } from './app.component';
 import {CarListModule} from "./car-list/car-list.module";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {CarListModule} from "./car-list/car-list.module";
     FormsModule,
     HttpModule,
     HelloWorldModule,
-    CarListModule
+    CarListModule,
+    NgbModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
