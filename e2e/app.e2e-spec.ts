@@ -1,6 +1,6 @@
 import { AngularCliSeedPage } from './app.po';
 
-describe('angular-cli-seed App', function() {
+describe('angular-cli-seed App', () => {
   let page: AngularCliSeedPage;
 
   beforeEach(() => {
