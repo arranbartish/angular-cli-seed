@@ -2,12 +2,16 @@
 
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { HelloWorldModule } from './hello-world/hello-world.module';
 
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
+      ],
+      imports: [
+        HelloWorldModule
       ],
     });
     TestBed.compileComponents();
