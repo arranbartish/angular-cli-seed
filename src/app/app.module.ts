@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HelloWorldModule } from './hello-world/hello-world.module';
 
 import { AppComponent } from './app.component';
+import {CarListModule} from "./car-list/car-list.module";
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { AppComponent } from './app.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    HelloWorldModule
+    HelloWorldModule,
+    CarListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
