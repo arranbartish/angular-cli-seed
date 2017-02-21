@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Car} from "../../car-service/car";
+import {CarService} from "../../car-service/car-service.service";
 
 @Component({
   selector: 'app-listing',
@@ -9,9 +10,14 @@ import {Car} from "../../car-service/car";
 export class ListingComponent implements OnInit {
   carList : Car[];
 
-  constructor() { }
+  constructor(private carService: CarService) {
+
+  }
 
   ngOnInit() {
+
+    //let otherCarList = this.carService.getData();
+    //debugger;
     this.carList = [
       {
         brand: 'Toyota',
@@ -25,6 +31,9 @@ export class ListingComponent implements OnInit {
         condition: 'Poor'
       }
     ];
+
+
+
   }
 
 }

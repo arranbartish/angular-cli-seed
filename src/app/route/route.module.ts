@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ListingComponent } from './listing/listing.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { CarListModule } from "../car-list/car-list.module";
-//import {CarServiceModule} from "../car-service/car-service.module";
+import { CarServiceModule } from "../car-service/car-service.module";
 //import { HelloWorldModule } from "../hello-world/hello-world.module";
 
 const routes: Routes = [
@@ -23,7 +23,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
   //  HelloWorldModule,
     CarListModule,
-    //CarServiceModule,
+    CarServiceModule,
     CommonModule
   ], declarations: [ListingComponent, SearchResultComponent]
 })
