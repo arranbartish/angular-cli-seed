@@ -4,7 +4,7 @@
   </p>
   <form [formGroup]="searchForm" (ngSubmit)="search($event)">
     <div class="col-md-10">
-      <input formControlName="terms" type="text" placeholder="Separate search terms by ," />
+      <input formControlName="terms" [(ngModel)]="terms" type="text" placeholder="Separate search terms by ," />
     </div>
     <div class="col-md-2">
       <button type="submit">Search</button>

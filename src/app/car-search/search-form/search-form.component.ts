@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./search-form.component.scss']
 })
 export class SearchFormComponent implements OnInit {
+  public terms : string;
   public searchForm = this.formBuilder.group({
     terms: ['', Validators.required]
   });
@@ -19,7 +20,9 @@ export class SearchFormComponent implements OnInit {
   }
 
   search() {
-    this.router.navigate(['./search']);
+    if(this.searchForm.valid) {
+      this.router.navigate(['./search'], {queryParams: {q : this.terms}});
+    }
   }
 
 }
