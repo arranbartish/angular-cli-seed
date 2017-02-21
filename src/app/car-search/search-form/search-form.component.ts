@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {Router} from "@angular/router";
 
@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./search-form.component.scss']
 })
 export class SearchFormComponent implements OnInit {
-  public terms : string;
+  @Input() public terms: string;
   public searchForm = this.formBuilder.group({
     terms: ['', Validators.required]
   });
