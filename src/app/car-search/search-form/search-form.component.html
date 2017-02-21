@@ -1,7 +1,4 @@
 <div class="row">
-  <p class="col-md-12">
-    search-form works!
-  </p>
   <form [formGroup]="searchForm" (ngSubmit)="search($event)">
     <div class="col-md-10">
       <input formControlName="terms" [(ngModel)]="terms" type="text" placeholder="Separate search terms by ," />
