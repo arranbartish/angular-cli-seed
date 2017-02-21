@@ -1,0 +1,13 @@
+[
+  {
+    "brand": "Toyota",
+    "model": "Camery",
+    "year": "2011",
+    "condition": "Awesome"
+  }, {
+  "brand": "Ford",
+  "model": "Highlux",
+  "year": "2009",
+  "condition": "Poor"
+}
+]
