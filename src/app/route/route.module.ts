@@ -7,8 +7,6 @@ import { CarListModule } from "../car-list/car-list.module";
 import { CarServiceModule } from "../car-service/car-service.module";
 import {CarSearchModule} from "../car-search/car-search.module";
 
-//import { HelloWorldModule } from "../hello-world/hello-world.module";
-
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'home', component: ListingComponent },
@@ -23,7 +21,6 @@ const routes: Routes = [
   ],
   imports: [
     RouterModule.forRoot(routes),
-  //  HelloWorldModule,
     CarListModule,
     CarServiceModule,
     CarSearchModule,
