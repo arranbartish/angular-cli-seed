@@ -12,7 +12,7 @@ import {CarSearchModule} from "../car-search/car-search.module";
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'home', component: ListingComponent },
-  { path: 'characters', component: SearchResultComponent },
+  { path: 'search', component: SearchResultComponent },
 ];
 
 @NgModule({

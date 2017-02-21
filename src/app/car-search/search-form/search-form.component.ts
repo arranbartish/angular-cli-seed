@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import {Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-search-form',
@@ -11,14 +13,13 @@ export class SearchFormComponent implements OnInit {
     terms: ['', Validators.required]
   });
 
-  constructor(public formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit() {
   }
 
-  search(event) {
-    debugger;
-    console.log(event);
+  search() {
+    this.router.navigate(['./search']);
   }
 
 }
