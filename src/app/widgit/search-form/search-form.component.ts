@@ -9,8 +9,8 @@ import {Router} from "@angular/router";
   styleUrls: ['search-form.component.scss']
 })
 export class SearchFormComponent implements OnInit {
-  @Input() public terms: string;
-  public searchForm = this.formBuilder.group({
+  @Input() private terms: string;
+  private searchForm = this.formBuilder.group({
     terms: ['', Validators.required]
   });
 
