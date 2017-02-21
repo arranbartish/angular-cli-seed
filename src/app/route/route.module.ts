@@ -5,6 +5,8 @@ import { ListingComponent } from './listing/listing.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { CarListModule } from "../car-list/car-list.module";
 import { CarServiceModule } from "../car-service/car-service.module";
+import {CarSearchModule} from "../car-search/car-search.module";
+
 //import { HelloWorldModule } from "../hello-world/hello-world.module";
 
 const routes: Routes = [
@@ -24,6 +26,7 @@ const routes: Routes = [
   //  HelloWorldModule,
     CarListModule,
     CarServiceModule,
+    CarSearchModule,
     CommonModule
   ], declarations: [ListingComponent, SearchResultComponent]
 })

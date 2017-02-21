@@ -1,0 +1,13 @@
+<div class="row">
+  <p class="col-md-12">
+    search-form works!
+  </p>
+  <form [formGroup]="searchForm" (ngSubmit)="search($event)">
+    <div class="col-md-10">
+      <input formControlName="terms" type="text" placeholder="search" />
+    </div>
+    <div class="col-md-2">
+      <button type="submit">Search</button>
+    </div>
+  </form>
+</div>
