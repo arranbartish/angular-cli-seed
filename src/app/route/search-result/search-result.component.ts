@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
 import {Car} from "../../car-service/car";
+import {CarSearchService} from "../../car-search/car-search.service";
 
 @Component({
   selector: 'app-search-result',
@@ -11,8 +12,9 @@ import {Car} from "../../car-service/car";
 export class SearchResultComponent implements OnInit {
   private term : string;
   private searchResults: Car[];
+  private errorMessage: string;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private carSearchService: CarSearchService) { }
 
   ngOnInit() {
 
@@ -24,19 +26,13 @@ export class SearchResultComponent implements OnInit {
       q => this.term = q,
       error =>  this.term = <any>error /*should toast*/);
 
-    this.searchResults = [
-      {
-        "brand": "Mercedes-Benz",
-        "model": "CLA",
-        "year": "2017",
-        "condition": "Awesome"
-      }, {
-        "brand": "Aston Martin",
-        "model": "AM-RB 001",
-        "year": "2017",
-        "condition": "Amazing"
-      }
-    ];
+    if(!!this.term) {
+      this.carSearchService.find(this.term)
+        .subscribe(
+          cars => this.searchResults = cars,
+          error =>  this.errorMessage = <any>error /*should toast*/);
+    }
+
   }
 
 }
