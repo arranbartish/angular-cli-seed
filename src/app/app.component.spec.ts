@@ -1,7 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { HelloWorldModule } from './hello-world/hello-world.module';
-import {CarListModule} from "./car-list/car-list.module";
+import { RouteModule } from "./route/route.module";
+import {CarSearchModule} from "./car-search/car-search.module";
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -10,8 +10,7 @@ describe('AppComponent', () => {
         AppComponent
       ],
       imports: [
-        HelloWorldModule,
-        CarListModule
+        RouteModule
       ],
     });
     TestBed.compileComponents();
