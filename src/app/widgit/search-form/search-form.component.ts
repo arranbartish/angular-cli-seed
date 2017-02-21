@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 })
 export class SearchFormComponent implements OnInit {
   @Input() private terms: string;
+  @Input() private target: string;
   private searchForm = this.formBuilder.group({
     terms: ['', Validators.required]
   });
@@ -21,7 +22,7 @@ export class SearchFormComponent implements OnInit {
 
   search() {
     if(this.searchForm.valid) {
-      this.router.navigate(['./search'], {queryParams: {q : this.terms}});
+      this.router.navigate([this.target], {queryParams: {q : this.terms}});
     }
   }
 

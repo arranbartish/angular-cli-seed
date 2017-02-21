@@ -10,13 +10,14 @@ import {CarService} from "../../car/service/car.service";
 export class ListingComponent implements OnInit {
   carList : Car[];
   errorMessage : string;
+  private target:string;
 
   constructor(private carService: CarService) {
 
   }
 
   ngOnInit() {
-
+    this.target = './search';
 
     this.carService.getData()
       .subscribe(

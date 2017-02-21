@@ -13,10 +13,13 @@ export class SearchResultComponent implements OnInit {
   private term : string;
   private searchResults: Car[];
   private errorMessage: string;
+  private target:string;
 
   constructor(private route: ActivatedRoute, private searchService: SearchService) { }
 
   ngOnInit() {
+    this.target = './search';
+
 
     let param : Observable<string> = this.route
       .queryParams
