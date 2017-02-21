@@ -9,6 +9,7 @@ import {CarService} from "../../car-service/car-service.service";
 })
 export class ListingComponent implements OnInit {
   carList : Car[];
+  errorMessage : string;
 
   constructor(private carService: CarService) {
 
@@ -16,23 +17,11 @@ export class ListingComponent implements OnInit {
 
   ngOnInit() {
 
-    //let otherCarList = this.carService.getData();
-    //debugger;
-    this.carList = [
-      {
-        brand: 'Toyota',
-        model: 'Camery',
-        year: '2011',
-        condition: 'Excellent'
-      }, {
-        brand: 'Ford',
-        model: 'Highlux',
-        year: '2009',
-        condition: 'Poor'
-      }
-    ];
 
-
+    this.carService.getData()
+      .subscribe(
+        cars => this.carList = cars,
+        error =>  this.errorMessage = <any>error);
 
   }
 
