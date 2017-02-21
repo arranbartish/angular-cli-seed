@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
 import {Car} from "../../car/domain/car";
-import {SearchService} from "../../car/service/search.service";
+import {CarService} from "../../car/service/car.service";
 
 @Component({
   selector: 'app-search-result',
@@ -15,7 +15,7 @@ export class SearchResultComponent implements OnInit {
   private errorMessage: string;
   private target:string;
 
-  constructor(private route: ActivatedRoute, private searchService: SearchService) { }
+  constructor(private route: ActivatedRoute, private carService: CarService) { }
 
   ngOnInit() {
     this.target = './search';
@@ -30,7 +30,7 @@ export class SearchResultComponent implements OnInit {
       error =>  this.term = <any>error /*should toast*/);
 
     if(!!this.term) {
-      this.searchService.find(this.term)
+      this.carService.findCars(this.term)
         .subscribe(
           cars => this.searchResults = cars,
           error =>  this.errorMessage = <any>error /*should toast*/);

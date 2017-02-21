@@ -9,8 +9,16 @@ export class CarService {
   constructor(private http:Http) {
   }
 
-  getData():Observable<Car[]> {
-    return this.http.get('/assets/list/cars.json')
+  findCars(term: string):Observable<Car[]> {
+    return this.getFromUrl('/assets/search/cars.json?q='+term);
+  }
+
+  getCars():Observable<Car[]> {
+    return this.getFromUrl('/assets/list/cars.json');
+  }
+
+  private getFromUrl(url: string):Observable<Car[]> {
+    return this.http.get(url)
       .map(this.extractData)
       .catch(this.handleError);
   }

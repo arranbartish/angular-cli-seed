@@ -19,7 +19,7 @@ export class ListingComponent implements OnInit {
   ngOnInit() {
     this.target = './search';
 
-    this.carService.getData()
+    this.carService.getCars()
       .subscribe(
         cars => this.carList = cars,
         error =>  this.errorMessage = <any>error);
