@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Car } from '../car-service/car';
 
 @Component({
   selector: 'app-car-list',
@@ -7,24 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CarListComponent implements OnInit {
 
-  carList = [];
+  @Input() public carList: Car[];
 
   constructor() { }
 
   ngOnInit() {
-    this.carList = [
-      {
-        brand: 'Toyota',
-        model: 'Camery',
-        year: '2011',
-        condition: 'Excellent'
-      }, {
-        brand: 'Ford',
-        model: 'Highlux',
-        year: '2009',
-        condition: 'Poor'
-      }
-    ];
   }
 
 }
