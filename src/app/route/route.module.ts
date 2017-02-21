@@ -3,14 +3,13 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { ListingComponent } from './listing/listing.component';
 import { SearchResultComponent } from './search-result/search-result.component';
-import { CarListModule } from "../car-list/car-list.module";
-import { CarServiceModule } from "../car-service/car-service.module";
-import {CarSearchModule} from "../car-search/car-search.module";
+import { CarModule } from '../car/car.module';
+import {WidgitModule} from "../widgit/widgit.module";
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'home', component: ListingComponent },
-  { path: 'search', component: SearchResultComponent },
+  { path: 'search', component: SearchResultComponent }
 ];
 
 @NgModule({
@@ -21,9 +20,8 @@ const routes: Routes = [
   ],
   imports: [
     RouterModule.forRoot(routes),
-    CarListModule,
-    CarServiceModule,
-    CarSearchModule,
+    CarModule,
+    WidgitModule,
     CommonModule
   ], declarations: [ListingComponent, SearchResultComponent]
 })

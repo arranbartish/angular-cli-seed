@@ -5,8 +5,8 @@ import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-search-form',
-  templateUrl: './search-form.component.html',
-  styleUrls: ['./search-form.component.scss']
+  templateUrl: 'search-form.component.html',
+  styleUrls: ['search-form.component.scss']
 })
 export class SearchFormComponent implements OnInit {
   @Input() public terms: string;

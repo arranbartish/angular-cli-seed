@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { Car } from './car';
-import './rxjs-operations';
+import {Observable} from 'rxjs';
+import {Car} from '../domain/car';
+import {Response, Http} from '@angular/http';
 
 @Injectable()
 export class CarService {
