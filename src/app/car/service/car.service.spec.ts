@@ -4,7 +4,7 @@ import {
   Headers, BaseRequestOptions,
   Response, HttpModule, Http, XHRBackend, RequestMethod
 } from '@angular/http';
-import { CarService } from './car-service.service';
+import { CarService } from './car.service';
 
 // fix this so we can mock http
 // http://chariotsolutions.com/blog/post/testing-angular-2-0-x-services-http-jasmine-karma/
