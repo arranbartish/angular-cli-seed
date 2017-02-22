@@ -4,27 +4,19 @@ import { Routes, RouterModule } from '@angular/router';
 import { ListingComponent } from './listing/listing.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { CarModule } from './car.module';
-import {WidgitModule} from "../widgit/widgit.module";
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'home', component: ListingComponent },
   { path: 'search', component: SearchResultComponent }
 ];
 
 @NgModule({
   exports: [
-    ListingComponent,
-    SearchResultComponent,
-    RouterModule
   ],
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forChild(routes),
     CarModule,
-    WidgitModule,
     CommonModule
-  ], declarations: [ListingComponent, SearchResultComponent]
+  ], declarations: []
 })
-export class RouteModule { }
-
-export const routingComponents = [ListingComponent, SearchResultComponent];
+export class CarRouteModule { }

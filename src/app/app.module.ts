@@ -4,19 +4,27 @@ import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {AppComponent} from "./app.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {RouteModule} from "./car/route.module";
-import {RouterModule} from "@angular/router";
+import {RouterModule, Routes} from "@angular/router";
+import {CarRouteModule} from "./car/car.route";
+
+
+const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'home' },
+  { path: 'home', loadChildren: './car/car.route#CarRouteModule' }
+];
+
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    RouterModule.forRoot(routes),
     BrowserModule,
     FormsModule,
     HttpModule,
     RouterModule,
-    RouteModule,
+    CarRouteModule,
     NgbModule.forRoot()
   ],
   providers: [],
