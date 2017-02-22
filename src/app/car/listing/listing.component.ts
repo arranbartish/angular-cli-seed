@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {Car} from "../../car/domain/car";
-import {CarService} from "../../car/service/car.service";
+import {Car} from "../domain/car";
+import {CarService} from "../service/car.service";
 import {SearchOptions} from "../../widgit/search-form/search-options";
 
 @Component({
   selector: 'app-listing',
-  templateUrl: './listing.component.html',
-  styleUrls: ['./listing.component.scss']
+  templateUrl: 'listing.component.html',
+  styleUrls: ['listing.component.scss']
 })
 export class ListingComponent implements OnInit {
   carList : Car[];

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
-import {Car} from "../../car/domain/car";
-import {CarService} from "../../car/service/car.service";
+import {Car} from "../domain/car";
+import {CarService} from "../service/car.service";
 import {SearchFormService} from "../../widgit/search-form/search-form.service";
 import {SearchEvent} from "../../widgit/search-form/search-event";
 import {SearchOptions} from "../../widgit/search-form/search-options";
 
 @Component({
   selector: 'app-search-result',
-  templateUrl: './search-result.component.html',
-  styleUrls: ['./search-result.component.scss']
+  templateUrl: 'search-result.component.html',
+  styleUrls: ['search-result.component.scss']
 })
 export class SearchResultComponent implements OnInit {
   private term : string;
