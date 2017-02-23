@@ -49,7 +49,7 @@ describe('CarService', () => {
 
   describe('getCars', () => {
 
-    const expectedUrl = '/assets/mock/list/cars.json';
+    const expectedUrl : string = '/assets/mock/list/cars.json';
 
     beforeEach(() => {
       mockBackend.connections.subscribe(
@@ -67,6 +67,36 @@ describe('CarService', () => {
 
         let result : Car[] = [];
         service.getCars()
+          .subscribe(res => {
+            result = res;
+          });
+        expect(result[0]).toEqual(expectedCar);
+      }
+    ));
+
+  });
+
+  describe('findCars', () => {
+
+    const term : string = 'whatever';
+    const expectedUrl : string = '/assets/mock/search/cars.json?q=whatever';
+
+    beforeEach(() => {
+      mockBackend.connections.subscribe(
+        (connection: MockConnection) => {
+          expect(connection.request.method).toBe(RequestMethod.Get);
+          expect(connection.request.url).toBe(expectedUrl);
+
+          connection.mockRespond(new Response(
+            new ResponseOptions({ body: mockResponse })
+          ));
+        });
+    });
+
+    it('will find cars from service', fakeAsync(function () {
+
+        let result : Car[] = [];
+        service.findCars(term)
           .subscribe(res => {
             result = res;
           });
