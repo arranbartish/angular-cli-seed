@@ -24,7 +24,7 @@ export class SearchFormComponent implements OnInit {
   };
 
   private searchForm = this.formBuilder.group({
-    terms: ['', Validators.required]
+    terms: [this.terms, Validators.required]
   });
 
   constructor(private formBuilder: FormBuilder,

@@ -11,7 +11,7 @@ import {SearchOptions} from "../../widgit/search-form/search-options";
 export class ListingComponent implements OnInit {
   carList : Car[];
   errorMessage : string;
-  private searchOptions : SearchOptions;
+  searchOptions : SearchOptions;
 
   constructor(private carService: CarService) {
 
