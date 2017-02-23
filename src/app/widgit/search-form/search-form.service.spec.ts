@@ -6,14 +6,11 @@ import {SearchEvent} from "./search-event";
 describe('SearchFormService', () => {
 
   let searchFormService : SearchFormService;
-  let expectedSearchEvent : SearchEvent;
+  const expectedSearchEvent : SearchEvent = {
+    name : 'You\'ve been',
+    term : 'called'
+  };
 
-  beforeEach(() => {
-    expectedSearchEvent = {
-      name : 'You\'ve been',
-      term : 'called'
-    };
-  });
 
   beforeEach(() => {
     TestBed.configureTestingModule({
