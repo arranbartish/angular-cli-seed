@@ -63,7 +63,7 @@ describe('CarService', () => {
         });
     });
 
-    it('will get cars from service', fakeAsync(function () {
+    it('will get cars from http request', fakeAsync(function () {
 
         let result : Car[] = [];
         service.getCars()
@@ -93,7 +93,7 @@ describe('CarService', () => {
         });
     });
 
-    it('will find cars from service', fakeAsync(function () {
+    it('will find cars from http request', fakeAsync(function () {
 
         let result : Car[] = [];
         service.findCars(term)
