@@ -1,27 +1,9 @@
-import {
-  fakeAsync,
-  inject,
-  TestBed,
-  tick
-} from '@angular/core/testing';
-import {
-  HttpModule,
-  XHRBackend,
-  ResponseOptions,
-  Response,
-  RequestMethod
-} from '@angular/http';
-import {
-  MockBackend,
-  MockConnection
-} from '@angular/http/testing/mock_backend';
+import { fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { HttpModule, XHRBackend, ResponseOptions, Response, RequestMethod } from '@angular/http';
+import { MockBackend, MockConnection } from '@angular/http/testing/mock_backend';
 
 import { CarService } from './car.service';
-
-// fix this so we can mock http
-// http://chariotsolutions.com/blog/post/testing-angular-2-0-x-services-http-jasmine-karma/
-// maybe extend the class?
-// http://www.typescriptlang.org/docs/handbook/classes.html
+import {Car} from "../domain/car";
 
 // potential example
 // https://angular-2-training-book.rangle.io/handout/testing/services/mockbackend.html
@@ -29,26 +11,22 @@ import { CarService } from './car.service';
 
 describe('CarService', () => {
 
-  const mockResponse = {
-    "batchcomplete": "",
-    "continue": {
-      "sroffset": 10,
-      "continue": "-||"
-    },
-    "query": {
-      "searchinfo": {
-        "totalhits": 36853
-      },
-      "search": [{
-        "ns": 0,
-        "title": "Stuff",
-        "snippet": "<span></span>",
-        "size": 1906,
-        "wordcount": 204,
-        "timestamp": "2016-06-10T17:25:36Z"
-      }]
-    }
+  let service : CarService;
+  let mockBackend : MockBackend;
+
+  const mockResponse = [{
+    "brand": "Toyota",
+    "model": "Camery",
+    "year": "2011",
+    "condition": "Awesome"
+  }];
+  const expectedCar : Car = {
+    brand: 'Toyota',
+    model: 'Camery',
+    year: '2011',
+    condition: 'Awesome'
   };
+
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -63,15 +41,18 @@ describe('CarService', () => {
     });
   });
 
-  it('will get "cars" from service', fakeAsync(
-    inject([
-      XHRBackend,
-      CarService
-    ], (backend: XHRBackend, carService: CarService) => {
+  beforeEach(inject([XHRBackend, CarService], (backend: XHRBackend, carService: CarService) => {
+    service = carService;
+    mockBackend = backend as MockBackend;
+  }));
 
-      const expectedUrl = '/assets/mock/list/cars.json';
 
-      backend.connections.subscribe(
+  describe('getCars', () => {
+
+    const expectedUrl = '/assets/mock/list/cars.json';
+
+    beforeEach(() => {
+      mockBackend.connections.subscribe(
         (connection: MockConnection) => {
           expect(connection.request.method).toBe(RequestMethod.Get);
           expect(connection.request.url).toBe(expectedUrl);
@@ -80,11 +61,19 @@ describe('CarService', () => {
             new ResponseOptions({ body: mockResponse })
           ));
         });
+    });
 
-      carService.getCars()
-        .subscribe(res => {
-          expect(res).toEqual(mockResponse);
-        });
-    })
-  ));
+    it('will get cars from service', fakeAsync(function () {
+
+        let result : Car[] = [];
+        service.getCars()
+          .subscribe(res => {
+            result = res;
+          });
+        expect(result[0]).toEqual(expectedCar);
+      }
+    ));
+
+  });
+
 });
