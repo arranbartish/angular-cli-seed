@@ -10,11 +10,11 @@ export class CarService {
   }
 
   findCars(term: string):Observable<Car[]> {
-    return this.getFromUrl('/assets/search/cars.json?q='+term);
+    return this.getFromUrl('/assets/mock/search/cars.json?q='+term);
   }
 
   getCars():Observable<Car[]> {
-    return this.getFromUrl('/assets/list/cars.json');
+    return this.getFromUrl('/assets/mock/list/cars.json');
   }
 
   private getFromUrl(url: string):Observable<Car[]> {
