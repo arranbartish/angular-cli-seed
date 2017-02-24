@@ -1,6 +1,6 @@
 import {TestBed, async} from "@angular/core/testing";
 import {AppComponent} from "./app.component";
-import {RouteModule} from "./car/route.module";
+import {CarRouteModule} from "./car/car.route";
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -9,7 +9,7 @@ describe('AppComponent', () => {
         AppComponent
       ],
       imports: [
-        RouteModule
+        CarRouteModule
       ],
     });
     TestBed.compileComponents();

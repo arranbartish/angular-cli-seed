@@ -1,41 +1,109 @@
-import { TestBed, getTestBed, inject } from '@angular/core/testing';
-import {MockBackend} from '@angular/http/testing';
-import {
-  Headers, BaseRequestOptions,
-  Response, HttpModule, Http, XHRBackend, RequestMethod
-} from '@angular/http';
-import { CarService } from './car-service.service';
+import { fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { HttpModule, XHRBackend, ResponseOptions, Response, RequestMethod } from '@angular/http';
+import { MockBackend, MockConnection } from '@angular/http/testing/mock_backend';
 
-// fix this so we can mock http
-// http://chariotsolutions.com/blog/post/testing-angular-2-0-x-services-http-jasmine-karma/
-// maybe extend the class?
-// http://www.typescriptlang.org/docs/handbook/classes.html
+import { CarService } from './car.service';
+import {Car} from "../domain/car";
+
+// potential example
+// https://angular-2-training-book.rangle.io/handout/testing/services/mockbackend.html
+// http://plnkr.co/edit/K9gzDOcEOcmfFaOacdKZ?p=info
+
 describe('CarService', () => {
-  let mockBackend: MockBackend;
+
+  let service : CarService;
+  let mockBackend : MockBackend;
+
+  const mockResponse = [{
+    "brand": "Toyota",
+    "model": "Camery",
+    "year": "2011",
+    "condition": "Awesome"
+  }];
+  const expectedCar : Car = {
+    brand: 'Toyota',
+    model: 'Camery',
+    year: '2011',
+    condition: 'Awesome'
+  };
+
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpModule],
       providers: [
-        CarService,
-        MockBackend,
-        BaseRequestOptions,
         {
-          provide: Http,
-          deps: [MockBackend, BaseRequestOptions],
-          useFactory:
-            (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
-              return new Http(backend, defaultOptions);
-            }
-        }
-      ],
-      imports : [
-        HttpModule
+          provide: XHRBackend,
+          useClass: MockBackend
+        },
+        CarService
       ]
     });
-    mockBackend = getTestBed().get(MockBackend);
   });
 
-  it('should ...', inject([CarService], (service: CarService) => {
-    expect(service).toBeTruthy();
+  beforeEach(inject([XHRBackend, CarService], (backend: XHRBackend, carService: CarService) => {
+    service = carService;
+    mockBackend = backend as MockBackend;
   }));
+
+
+  describe('getCars', () => {
+
+    const expectedUrl : string = '/assets/mock/list/cars.json';
+
+    beforeEach(() => {
+      mockBackend.connections.subscribe(
+        (connection: MockConnection) => {
+          expect(connection.request.method).toBe(RequestMethod.Get);
+          expect(connection.request.url).toBe(expectedUrl);
+
+          connection.mockRespond(new Response(
+            new ResponseOptions({ body: mockResponse })
+          ));
+        });
+    });
+
+    it('will get cars from http request', fakeAsync(function () {
+
+        let result : Car[] = [];
+        service.getCars()
+          .subscribe(res => {
+            result = res;
+          });
+        expect(result[0]).toEqual(expectedCar);
+      }
+    ));
+
+  });
+
+  describe('findCars', () => {
+
+    const term : string = 'whatever';
+    const expectedUrl : string = '/assets/mock/search/cars.json?q=whatever';
+
+    beforeEach(() => {
+      mockBackend.connections.subscribe(
+        (connection: MockConnection) => {
+          expect(connection.request.method).toBe(RequestMethod.Get);
+          expect(connection.request.url).toBe(expectedUrl);
+
+          connection.mockRespond(new Response(
+            new ResponseOptions({ body: mockResponse })
+          ));
+        });
+    });
+
+    it('will find cars from http request', fakeAsync(function () {
+
+        let result : Car[] = [];
+        service.findCars(term)
+          .subscribe(res => {
+            result = res;
+          });
+        expect(result[0]).toEqual(expectedCar);
+      }
+    ));
+
+  });
+
 });

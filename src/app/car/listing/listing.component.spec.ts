@@ -19,7 +19,18 @@ describe('ListingComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('will be defined', () => {
+    expect(component).toBeDefined();
+  });
+
+  describe('ngOnInit', () => {
+
+    beforeEach(() => {
+      component.ngOnInit();
+    });
+
+    it('will define options', () => {
+        expect(component.searchOptions).toBeDefined();
+    });
   });
 });
