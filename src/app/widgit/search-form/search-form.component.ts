@@ -5,8 +5,8 @@ import {SearchFormService} from "./search-form.service";
 import {SearchOptions} from "./search-options";
 import {ObjectService} from "../../utilities/object.service";
 
-const UNDEFINED_NAME : string = 'SearchFormComponent_name_unspecified';
-const DEFAULT_TARGET : string = './search';
+export const UNDEFINED_NAME : string = 'SearchFormComponent_name_unspecified';
+export const DEFAULT_TARGET : string = './search';
 
 
 @Component({
@@ -16,14 +16,14 @@ const DEFAULT_TARGET : string = './search';
 })
 export class SearchFormComponent implements OnInit {
 
-  @Input() private terms: string;
-  @Input() private options: SearchOptions;
-  private configuredOptions: SearchOptions = {
+  @Input() terms: string;
+  @Input() options: SearchOptions;
+  configuredOptions: SearchOptions = {
     name: UNDEFINED_NAME,
     target: DEFAULT_TARGET
   };
 
-  private searchForm = this.formBuilder.group({
+  searchForm = this.formBuilder.group({
     terms: [this.terms, Validators.required]
   });
 
