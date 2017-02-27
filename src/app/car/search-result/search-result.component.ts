@@ -13,10 +13,10 @@ import {SearchOptions} from "../../widgit/search-form/search-options";
   styleUrls: ['search-result.component.scss']
 })
 export class SearchResultComponent implements OnInit {
-  private term : string;
-  private searchResults: Car[];
-  private errorMessage: string;
-  private searchOptions : SearchOptions;
+  term : string;
+  searchResults: Car[];
+  errorMessage: string;
+  searchOptions : SearchOptions;
 
   constructor(private route: ActivatedRoute, private carService: CarService, private searchFormService: SearchFormService) { }
 
@@ -46,8 +46,9 @@ export class SearchResultComponent implements OnInit {
 
   }
 
-  private refreshSearchResultsOnEvent(event: SearchEvent) {
+  refreshSearchResultsOnEvent(event: SearchEvent) {
     if(event.name === this.searchOptions.name) {
+      this.term = event.term;
       this.refreshSearchResults();
     }
   }
