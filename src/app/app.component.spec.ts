@@ -1,36 +1,36 @@
 import {TestBed, async} from "@angular/core/testing";
 import {AppComponent} from "./app.component";
 import {CarRouteModule} from "./car/car.route";
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('AppComponent', () => {
+  let fixture;
+  let component;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
       ],
-      imports: [
-        CarRouteModule
-      ],
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [],
     });
     TestBed.compileComponents();
   });
 
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
-
-  it(`should have as title 'app works!'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app works!');
-  }));
-
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  it('will be defined', async(() => {
+
+    expect(component).toBeDefined();
+  }));
+
+  it('demonstrate how to interrogate the DOM', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('app works!');
+    expect(compiled.querySelector('h1').textContent).toContain('Car search POC');
   }));
 });
