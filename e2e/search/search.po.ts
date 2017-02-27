@@ -1,8 +1,8 @@
 import { browser, element, by } from 'protractor';
 
-export class AngularCliSeedPage {
+export class SearchPage {
   navigateTo() {
-    return browser.get('/');
+    return browser.get('/search');
   }
 
   getParagraphText() {

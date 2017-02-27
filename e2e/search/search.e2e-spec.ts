@@ -1,10 +1,11 @@
 
-import {RootPage} from "./root/root.po";
-describe('angular-cli-seed App', () => {
-  let page: RootPage;
+import {SearchPage} from "./search.po";
+
+describe('search page', () => {
+  let page: SearchPage;
 
   beforeEach(() => {
-    page = new RootPage();
+    page = new SearchPage();
   });
 
   it('will display its title', () => {
