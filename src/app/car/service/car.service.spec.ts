@@ -3,7 +3,10 @@ import { HttpModule, XHRBackend, ResponseOptions, Response, RequestMethod } from
 import { MockBackend, MockConnection } from '@angular/http/testing/mock_backend';
 
 import { CarService } from './car.service';
-import {Car} from '../domain/car';
+import {Car, CarState, CarAction} from '../domain/car';
+import {StoreModule, Store, Action} from '@ngrx/store';
+import {car} from '../ngrx/car.reducer';
+import {CarModule} from '../car.module';
 
 // potential example
 // https://angular-2-training-book.rangle.io/handout/testing/services/mockbackend.html
@@ -13,6 +16,7 @@ describe('CarService', () => {
 
   let service: CarService;
   let mockBackend: MockBackend;
+  let store: Store<CarState>;
 
   const mockResponse = [{
     'brand': 'Toyota',
@@ -30,20 +34,20 @@ describe('CarService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpModule],
+      imports: [CarModule, HttpModule, StoreModule.provideStore({car})],
       providers: [
         {
           provide: XHRBackend,
           useClass: MockBackend
-        },
-        CarService
+        }
       ]
     });
   });
 
-  beforeEach(inject([XHRBackend, CarService], (backend: XHRBackend, carService: CarService) => {
+  beforeEach(inject([XHRBackend, CarService, Store], (backend: XHRBackend, carService: CarService, _store: Store<CarState>) => {
     service = carService;
     mockBackend = backend as MockBackend;
+    store = _store;
   }));
 
 
@@ -104,6 +108,20 @@ describe('CarService', () => {
       }
     ));
 
-  });
+    describe('store', () => {
 
+      let expectedAction: Action = {
+        type: CarAction[CarAction.SET_CARS],
+        payload: [expectedCar]
+      };
+
+      it('will generate a dispatch with the payload', () => {
+        service.findCars(term);
+
+        // store.select(state => state.cars)
+        expect(service).toBeDefined();
+      });
+    });
+
+  });
 });
