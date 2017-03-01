@@ -18,6 +18,6 @@ install:
   - npm install
 script:
   - npm run ng test -- --single-run=true --browsers Chrome --code-coverage
-  - npm run codecov
+  - ./node_modules/codecov/bin/codecov
   - cat ./coverage/coverage.lcov | ./node_modules/coveralls/bin/coveralls.js
   - npm run ng e2e
