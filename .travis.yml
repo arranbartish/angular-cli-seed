@@ -16,4 +16,6 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 install:
   - npm install
-script: npm run ng test -- --single-run=true --browsers Chrome --code-coverage
+script:
+  - npm run ng test -- --single-run=true --browsers Chrome --code-coverage
+  - npm run ng e2e
