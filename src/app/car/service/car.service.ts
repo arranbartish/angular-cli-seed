@@ -22,8 +22,12 @@ export class CarService {
 
     this.http.get(url)
       .map((res: Response) => res.json())
-      .map(payload => ({ type: CarAction[CarAction.SET_CARS], payload: payload }))
-      .subscribe(action => this._store.dispatch(action));
+      .map(payload => (
+        {
+          type: CarAction[CarAction.SET_CARS],
+          payload: payload
+        }
+      )).subscribe(action => this._store.dispatch(action));
 
     return this.http.get(url)
       .map(this.extractData)

@@ -1,5 +1,5 @@
 import { fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { HttpModule, XHRBackend, ResponseOptions, Response, RequestMethod } from '@angular/http';
+import {HttpModule, XHRBackend, ResponseOptions, Response, RequestMethod, ConnectionBackend} from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing/mock_backend';
 
 import { CarService } from './car.service';
@@ -44,7 +44,7 @@ describe('CarService', () => {
     });
   });
 
-  beforeEach(inject([XHRBackend, CarService, Store], (backend: XHRBackend, carService: CarService, _store: Store<CarState>) => {
+  beforeEach(inject([XHRBackend, CarService, Store], (backend: ConnectionBackend, carService: CarService, _store: Store<CarState>) => {
     service = carService;
     mockBackend = backend as MockBackend;
     store = _store;
@@ -116,10 +116,20 @@ describe('CarService', () => {
       };
 
       it('will generate a dispatch with the payload', () => {
+        let cars : Car[];
+
+        store.select(state => state.cars).subscribe(
+          model => cars = model
+        );
+
         service.findCars(term);
 
         // store.select(state => state.cars)
-        expect(service).toBeDefined();
+        expect(cars).toEqual(expectedAction.payload);
+      });
+
+      it('will be defined', () => {
+          expect(store).toBeDefined();
       });
     });
 
