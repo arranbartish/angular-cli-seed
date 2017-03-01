@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {Observable} from "rxjs";
-import {Car} from "../domain/car";
-import {CarService} from "../service/car.service";
-import {SearchFormService} from "../../widgit/search-form/search-form.service";
-import {SearchEvent} from "../../widgit/search-form/search-event";
-import {SearchOptions} from "../../widgit/search-form/search-options";
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
+import {Car} from '../domain/car';
+import {CarService} from '../service/car.service';
+import {SearchFormService} from '../../widgit/search-form/search-form.service';
+import {SearchEvent} from '../../widgit/search-form/search-event';
+import {SearchOptions} from '../../widgit/search-form/search-options';
 
 @Component({
   selector: 'app-search-result',
@@ -13,10 +13,10 @@ import {SearchOptions} from "../../widgit/search-form/search-options";
   styleUrls: ['search-result.component.scss']
 })
 export class SearchResultComponent implements OnInit {
-  term : string;
+  term: string;
   searchResults: Car[];
   errorMessage: string;
-  searchOptions : SearchOptions;
+  searchOptions: SearchOptions;
 
   constructor(private route: ActivatedRoute, private carService: CarService, private searchFormService: SearchFormService) { }
 
@@ -26,7 +26,7 @@ export class SearchResultComponent implements OnInit {
       target : './search'
     };
 
-    let param : Observable<string> = this.route
+    const param: Observable<string> = this.route
       .queryParams
       .map(params => params['q'] || '');
 
@@ -34,11 +34,11 @@ export class SearchResultComponent implements OnInit {
       q => this.term = q,
       error =>  this.term = <any>error /*should toast*/);
 
-    if(!!this.term) {
+    if (!!this.term) {
       this.refreshSearchResults();
     }
 
-    let me = this;
+    const me = this;
     function handleEvent(event: SearchEvent) {
       me.refreshSearchResultsOnEvent(event);
     }
@@ -47,7 +47,7 @@ export class SearchResultComponent implements OnInit {
   }
 
   refreshSearchResultsOnEvent(event: SearchEvent) {
-    if(event.name === this.searchOptions.name) {
+    if (event.name === this.searchOptions.name) {
       this.term = event.term;
       this.refreshSearchResults();
     }

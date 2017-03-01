@@ -1,13 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListingComponent } from './listing.component';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {CarService} from "../service/car.service";
-import {Car} from "../domain/car";
-import {BehaviorSubject, Observable} from "rxjs";
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {CarService} from '../service/car.service';
+import {Car} from '../domain/car';
+import {Observable} from 'rxjs/Observable';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 describe('ListingComponent', () => {
-  const carResponse : Car[] = [{
+  const carResponse: Car[] = [{
     brand: 'rolls',
     model: 'can-ardly',
     year: '1950',
@@ -19,8 +20,8 @@ describe('ListingComponent', () => {
 
   beforeEach(async(() => {
 
-    let mockCarsResponse : Observable<Car[]> = new BehaviorSubject(carResponse);
-    let mockedGetCars = jasmine.createSpy("findCars");
+    const mockCarsResponse: Observable<Car[]> = new BehaviorSubject(carResponse);
+    const mockedGetCars = jasmine.createSpy('findCars');
     mockedGetCars.and.returnValue(mockCarsResponse);
 
     TestBed.configureTestingModule({
@@ -29,7 +30,7 @@ describe('ListingComponent', () => {
       providers: [{
         provide: CarService,
         useClass: class {
-          findCars = jasmine.createSpy("findCars");
+          findCars = jasmine.createSpy('findCars');
           getCars = mockedGetCars;
         }
       }]

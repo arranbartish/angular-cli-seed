@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Car} from "../domain/car";
-import {CarService} from "../service/car.service";
-import {SearchOptions} from "../../widgit/search-form/search-options";
+import {Car} from '../domain/car';
+import {CarService} from '../service/car.service';
+import {SearchOptions} from '../../widgit/search-form/search-options';
 
 @Component({
   selector: 'app-listing',
@@ -9,9 +9,9 @@ import {SearchOptions} from "../../widgit/search-form/search-options";
   styleUrls: ['listing.component.scss']
 })
 export class ListingComponent implements OnInit {
-  carList : Car[];
-  errorMessage : string;
-  searchOptions : SearchOptions;
+  carList: Car[];
+  errorMessage: string;
+  searchOptions: SearchOptions;
 
   constructor(private carService: CarService) {
 

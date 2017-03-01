@@ -1,4 +1,4 @@
 export interface SearchOptions {
-  name : string;
-  target : string;
+  name: string;
+  target: string;
 }

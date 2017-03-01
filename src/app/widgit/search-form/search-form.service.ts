@@ -1,5 +1,5 @@
 import {Injectable, EventEmitter} from '@angular/core';
-import {SearchEvent} from "./search-event";
+import {SearchEvent} from './search-event';
 
 @Injectable()
 export class SearchFormService {
@@ -9,12 +9,12 @@ export class SearchFormService {
     this.searchDone$ = new EventEmitter();
   }
 
-  registerMe(action : Function){
+  registerMe(action: Function) {
     this.searchDone$.subscribe(event => action(event));
   }
 
   searchDone(name: string, term: string) {
-    let event : SearchEvent = {
+    const event: SearchEvent = {
       name: name,
       term: term
     };

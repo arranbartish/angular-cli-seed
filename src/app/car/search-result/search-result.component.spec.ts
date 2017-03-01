@@ -1,25 +1,27 @@
 import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 
 import { SearchResultComponent } from './search-result.component';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {SearchFormService} from "../../widgit/search-form/search-form.service";
-import {CarService} from "../service/car.service";
-import {BehaviorSubject, Observable} from "rxjs";
-import {Car} from "../domain/car";
-import {SearchOptions} from "../../widgit/search-form/search-options";
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {SearchFormService} from '../../widgit/search-form/search-form.service';
+import {CarService} from '../service/car.service';
+import {Observable} from 'rxjs/Observable';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Car} from '../domain/car';
+import {SearchOptions} from '../../widgit/search-form/search-options';
 
 describe('SearchResultComponent', () => {
-  const carResponse : Car[] = [{
+  const carResponse: Car[] = [{
     brand: 'rolls',
     model: 'can-ardly',
     year: '1950',
     condition: 'almost 70 years old, what do you think?'
   }];
 
-  const expectedSearchOptions : SearchOptions =
-    { name: 'cars',
-    target: './search' };
+  const expectedSearchOptions: SearchOptions = {
+    name: 'cars',
+    target: './search'
+  };
 
   let component: SearchResultComponent;
   let fixture: ComponentFixture<SearchResultComponent>;
@@ -31,14 +33,14 @@ describe('SearchResultComponent', () => {
 
   function setupMocks(term: string) {
 
-    let mockCarsResponse : Observable<Car[]> = new BehaviorSubject(carResponse);
-    let mockTermResponse : Observable<string> = new BehaviorSubject(term);
+    const mockCarsResponse: Observable<Car[]> = new BehaviorSubject(carResponse);
+    const mockTermResponse: Observable<string> = new BehaviorSubject(term);
 
-    mockedQueryParams = jasmine.createSpyObj("queryParams", ["map"]);
+    mockedQueryParams = jasmine.createSpyObj('queryParams', ['map']);
     mockedQueryParams.map.and.returnValue(mockTermResponse);
 
-    mockedFindCars = jasmine.createSpy("findCars");
-    if(!!term){
+    mockedFindCars = jasmine.createSpy('findCars');
+    if (!!term) {
       mockedFindCars.and.returnValue(mockCarsResponse);
     }
 
@@ -47,14 +49,14 @@ describe('SearchResultComponent', () => {
         provide: CarService,
         useClass: class {
           findCars = mockedFindCars;
-          getCars = jasmine.createSpy("getCars");
+          getCars = jasmine.createSpy('getCars');
         }
       },
       {
         provide: SearchFormService,
         useClass: class {
-          registerMe = jasmine.createSpy("registerMe");
-          searchDone = jasmine.createSpy("searchDone");
+          registerMe = jasmine.createSpy('registerMe');
+          searchDone = jasmine.createSpy('searchDone');
         }
       },
       {
@@ -66,11 +68,11 @@ describe('SearchResultComponent', () => {
     ];
   }
 
-  function setupMocksWithTerm(){
+  function setupMocksWithTerm() {
     setupMocks('find-me');
   }
 
-  function setupMocksWithoutTerm(){
+  function setupMocksWithoutTerm() {
     setupMocks(undefined);
   }
 

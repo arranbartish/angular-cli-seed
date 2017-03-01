@@ -1,6 +1,6 @@
 export interface Car {
-  brand : string;
-  model : string;
-  year : string;
-  condition : string;
+  brand: string;
+  model: string;
+  year: string;
+  condition: string;
 }

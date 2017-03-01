@@ -3,7 +3,7 @@ import { HttpModule, XHRBackend, ResponseOptions, Response, RequestMethod } from
 import { MockBackend, MockConnection } from '@angular/http/testing/mock_backend';
 
 import { CarService } from './car.service';
-import {Car} from "../domain/car";
+import {Car} from '../domain/car';
 
 // potential example
 // https://angular-2-training-book.rangle.io/handout/testing/services/mockbackend.html
@@ -11,16 +11,16 @@ import {Car} from "../domain/car";
 
 describe('CarService', () => {
 
-  let service : CarService;
-  let mockBackend : MockBackend;
+  let service: CarService;
+  let mockBackend: MockBackend;
 
   const mockResponse = [{
-    "brand": "Toyota",
-    "model": "Camery",
-    "year": "2011",
-    "condition": "Awesome"
+    'brand': 'Toyota',
+    'model': 'Camery',
+    'year': '2011',
+    'condition': 'Awesome'
   }];
-  const expectedCar : Car = {
+  const expectedCar: Car = {
     brand: 'Toyota',
     model: 'Camery',
     year: '2011',
@@ -49,7 +49,7 @@ describe('CarService', () => {
 
   describe('getCars', () => {
 
-    const expectedUrl : string = '/assets/mock/list/cars.json';
+    const expectedUrl = '/assets/mock/list/cars.json';
 
     beforeEach(() => {
       mockBackend.connections.subscribe(
@@ -65,7 +65,7 @@ describe('CarService', () => {
 
     it('will get cars from http request', fakeAsync(function () {
 
-        let result : Car[] = [];
+        let result: Car[] = [];
         service.getCars()
           .subscribe(res => {
             result = res;
@@ -78,8 +78,8 @@ describe('CarService', () => {
 
   describe('findCars', () => {
 
-    const term : string = 'whatever';
-    const expectedUrl : string = '/assets/mock/search/cars.json?q=whatever';
+    const term = 'whatever';
+    const expectedUrl = '/assets/mock/search/cars.json?q=whatever';
 
     beforeEach(() => {
       mockBackend.connections.subscribe(
@@ -95,7 +95,7 @@ describe('CarService', () => {
 
     it('will find cars from http request', fakeAsync(function () {
 
-        let result : Car[] = [];
+        let result: Car[] = [];
         service.findCars(term)
           .subscribe(res => {
             result = res;

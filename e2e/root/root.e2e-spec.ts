@@ -1,8 +1,8 @@
 
-import {RootPage} from "./root.po";
-import {HomePage} from "../home/home.po";
-import {WaitCondition} from "../wait.conditions";
-import {browser} from "protractor";
+import {RootPage} from './root.po';
+import {HomePage} from '../home/home.po';
+import {WaitCondition} from '../wait.conditions';
+import {browser} from 'protractor';
 
 describe('root page', () => {
   let page: RootPage;

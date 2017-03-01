@@ -1,11 +1,11 @@
-import {async, ComponentFixture, TestBed, fakeAsync, tick, inject} from "@angular/core/testing";
-import {SearchFormComponent, UNDEFINED_NAME, DEFAULT_TARGET} from "./search-form.component";
-import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {SearchFormService} from "./search-form.service";
-import {Router} from "@angular/router";
-import {UtilitiesModule} from "../../utilities/utilities.module";
-import {SearchOptions} from "./search-options";
+import {async, ComponentFixture, TestBed, fakeAsync, tick, inject} from '@angular/core/testing';
+import {SearchFormComponent, UNDEFINED_NAME, DEFAULT_TARGET} from './search-form.component';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {SearchFormService} from './search-form.service';
+import {Router} from '@angular/router';
+import {UtilitiesModule} from '../../utilities/utilities.module';
+import {SearchOptions} from './search-options';
 
 
 describe('SearchFormComponent', () => {
@@ -16,12 +16,12 @@ describe('SearchFormComponent', () => {
   let mockSearchFormService: SearchFormService;
   let mockRouter: Router;
 
-  const undefinedDefaultConfigurtion : SearchOptions = {
+  const undefinedDefaultConfigurtion: SearchOptions = {
     name: UNDEFINED_NAME,
     target: DEFAULT_TARGET
   };
 
-  const expectedOptions : SearchOptions = {
+  const expectedOptions: SearchOptions = {
     name: 'unit-test',
     target: './some-path'
   };
@@ -34,14 +34,14 @@ describe('SearchFormComponent', () => {
         {
           provide: SearchFormService,
           useClass: class {
-            registerMe = jasmine.createSpy("registerMe");
-            searchDone = jasmine.createSpy("searchDone");
+            registerMe = jasmine.createSpy('registerMe');
+            searchDone = jasmine.createSpy('searchDone');
           }
         },
         {
           provide: Router,
           useClass: class {
-            navigate = jasmine.createSpy("navigate");
+            navigate = jasmine.createSpy('navigate');
           }
         }
       ],
@@ -116,7 +116,7 @@ describe('SearchFormComponent', () => {
 
     describe('when valid input is provided', () => {
 
-      const searchTerm: string = 'find-me';
+      const searchTerm = 'find-me';
       const expectedQueryParameters = {queryParams: {q : searchTerm}};
 
       beforeEach(() => {

@@ -1,12 +1,12 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { SearchFormService } from './search-form.service';
-import {ReactiveFormsModule} from "@angular/forms";
-import {SearchEvent} from "./search-event";
+import {ReactiveFormsModule} from '@angular/forms';
+import {SearchEvent} from './search-event';
 
 describe('SearchFormService', () => {
 
-  let searchFormService : SearchFormService;
-  const expectedSearchEvent : SearchEvent = {
+  let searchFormService: SearchFormService;
+  const expectedSearchEvent: SearchEvent = {
     name : 'You\'ve been',
     term : 'called'
   };
@@ -14,7 +14,7 @@ describe('SearchFormService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports :[ReactiveFormsModule],
+      imports: [ReactiveFormsModule],
       providers: [SearchFormService]
     });
   });
@@ -28,7 +28,7 @@ describe('SearchFormService', () => {
   });
 
   it('will notify me when I am registered', () => {
-    let called : boolean = false;
+    let called = false;
     function callMe() {
       called = true;
     }
@@ -39,12 +39,12 @@ describe('SearchFormService', () => {
   });
 
   it('will inform me about the event when I am registered', () => {
-    let event : SearchEvent = {
+    let event: SearchEvent = {
       name: 'super fail',
       term: 'fail'
     };
 
-    function callMe(result:SearchEvent) {
+    function callMe(result: SearchEvent) {
       event = result;
     }
 

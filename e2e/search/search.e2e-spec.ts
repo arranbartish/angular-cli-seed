@@ -1,5 +1,5 @@
 
-import {SearchPage} from "./search.po";
+import {SearchPage} from './search.po';
 
 describe('search page', () => {
   let page: SearchPage;

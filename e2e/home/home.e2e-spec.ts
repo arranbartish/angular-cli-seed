@@ -1,5 +1,5 @@
 
-import {HomePage} from "./home.po";
+import {HomePage} from './home.po';
 describe('Home page', () => {
   let page: HomePage;
 

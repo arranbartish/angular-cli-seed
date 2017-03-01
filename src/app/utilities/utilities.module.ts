@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ObjectService} from "./object.service";
+import {ObjectService} from './object.service';
 
 @NgModule({
   imports: [

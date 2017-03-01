@@ -1,12 +1,12 @@
 import {Component, OnInit, Input} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import {Router} from "@angular/router";
-import {SearchFormService} from "./search-form.service";
-import {SearchOptions} from "./search-options";
-import {ObjectService} from "../../utilities/object.service";
+import {Router} from '@angular/router';
+import {SearchFormService} from './search-form.service';
+import {SearchOptions} from './search-options';
+import {ObjectService} from '../../utilities/object.service';
 
-export const UNDEFINED_NAME : string = 'SearchFormComponent_name_unspecified';
-export const DEFAULT_TARGET : string = './search';
+export const UNDEFINED_NAME = 'SearchFormComponent_name_unspecified';
+export const DEFAULT_TARGET = './search';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class SearchFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private searchFormService: SearchFormService,
-              private objectService : ObjectService) { }
+              private objectService: ObjectService) { }
 
   ngOnInit() {
 
@@ -44,7 +44,7 @@ export class SearchFormComponent implements OnInit {
   }
 
   search() {
-    if(!this.searchForm.valid){
+    if (!this.searchForm.valid) {
       return;
     }
     this.searchFormService.searchDone(this.configuredOptions.name, this.terms);

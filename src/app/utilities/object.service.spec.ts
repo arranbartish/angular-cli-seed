@@ -4,16 +4,16 @@ import { ObjectService } from './object.service';
 describe('ObjectService', () => {
 
   interface SomeInterface {
-    someProperty : string
-    anotherProperty: string
+    someProperty: string;
+    anotherProperty: string;
   }
 
-  const originalSomething : SomeInterface = {
+  const originalSomething: SomeInterface = {
     someProperty: 'some value',
-    anotherProperty : 'another value'
+    anotherProperty: 'another value'
   };
 
-  let service : ObjectService;
+  let service: ObjectService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

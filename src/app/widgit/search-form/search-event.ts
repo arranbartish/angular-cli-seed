@@ -1,4 +1,4 @@
 export interface SearchEvent {
-  name : string;
-  term : string;
+  name: string;
+  term: string;
 }

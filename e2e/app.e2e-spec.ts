@@ -1,5 +1,5 @@
 
-import {RootPage} from "./root/root.po";
+import {RootPage} from './root/root.po';
 describe('angular-cli-seed App', () => {
   let page: RootPage;
 

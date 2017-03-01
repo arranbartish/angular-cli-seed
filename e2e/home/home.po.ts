@@ -3,7 +3,7 @@ import { browser, element, by,  } from 'protractor';
 export class HomePage {
 
   uri() {
-    return '/home'
+    return '/home';
   }
 
   navigateTo() {
