@@ -115,7 +115,7 @@ describe('CarService', () => {
         payload: [expectedCar]
       };
 
-      it('will generate a dispatch with the payload', () => {
+      it('will generate a dispatch with the payload', fakeAsync(() => {
         let cars : Car[];
 
         store.select(state => state.cars).subscribe(
@@ -126,7 +126,7 @@ describe('CarService', () => {
 
         // store.select(state => state.cars)
         expect(cars).toEqual(expectedAction.payload);
-      });
+      }));
 
       it('will be defined', () => {
           expect(store).toBeDefined();
