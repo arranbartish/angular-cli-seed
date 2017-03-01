@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Car} from '../domain/car';
 import {CarService} from '../service/car.service';
 import {SearchFormService} from '../../widgit/search-form/search-form.service';
