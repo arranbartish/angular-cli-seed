@@ -3,8 +3,6 @@
 [![Build Status](https://travis-ci.org/arranbartish/angular-cli-seed.svg?branch=master)](https://travis-ci.org/arranbartish/angular-cli-seed)
 [![Dependency Status](https://david-dm.org/arranbartish/angular-cli-seed.svg)](https://david-dm.org/arranbartish/angular-cli-seed)
 
-https://david-dm.org/arranbartish/angular-cli-seed.svg
-
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.0.
 
 ## Development server
