@@ -7,16 +7,15 @@ describe('AppComponent', () => {
   let fixture;
   let component;
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
       ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [],
-    });
-    TestBed.compileComponents();
-  });
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
