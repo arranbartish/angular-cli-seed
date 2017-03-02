@@ -31,3 +31,9 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Wallaby Integration 
+
+Simply install the plugin and configure your IDE to run with the wallaby config and the correct node version, __NOT__ the one that embedded in the IDE. 
+ 
+This is an example good configuration ![Image](https://cloud.githubusercontent.com/assets/979966/23509360/3557abac-ffa1-11e6-9380-e79386a14fd1.png)
