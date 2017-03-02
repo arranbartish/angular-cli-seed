@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, state} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Car, CarAction, CarState} from '../domain/car';
 import {Response, Http} from '@angular/http';

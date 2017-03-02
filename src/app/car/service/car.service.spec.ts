@@ -5,7 +5,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing/mock_backend'
 import { CarService } from './car.service';
 import {Car, CarState, CarAction} from '../domain/car';
 import {StoreModule, Store, Action} from '@ngrx/store';
-import {car} from '../ngrx/car.reducer';
+import {cars} from '../ngrx/car.reducer';
 import {CarModule} from '../car.module';
 
 // potential example
@@ -34,7 +34,7 @@ describe('CarService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [CarModule, HttpModule, StoreModule.provideStore({car})],
+      imports: [CarModule, HttpModule, StoreModule.provideStore({cars})],
       providers: [
         {
           provide: XHRBackend,
@@ -110,13 +110,13 @@ describe('CarService', () => {
 
     describe('store', () => {
 
-      let expectedAction: Action = {
+      const expectedAction: Action = {
         type: CarAction[CarAction.SET_CARS],
         payload: [expectedCar]
       };
 
       it('will generate a dispatch with the payload', fakeAsync(() => {
-        let cars : Car[];
+        let cars: Car[];
 
         store.select(state => state.cars).subscribe(
           model => cars = model
@@ -124,7 +124,6 @@ describe('CarService', () => {
 
         service.findCars(term);
 
-        // store.select(state => state.cars)
         expect(cars).toEqual(expectedAction.payload);
       }));
 

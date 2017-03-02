@@ -7,7 +7,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {RouterModule, Routes} from '@angular/router';
 import {CarRouteModule} from './car/car.route';
 import {StoreModule, ActionReducer, combineReducers} from '@ngrx/store';
-import {car} from './car/ngrx/car.reducer';
+import {cars} from './car/ngrx/car.reducer';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -27,7 +27,7 @@ const routes: Routes = [
     RouterModule,
     CarRouteModule,
     NgbModule.forRoot(),
-    StoreModule.provideStore({car})
+    StoreModule.provideStore({cars})
   ],
   providers: [],
   bootstrap: [AppComponent]
