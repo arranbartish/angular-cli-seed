@@ -1,9 +1,12 @@
 import { fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { HttpModule, XHRBackend, ResponseOptions, Response, RequestMethod } from '@angular/http';
+import {HttpModule, XHRBackend, ResponseOptions, Response, RequestMethod, ConnectionBackend} from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing/mock_backend';
 
 import { CarService } from './car.service';
-import {Car} from '../domain/car';
+import {Car, CarState, CarAction} from '../domain/car';
+import {StoreModule, Store, Action} from '@ngrx/store';
+import {cars} from '../ngrx/car.reducer';
+import {CarModule} from '../car.module';
 
 // potential example
 // https://angular-2-training-book.rangle.io/handout/testing/services/mockbackend.html
@@ -13,6 +16,7 @@ describe('CarService', () => {
 
   let service: CarService;
   let mockBackend: MockBackend;
+  let store: Store<CarState>;
 
   const mockResponse = [{
     'brand': 'Toyota',
@@ -30,20 +34,20 @@ describe('CarService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpModule],
+      imports: [CarModule, HttpModule, StoreModule.provideStore({cars})],
       providers: [
         {
           provide: XHRBackend,
           useClass: MockBackend
-        },
-        CarService
+        }
       ]
     });
   });
 
-  beforeEach(inject([XHRBackend, CarService], (backend: XHRBackend, carService: CarService) => {
+  beforeEach(inject([XHRBackend, CarService, Store], (backend: ConnectionBackend, carService: CarService, _store: Store<CarState>) => {
     service = carService;
     mockBackend = backend as MockBackend;
+    store = _store;
   }));
 
 
@@ -104,6 +108,29 @@ describe('CarService', () => {
       }
     ));
 
-  });
+    describe('store', () => {
 
+      const expectedAction: Action = {
+        type: CarAction[CarAction.SET_CARS],
+        payload: [expectedCar]
+      };
+
+      it('will generate a dispatch with the payload', fakeAsync(() => {
+        let cars: Car[];
+
+        store.select(state => state.cars).subscribe(
+          model => cars = model
+        );
+
+        service.findCars(term);
+
+        expect(cars).toEqual(expectedAction.payload);
+      }));
+
+      it('will be defined', () => {
+          expect(store).toBeDefined();
+      });
+    });
+
+  });
 });

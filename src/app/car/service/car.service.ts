@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import {Injectable, state} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Car} from '../domain/car';
+import {Car, CarAction, CarState} from '../domain/car';
 import {Response, Http} from '@angular/http';
+import {Store} from '@ngrx/store';
 
 @Injectable()
 export class CarService {
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private _store: Store<CarState>) {
   }
 
   findCars(term: string): Observable<Car[]> {
@@ -18,6 +19,16 @@ export class CarService {
   }
 
   private getFromUrl(url: string): Observable<Car[]> {
+
+    this.http.get(url)
+      .map((res: Response) => res.json())
+      .map(payload => (
+        {
+          type: CarAction[CarAction.SET_CARS],
+          payload: payload
+        }
+      )).subscribe(action => this._store.dispatch(action));
+
     return this.http.get(url)
       .map(this.extractData)
       .catch(this.handleError);

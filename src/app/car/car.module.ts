@@ -8,6 +8,7 @@ import {SearchResultComponent} from './search-result/search-result.component';
 import {WidgitModule} from '../widgit/widgit.module';
 import {UtilitiesModule} from '../utilities/utilities.module';
 // import {RouterModule, Routes} from '@angular/router';
+import { AddComponent } from './add/add.component';
 
 // const routes: Routes = [
 //   { path: 'home', component: ListingComponent },
@@ -20,14 +21,13 @@ import {UtilitiesModule} from '../utilities/utilities.module';
     WidgitModule,
     UtilitiesModule,
     NgbModule
-    // ,RouterModule.forChild(routes),
   ],
   exports: [
     CarListComponent,
     ListingComponent,
     SearchResultComponent
   ],
-  declarations: [CarListComponent, ListingComponent, SearchResultComponent],
+  declarations: [CarListComponent, ListingComponent, SearchResultComponent, AddComponent],
   providers: [CarService]
 })
 export class CarModule { }
