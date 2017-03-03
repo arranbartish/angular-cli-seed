@@ -9,7 +9,7 @@ import { TreeLeaf } from './valueObject/treeLeaf';
     selector: 'nav-item',
     templateUrl: './navigation-item.component.html'
 })
-export class NavItemComponent {
+export class NavigationItemComponent {
     @Input('treeElements')
     public treeElements: TreeElement[];
 
