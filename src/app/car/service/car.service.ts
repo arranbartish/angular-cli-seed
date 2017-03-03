@@ -8,10 +8,13 @@ import {Store} from '@ngrx/store';
 export class CarService {
 
   constructor(private http: Http, private _store: Store<CarState>) {
+    this._store.select(state => state.term).subscribe(term => this.findCars(term));
   }
 
   findCars(term: string) {
-    this.getFromUrl('/assets/mock/search/cars.json?q=' + term);
+    if(term && term.trim().length){
+      this.getFromUrl('/assets/mock/search/cars.json?q=' + term);
+    }
   }
 
   getCars() {

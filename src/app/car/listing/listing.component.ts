@@ -18,13 +18,11 @@ export class ListingComponent implements OnInit {
   ngOnInit() {
     this.searchOptions = {
       name: 'cars',
-      target: './search'
+      target: './search',
+      store: this.carStore
     };
 
     this.carStore.select(state => state.cars).subscribe(cars => this.carList = cars);
-
-    this.carService.getCars();
-
   }
 
 }

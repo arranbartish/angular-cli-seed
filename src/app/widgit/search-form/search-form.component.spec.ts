@@ -1,11 +1,13 @@
-import {async, ComponentFixture, TestBed, fakeAsync, tick, inject} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {SearchFormComponent, UNDEFINED_NAME, DEFAULT_TARGET} from './search-form.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {SearchFormService} from './search-form.service';
 import {Router} from '@angular/router';
 import {UtilitiesModule} from '../../utilities/utilities.module';
 import {SearchOptions} from './search-options';
+import {StoreModule, Store} from '@ngrx/store';
+import {term} from './ngrx/term.reducer';
+import {SeachState} from './domain/search-event';
 
 
 describe('SearchFormComponent', () => {
@@ -13,8 +15,9 @@ describe('SearchFormComponent', () => {
 
   let fixture: ComponentFixture<SearchFormComponent>;
 
-  let mockSearchFormService: SearchFormService;
   let mockRouter: Router;
+  let store: Store<SeachState>;
+  let subscribedTerm: string;
 
   const undefinedDefaultConfigurtion: SearchOptions = {
     name: UNDEFINED_NAME,
@@ -28,24 +31,17 @@ describe('SearchFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [FormsModule, ReactiveFormsModule, UtilitiesModule, StoreModule.provideStore({term})],
       declarations: [ SearchFormComponent ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        {
-          provide: SearchFormService,
-          useClass: class {
-            registerMe = jasmine.createSpy('registerMe');
-            searchDone = jasmine.createSpy('searchDone');
-          }
-        },
         {
           provide: Router,
           useClass: class {
             navigate = jasmine.createSpy('navigate');
           }
         }
-      ],
-      imports: [FormsModule, ReactiveFormsModule, UtilitiesModule]
+      ]
     })
     .compileComponents();
   }));
@@ -56,10 +52,12 @@ describe('SearchFormComponent', () => {
     fixture.detectChanges();
   });
 
-  beforeEach(inject([SearchFormService, Router], (searchFormService: SearchFormService, router: Router) => {
-      mockSearchFormService = searchFormService;
-      mockRouter = router;
+  beforeEach(inject([Router, Store], ( router: Router,
+                                       _store: Store<SeachState>) => {
+    mockRouter = router;
+    store = _store;
   }));
+
 
   it('will be defined', () => {
     expect(component).toBeDefined();
@@ -78,6 +76,7 @@ describe('SearchFormComponent', () => {
     });
 
     it('will apply configuration provided as options', () => {
+      expectedOptions.store = store;
       component.options = expectedOptions;
 
       component.ngOnInit();
@@ -96,20 +95,23 @@ describe('SearchFormComponent', () => {
   describe('search', () => {
 
     beforeEach(() => {
+      expectedOptions.store = store;
       component.options = expectedOptions;
       component.ngOnInit();
+      store.select(state => state.term).subscribe(term => subscribedTerm = term);
     });
 
     describe('when no valid input is provided', () => {
 
-      it('will be able to be called and not execute a search', () => {
-        component.search();
-        expect(mockSearchFormService.searchDone).not.toHaveBeenCalled();
-      });
 
       it('will be able to be called and navigate away', () => {
         component.search();
         expect(mockRouter.navigate).not.toHaveBeenCalled();
+      });
+
+      it('will not change the subscribed term', () => {
+        component.search();
+        expect(subscribedTerm).toEqual('');
       });
 
     });
@@ -128,14 +130,15 @@ describe('SearchFormComponent', () => {
         expect(component.searchForm.valid).toBeTruthy();
       });
 
-      it('will execute a search', () => {
-        component.search();
-        expect(mockSearchFormService.searchDone).toHaveBeenCalledWith(expectedOptions.name, searchTerm);
-      });
 
       it('will navigate to the configured target', () => {
         component.search();
         expect(mockRouter.navigate).toHaveBeenCalledWith([expectedOptions.target], expectedQueryParameters);
+      });
+
+      it('will update a subscribed term', () => {
+        component.search();
+        expect(subscribedTerm).toEqual(searchTerm);
       });
 
     });

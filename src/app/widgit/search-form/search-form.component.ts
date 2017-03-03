@@ -1,9 +1,9 @@
 import {Component, OnInit, Input} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
-import {SearchFormService} from './search-form.service';
 import {SearchOptions} from './search-options';
 import {ObjectService} from '../../utilities/object.service';
+import {SearchAction} from './domain/search-event';
 
 export const UNDEFINED_NAME = 'SearchFormComponent_name_unspecified';
 export const DEFAULT_TARGET = './search';
@@ -29,14 +29,14 @@ export class SearchFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
-              private searchFormService: SearchFormService,
               private objectService: ObjectService) { }
 
   ngOnInit() {
 
 
     if (!!this.options) {
-       this.configuredOptions = this.objectService.shallowCopy(this.configuredOptions, this.options);
+      this.configuredOptions = this.objectService.shallowCopy(this.configuredOptions, this.options);
+      this.configuredOptions.store = this.options.store;
     }
 
     this.configuredOptions.name = !!(this.configuredOptions.name) ? this.configuredOptions.name : UNDEFINED_NAME;
@@ -47,7 +47,12 @@ export class SearchFormComponent implements OnInit {
     if (!this.searchForm.valid) {
       return;
     }
-    this.searchFormService.searchDone(this.configuredOptions.name, this.terms);
+    if (this.options.store) {
+      this.options.store.dispatch({
+        type: SearchAction[SearchAction.CHANGE_TERM],
+        payload: this.terms
+      });
+    }
     this.router.navigate([this.configuredOptions.target], {queryParams: {q : this.terms}});
   }
 

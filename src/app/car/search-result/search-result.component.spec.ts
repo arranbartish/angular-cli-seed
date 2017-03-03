@@ -2,9 +2,7 @@ import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 
 import { SearchResultComponent } from './search-result.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SearchFormService} from '../../widgit/search-form/search-form.service';
-import {CarService} from '../service/car.service';
+import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Car, CarState, CarAction} from '../domain/car';
@@ -28,40 +26,20 @@ describe('SearchResultComponent', () => {
   let component: SearchResultComponent;
   let fixture: ComponentFixture<SearchResultComponent>;
   let mockedQueryParams;
-  let mockedFindCars;
   let mockProviders;
-  let mockSearchFormService: SearchFormService;
-  let mockCarService: CarService;
   let carStore: Store<CarState>;
+
+  function mockQueryStringBehaviour (term: string) {
+    const mockTermResponse: Observable<string> = new BehaviorSubject(term);
+    mockedQueryParams = jasmine.createSpyObj('queryParams', ['map']);
+    mockedQueryParams.map.and.returnValue(mockTermResponse);
+  }
 
   function setupMocks(term: string) {
 
-    const mockCarsResponse: Observable<Car[]> = new BehaviorSubject(carResponse);
-    const mockTermResponse: Observable<string> = new BehaviorSubject(term);
-
-    mockedQueryParams = jasmine.createSpyObj('queryParams', ['map']);
-    mockedQueryParams.map.and.returnValue(mockTermResponse);
-
-    mockedFindCars = jasmine.createSpy('findCars');
-    if (!!term) {
-      mockedFindCars.and.returnValue(mockCarsResponse);
-    }
+    mockQueryStringBehaviour(term);
 
     mockProviders = [
-      {
-        provide: CarService,
-        useClass: class {
-          findCars = mockedFindCars;
-          getCars = jasmine.createSpy('getCars');
-        }
-      },
-      {
-        provide: SearchFormService,
-        useClass: class {
-          registerMe = jasmine.createSpy('registerMe');
-          searchDone = jasmine.createSpy('searchDone');
-        }
-      },
       {
         provide: ActivatedRoute,
         useClass: class {
@@ -98,16 +76,13 @@ describe('SearchResultComponent', () => {
     });
 
 
-    beforeEach(inject([CarService, SearchFormService, Store],
-        (carService: CarService,
-         searchFormService: SearchFormService,
-         _carStore: Store<CarState>) => {
-      mockSearchFormService = searchFormService;
-      mockCarService = carService;
+    beforeEach(inject([Store],
+        (_carStore: Store<CarState>) => {
       carStore = _carStore;
     }));
 
     beforeEach(() => {
+      expectedSearchOptions.store = carStore;
       component.ngOnInit();
       carStore.dispatch({
         type: CarAction[CarAction.SET_CARS],
@@ -119,9 +94,6 @@ describe('SearchResultComponent', () => {
       expect(component).toBeDefined();
     });
 
-    it('will refresh search results on initialisation', () => {
-      expect(mockCarService.findCars).toHaveBeenCalledWith('find-me');
-    });
 
     it('will expose search results', () => {
       expect(component.searchResults).toEqual(carResponse);
@@ -131,27 +103,7 @@ describe('SearchResultComponent', () => {
         expect(component.searchOptions).toEqual(expectedSearchOptions);
     });
 
-    it('will refresh search results on configured search event', () => {
 
-      component.refreshSearchResultsOnEvent({
-        term: 'now-find-me',
-        name: expectedSearchOptions.name
-      });
-      expect(mockCarService.findCars).toHaveBeenCalledWith('now-find-me');
-    });
-
-    it('will not refresh search results on a random event', () => {
-
-      component.refreshSearchResultsOnEvent({
-        term: 'whatever',
-        name: 'random-event'
-      });
-      expect(mockCarService.findCars).not.toHaveBeenCalledWith('whatever');
-    });
-
-    it('will register for search events', () => {
-        expect(mockSearchFormService.registerMe).toHaveBeenCalled();
-    });
   });
 
   describe('when initialised and a search term is not provided', () => {
@@ -173,12 +125,8 @@ describe('SearchResultComponent', () => {
     });
 
 
-    beforeEach(inject([CarService, SearchFormService, Store],
-      (carService: CarService,
-       searchFormService: SearchFormService,
-       _carStore: Store<CarState>) => {
-        mockSearchFormService = searchFormService;
-        mockCarService = carService;
+    beforeEach(inject([Store],
+      (_carStore: Store<CarState>) => {
         carStore = _carStore;
       }
     ));
@@ -191,16 +139,9 @@ describe('SearchResultComponent', () => {
       expect(component).toBeDefined();
     });
 
-    it('will not refresh search results on initialisation', () => {
-      expect(mockCarService.findCars).not.toHaveBeenCalled();
-    });
-
     it('will not expose search results', () => {
       expect(component.searchResults).toEqual([]);
     });
 
-    it('will register for search events', () => {
-      expect(mockSearchFormService.registerMe).toHaveBeenCalled();
-    });
   });
 });

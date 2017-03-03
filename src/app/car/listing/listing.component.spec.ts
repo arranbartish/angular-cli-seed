@@ -70,7 +70,8 @@ describe('ListingComponent', () => {
     it('will define options', () => {
         expect(component.searchOptions).toEqual({
           name: 'cars',
-          target: './search'
+          target: './search',
+          store: carStore
         });
     });
 

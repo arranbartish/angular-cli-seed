@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {Car, CarState} from '../domain/car';
-import {CarService} from '../service/car.service';
-import {SearchFormService} from '../../widgit/search-form/search-form.service';
-import {SearchEvent} from '../../widgit/search-form/search-event';
+import {SearchAction} from '../../widgit/search-form/domain/search-event';
 import {SearchOptions} from '../../widgit/search-form/search-options';
 import {Store} from '@ngrx/store';
 
@@ -15,20 +13,18 @@ import {Store} from '@ngrx/store';
   styleUrls: ['search-result.component.scss']
 })
 export class SearchResultComponent implements OnInit {
-  term: string;
   searchResults: Car[];
   searchOptions: SearchOptions;
 
   constructor(private route: ActivatedRoute,
-              private carService: CarService,
-              private searchFormService: SearchFormService,
               private _carStore: Store<CarState>) { }
 
   ngOnInit() {
 
     this.searchOptions = {
       name : 'cars',
-      target : './search'
+      target : './search',
+      store: this._carStore
     };
 
     this._carStore.select(state => state.cars).subscribe(cars => this.searchResults = cars);
@@ -38,28 +34,11 @@ export class SearchResultComponent implements OnInit {
       .map(params => params['q'] || '');
 
     param.subscribe(
-      q => this.term = q,
-      error =>  this.term = <any>error /*should toast*/);
-
-    if (!!this.term) {
-      this.refreshSearchResults(this.term);
-    }
-
-    const me = this;
-    function handleEvent(event: SearchEvent) {
-      me.refreshSearchResultsOnEvent(event);
-    }
-    this.searchFormService.registerMe(handleEvent);
-
+      q => this._carStore.dispatch({
+        type: SearchAction[SearchAction.CHANGE_TERM],
+        payload: q
+      }),
+      error =>  console.log('nothing on query string')/*should toast*/);
   }
 
-  refreshSearchResultsOnEvent(event: SearchEvent) {
-    if (event.name === this.searchOptions.name) {
-      this.refreshSearchResults(event.term);
-    }
-  }
-
-  private refreshSearchResults(searchTerm: string) {
-    this.carService.findCars(searchTerm);
-  }
 }
