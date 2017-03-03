@@ -10,15 +10,15 @@ export class CarService {
   constructor(private http: Http, private _store: Store<CarState>) {
   }
 
-  findCars(term: string): Observable<Car[]> {
-    return this.getFromUrl('/assets/mock/search/cars.json?q=' + term);
+  findCars(term: string) {
+    this.getFromUrl('/assets/mock/search/cars.json?q=' + term);
   }
 
-  getCars(): Observable<Car[]> {
-    return this.getFromUrl('/assets/mock/list/cars.json');
+  getCars() {
+    this.getFromUrl('/assets/mock/list/cars.json');
   }
 
-  private getFromUrl(url: string): Observable<Car[]> {
+  private getFromUrl(url: string) {
 
     this.http.get(url)
       .map((res: Response) => res.json())
@@ -28,10 +28,6 @@ export class CarService {
           payload: payload
         }
       )).subscribe(action => this._store.dispatch(action));
-
-    return this.http.get(url)
-      .map(this.extractData)
-      .catch(this.handleError);
   }
 
   private extractData(res: Response) {
