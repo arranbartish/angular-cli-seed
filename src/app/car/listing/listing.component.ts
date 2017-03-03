@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Car} from '../domain/car';
+import {Car, CarState} from '../domain/car';
 import {CarService} from '../service/car.service';
 import {SearchOptions} from '../../widgit/search-form/search-options';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-listing',
@@ -10,12 +11,9 @@ import {SearchOptions} from '../../widgit/search-form/search-options';
 })
 export class ListingComponent implements OnInit {
   carList: Car[];
-  errorMessage: string;
   searchOptions: SearchOptions;
 
-  constructor(private carService: CarService) {
-
-  }
+  constructor(private carService: CarService, private carStore: Store<CarState>) {}
 
   ngOnInit() {
     this.searchOptions = {
@@ -23,10 +21,9 @@ export class ListingComponent implements OnInit {
       target: './search'
     };
 
-    this.carService.getCars()
-      .subscribe(
-        cars => this.carList = cars,
-        error =>  this.errorMessage = <any>error);
+    this.carStore.select(state => state.cars).subscribe(cars => this.carList = cars);
+
+    this.carService.getCars();
 
   }
 
