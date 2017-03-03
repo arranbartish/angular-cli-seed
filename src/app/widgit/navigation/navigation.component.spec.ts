@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavigationComponent } from './navigation.component';
 import { NavigationItemComponent } from './navigation-item.component';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 
 describe('NavigationComponent', () => {
   let component: NavigationComponent;
@@ -9,7 +10,8 @@ describe('NavigationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavigationComponent, NavigationItemComponent ]
+      declarations: [ NavigationComponent ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
     .compileComponents();
   }));
