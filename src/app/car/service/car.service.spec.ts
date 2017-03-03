@@ -1,8 +1,7 @@
-import { fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import {fakeAsync, inject, TestBed} from '@angular/core/testing';
 import {HttpModule, XHRBackend, ResponseOptions, Response, RequestMethod, ConnectionBackend} from '@angular/http';
-import { MockBackend, MockConnection } from '@angular/http/testing/mock_backend';
-
-import { CarService } from './car.service';
+import {MockBackend, MockConnection} from '@angular/http/testing/mock_backend';
+import {CarService} from './car.service';
 import {Car, CarState, CarAction} from '../domain/car';
 import {StoreModule, Store, Action} from '@ngrx/store';
 import {cars} from '../ngrx/car.reducer';
@@ -30,6 +29,7 @@ describe('CarService', () => {
     year: '2011',
     condition: 'Awesome'
   };
+  let result: Car[] = [];
 
 
   beforeEach(() => {
@@ -50,30 +50,24 @@ describe('CarService', () => {
     store = _store;
   }));
 
+  beforeEach(() => {
+    store.select(state => state.cars).subscribe(cars => result = cars);
+    store.dispatch({
+      type: CarAction[CarAction.SET_CARS],
+      payload: []
+    });
+  });
 
   describe('getCars', () => {
 
     const expectedUrl = '/assets/mock/list/cars.json';
 
     beforeEach(() => {
-      mockBackend.connections.subscribe(
-        (connection: MockConnection) => {
-          expect(connection.request.method).toBe(RequestMethod.Get);
-          expect(connection.request.url).toBe(expectedUrl);
-
-          connection.mockRespond(new Response(
-            new ResponseOptions({ body: mockResponse })
-          ));
-        });
+      mockHttpInteractionsForUrl(expectedUrl);
     });
 
     it('will get cars from http request', fakeAsync(function () {
-
-        let result: Car[] = [];
-        service.getCars()
-          .subscribe(res => {
-            result = res;
-          });
+        service.getCars();
         expect(result[0]).toEqual(expectedCar);
       }
     ));
@@ -86,24 +80,12 @@ describe('CarService', () => {
     const expectedUrl = '/assets/mock/search/cars.json?q=whatever';
 
     beforeEach(() => {
-      mockBackend.connections.subscribe(
-        (connection: MockConnection) => {
-          expect(connection.request.method).toBe(RequestMethod.Get);
-          expect(connection.request.url).toBe(expectedUrl);
-
-          connection.mockRespond(new Response(
-            new ResponseOptions({ body: mockResponse })
-          ));
-        });
+      mockHttpInteractionsForUrl(expectedUrl);
     });
 
     it('will find cars from http request', fakeAsync(function () {
 
-        let result: Car[] = [];
-        service.findCars(term)
-          .subscribe(res => {
-            result = res;
-          });
+        service.findCars(term);
         expect(result[0]).toEqual(expectedCar);
       }
     ));
@@ -133,4 +115,16 @@ describe('CarService', () => {
     });
 
   });
+
+  function mockHttpInteractionsForUrl(url: string) {
+    mockBackend.connections.subscribe(
+      (connection: MockConnection) => {
+        expect(connection.request.method).toBe(RequestMethod.Get);
+        expect(connection.request.url).toBe(url);
+
+        connection.mockRespond(new Response(
+          new ResponseOptions({ body: mockResponse })
+        ));
+      });
+  }
 });
