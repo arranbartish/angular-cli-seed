@@ -5,7 +5,7 @@ import {SearchFormService} from './search-form/search-form.service';
 import {UtilitiesModule} from '../utilities/utilities.module';
 import {SearchFormComponent} from './search-form/search-form.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { NavItemComponent } from './navigation/navigation-item.component';
+import { NavigationItemComponent } from './navigation/navigation-item.component';
 
 @NgModule({
   imports: [
@@ -16,12 +16,12 @@ import { NavItemComponent } from './navigation/navigation-item.component';
   exports: [
     SearchFormComponent,
     NavigationComponent,
-    NavItemComponent
+    NavigationItemComponent
   ],
   declarations: [
     SearchFormComponent,
     NavigationComponent,
-    NavItemComponent
+    NavigationItemComponent
   ],
   providers: [
     SearchFormService
