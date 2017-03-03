@@ -2,6 +2,8 @@ import {TestBed, async} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {CarRouteModule} from './car/car.route';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {StoreModule} from '@ngrx/store';
+import {cars} from './car/ngrx/car.reducer';
 
 describe('AppComponent', () => {
   let fixture;
@@ -13,7 +15,7 @@ describe('AppComponent', () => {
         AppComponent
       ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [],
+      imports: [StoreModule.provideStore({cars})],
     }).compileComponents();
   }));
 

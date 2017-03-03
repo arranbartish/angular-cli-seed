@@ -20,7 +20,7 @@ describe('root page', () => {
     expect(page.getParagraphText()).toEqual('Car search POC');
   });
 
-  it('will redirect the URL to the home page', () => {
+  xit('will redirect the URL to the home page', () => {
     page.navigateTo();
     condition.urlWillNotBe(page.uri());
     expect(browser.getCurrentUrl()).toContain(homePage.uri());

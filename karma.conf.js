@@ -11,6 +11,7 @@ module.exports = function (config) {
       require('karma-phantomjs-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
+      require('karma-istanbul-threshold'),
       require('@angular/cli/plugins/karma')
     ],
     client:{
@@ -26,14 +27,32 @@ module.exports = function (config) {
       'text/x-typescript': ['ts','tsx']
     },
     coverageIstanbulReporter: {
-      reports: [ 'html', 'lcovonly' ],
+      reports: [ 'html', 'lcovonly', 'json' ],
       fixWebpackSourcePaths: true
+    },
+    istanbulThresholdReporter: {
+      src: 'coverage/coverage-final.json',
+      reporters: ['text'],
+      thresholds: {
+        global: {
+          statements: 98,
+          branches: 77.27,
+          lines: 91.89,
+          functions: 91.89
+        },
+        each: {
+          statements: 90,
+          branches: 50,
+          lines: 88.89,
+          functions: 66.67
+        }
+      }
     },
     angularCli: {
       environment: 'dev'
     },
     reporters: config.angularCli && config.angularCli.codeCoverage
-              ? ['progress', 'coverage-istanbul']
+              ? ['progress', 'coverage-istanbul', 'istanbul-threshold']
               : ['progress', 'kjhtml'],
     port: 9876,
     colors: true,

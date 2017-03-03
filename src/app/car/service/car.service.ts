@@ -1,38 +1,31 @@
-import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
-import {Car} from '../domain/car';
+import {Injectable, state} from '@angular/core';
+import 'rxjs/add/operator/map';
+import {Car, CarAction, CarState} from '../domain/car';
 import {Response, Http} from '@angular/http';
+import {Store} from '@ngrx/store';
 
 @Injectable()
 export class CarService {
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private _store: Store<CarState>) {
   }
 
-  findCars(term: string): Observable<Car[]> {
-    return this.getFromUrl('/assets/mock/search/cars.json?q=' + term);
+  findCars(term: string) {
+    this.getFromUrl('/assets/mock/search/cars.json?q=' + term);
   }
 
-  getCars(): Observable<Car[]> {
-    return this.getFromUrl('/assets/mock/list/cars.json');
+  getCars() {
+    this.getFromUrl('/assets/mock/list/cars.json');
   }
 
-  private getFromUrl(url: string): Observable<Car[]> {
-    return this.http.get(url)
-      .map(this.extractData)
-      .catch(this.handleError);
-  }
+  private getFromUrl(url: string) {
 
-  private extractData(res: Response) {
-    const body = res.json();
-    return body || [];
+    this.http.get(url)
+      .map((res: Response) => (
+        {
+          type: CarAction[CarAction.SET_CARS],
+          payload: res.json() || []
+        }
+      )).subscribe(action => this._store.dispatch(action));
   }
-
-  private handleError(error: any) {
-    const errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg); // log to console instead
-    return Observable.throw(errMsg);
-  }
-
 }

@@ -7,8 +7,10 @@ import {SearchFormService} from '../../widgit/search-form/search-form.service';
 import {CarService} from '../service/car.service';
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Car} from '../domain/car';
+import {Car, CarState, CarAction} from '../domain/car';
 import {SearchOptions} from '../../widgit/search-form/search-options';
+import {StoreModule, Store} from '@ngrx/store';
+import {cars} from '../ngrx/car.reducer';
 
 describe('SearchResultComponent', () => {
   const carResponse: Car[] = [{
@@ -28,8 +30,9 @@ describe('SearchResultComponent', () => {
   let mockedQueryParams;
   let mockedFindCars;
   let mockProviders;
-  let mockSearchFormService;
-  let mockCarService;
+  let mockSearchFormService: SearchFormService;
+  let mockCarService: CarService;
+  let carStore: Store<CarState>;
 
   function setupMocks(term: string) {
 
@@ -81,6 +84,7 @@ describe('SearchResultComponent', () => {
     beforeEach(async(() => {
       setupMocksWithTerm();
       TestBed.configureTestingModule({
+        imports: [StoreModule.provideStore({cars})],
         declarations: [ SearchResultComponent ],
         schemas: [NO_ERRORS_SCHEMA],
         providers: mockProviders
@@ -94,13 +98,21 @@ describe('SearchResultComponent', () => {
     });
 
 
-    beforeEach(inject([CarService, SearchFormService], (carService: CarService, searchFormService: SearchFormService) => {
+    beforeEach(inject([CarService, SearchFormService, Store],
+        (carService: CarService,
+         searchFormService: SearchFormService,
+         _carStore: Store<CarState>) => {
       mockSearchFormService = searchFormService;
       mockCarService = carService;
+      carStore = _carStore;
     }));
 
     beforeEach(() => {
       component.ngOnInit();
+      carStore.dispatch({
+        type: CarAction[CarAction.SET_CARS],
+        payload: carResponse
+      });
     });
 
     it('will be defined', () => {
@@ -147,6 +159,7 @@ describe('SearchResultComponent', () => {
     beforeEach(async(() => {
       setupMocksWithoutTerm();
       TestBed.configureTestingModule({
+        imports: [StoreModule.provideStore({cars})],
         declarations: [ SearchResultComponent ],
         schemas: [NO_ERRORS_SCHEMA],
         providers: mockProviders
@@ -159,10 +172,16 @@ describe('SearchResultComponent', () => {
       fixture.detectChanges();
     });
 
-    beforeEach(inject([CarService, SearchFormService], (carService: CarService, searchFormService: SearchFormService) => {
-      mockSearchFormService = searchFormService;
-      mockCarService = carService;
-    }));
+
+    beforeEach(inject([CarService, SearchFormService, Store],
+      (carService: CarService,
+       searchFormService: SearchFormService,
+       _carStore: Store<CarState>) => {
+        mockSearchFormService = searchFormService;
+        mockCarService = carService;
+        carStore = _carStore;
+      }
+    ));
 
     beforeEach(() => {
       component.ngOnInit();
@@ -177,7 +196,7 @@ describe('SearchResultComponent', () => {
     });
 
     it('will not expose search results', () => {
-      expect(component.searchResults).not.toBeDefined();
+      expect(component.searchResults).toEqual([]);
     });
 
     it('will register for search events', () => {
