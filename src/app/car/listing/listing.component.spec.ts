@@ -1,11 +1,13 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 
 import { ListingComponent } from './listing.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {CarService} from '../service/car.service';
-import {Car} from '../domain/car';
+import {Car, CarState, CarAction} from '../domain/car';
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {StoreModule, Store} from '@ngrx/store';
+import {cars} from '../ngrx/car.reducer';
 
 describe('ListingComponent', () => {
   const carResponse: Car[] = [{
@@ -17,6 +19,7 @@ describe('ListingComponent', () => {
 
   let component: ListingComponent;
   let fixture: ComponentFixture<ListingComponent>;
+  let carStore: Store<CarState>;
 
   beforeEach(async(() => {
 
@@ -25,6 +28,7 @@ describe('ListingComponent', () => {
     mockedGetCars.and.returnValue(mockCarsResponse);
 
     TestBed.configureTestingModule({
+      imports: [StoreModule.provideStore({cars})],
       declarations: [ ListingComponent ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [{
@@ -45,6 +49,10 @@ describe('ListingComponent', () => {
     fixture.detectChanges();
   });
 
+  beforeEach(inject([Store], (_carStore: Store<CarState>) => {
+    carStore = _carStore;
+  }));
+
   it('will be defined', () => {
     expect(component).toBeDefined();
   });
@@ -53,6 +61,10 @@ describe('ListingComponent', () => {
 
     beforeEach(() => {
       component.ngOnInit();
+      carStore.dispatch({
+        type: CarAction[CarAction.SET_CARS],
+        payload: carResponse
+      });
     });
 
     it('will define options', () => {
