@@ -1,8 +1,7 @@
-import { fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import {fakeAsync, inject, TestBed} from '@angular/core/testing';
 import {HttpModule, XHRBackend, ResponseOptions, Response, RequestMethod, ConnectionBackend} from '@angular/http';
-import { MockBackend, MockConnection } from '@angular/http/testing/mock_backend';
-
-import { CarService } from './car.service';
+import {MockBackend, MockConnection} from '@angular/http/testing/mock_backend';
+import {CarService} from './car.service';
 import {Car, CarState, CarAction} from '../domain/car';
 import {StoreModule, Store, Action} from '@ngrx/store';
 import {cars} from '../ngrx/car.reducer';
