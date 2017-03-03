@@ -6,7 +6,8 @@ import { SearchResultComponent } from './search-result/search-result.component';
 import { CarModule } from './car.module';
 
 const routes: Routes = [
-  { path: '', component: ListingComponent },
+  { path: 'car', redirectTo: '/car/overview', pathMatch: 'full' },
+  { path: 'overview', component: ListingComponent },
   { path: 'search', component: SearchResultComponent }
 ];
 
