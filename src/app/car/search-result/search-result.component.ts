@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 import {Car, CarState} from '../domain/car';
 import {CarService} from '../service/car.service';
 import {SearchFormService} from '../../widgit/search-form/search-form.service';

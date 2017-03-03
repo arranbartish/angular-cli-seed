@@ -1,5 +1,5 @@
 import {Injectable, state} from '@angular/core';
-import {Observable} from 'rxjs';
+import 'rxjs/add/operator/map';
 import {Car, CarAction, CarState} from '../domain/car';
 import {Response, Http} from '@angular/http';
 import {Store} from '@ngrx/store';
@@ -28,12 +28,4 @@ export class CarService {
         }
       )).subscribe(action => this._store.dispatch(action));
   }
-
-  private handleError(error: any) {
-    const errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-//    console.error(errMsg); // log to console instead
-    return Observable.throw(errMsg);
-  }
-
 }
