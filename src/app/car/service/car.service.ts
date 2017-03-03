@@ -21,24 +21,18 @@ export class CarService {
   private getFromUrl(url: string) {
 
     this.http.get(url)
-      .map((res: Response) => res.json())
-      .map(payload => (
+      .map((res: Response) => (
         {
           type: CarAction[CarAction.SET_CARS],
-          payload: payload
+          payload: res.json() || []
         }
       )).subscribe(action => this._store.dispatch(action));
-  }
-
-  private extractData(res: Response) {
-    const body = res.json();
-    return body || [];
   }
 
   private handleError(error: any) {
     const errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg); // log to console instead
+//    console.error(errMsg); // log to console instead
     return Observable.throw(errMsg);
   }
 
