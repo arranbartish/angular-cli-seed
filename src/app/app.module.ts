@@ -12,9 +12,9 @@ import { PageNotFoundComponent } from './404/pageNotFound.component';
 import {StoreModule, ActionReducer, combineReducers} from '@ngrx/store';
 import {cars} from './car/ngrx/car.reducer';
 const routes: Routes = [
-  { path: 'car', loadChildren: './car/car.route#CarRouteModule' },
-  { path: 'home', component: HomeComponent },
   { path: '', pathMatch: 'full', redirectTo: 'home' },
+  { path: 'home', component: HomeComponent },
+  { path: 'car', loadChildren: './car/car.route#CarRouteModule' },
   { path: '**', component: PageNotFoundComponent }
 ];
 
