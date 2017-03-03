@@ -3,6 +3,6 @@
         <span [ngClass]="[ 'glyphicon', treeElmt.imageCssClass ]"></span> {{treeElmt.title}}
     </a>
     <ul *ngIf="isNode(treeElmt)">
-        <nav-item [treeElements]="asNode(treeElmt).children"></nav-item>
+        <app-nav-item [treeElements]="asNode(treeElmt).children"></app-nav-item>
     </ul>
 </li>

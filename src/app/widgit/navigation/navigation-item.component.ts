@@ -1,12 +1,10 @@
-import { Component, Input } from '@angular/core';
-import { Location } from '@angular/common';
-
-import { TreeElement } from './valueObject/treeElement';
-import { TreeNode } from './valueObject/treeNode';
-import { TreeLeaf } from './valueObject/treeLeaf';
+import {Component, Input} from '@angular/core';
+import {Location} from '@angular/common';
+import {TreeElement} from './valueObject/treeElement';
+import {TreeNode} from './valueObject/treeNode';
 
 @Component({
-    selector: 'nav-item',
+    selector: 'app-nav-item',
     templateUrl: './navigation-item.component.html'
 })
 export class NavigationItemComponent {

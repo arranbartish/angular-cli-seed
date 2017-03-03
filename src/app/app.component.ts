@@ -10,6 +10,7 @@ import { TreeLeaf } from './widgit/navigation/valueObject/treeLeaf';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
     public treeElements: TreeElement[];
 
     constructor() {

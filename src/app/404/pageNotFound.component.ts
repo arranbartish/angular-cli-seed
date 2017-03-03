@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-pageNotFound',
+  selector: 'app-page-not-found',
   templateUrl: './pageNotFound.component.html'
 })
 export class PageNotFoundComponent implements OnInit {
