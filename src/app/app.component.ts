@@ -1,9 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-
-import { TreeElement } from './widgit/navigation/valueObject/treeElement';
-import { TreeNode } from './widgit/navigation/valueObject/treeNode';
-import { TreeLeaf } from './widgit/navigation/valueObject/treeLeaf';
+import {Component, OnInit} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {TreeElement} from './widgit/navigation/valueObject/treeElement';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +8,9 @@ import { TreeLeaf } from './widgit/navigation/valueObject/treeLeaf';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
     public treeElements: TreeElement[];
-    
+
     constructor(private _store: Store<any>) {
     }
 
