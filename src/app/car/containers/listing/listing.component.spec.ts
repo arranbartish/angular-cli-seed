@@ -1,13 +1,10 @@
 import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
-
-import { ListingComponent } from './listing.component';
+import {ListingComponent} from './listing.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {CarService} from '../service/car.service';
-import {Car, CarState, CarAction} from '../domain/car';
-import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {StoreModule, Store} from '@ngrx/store';
-import {cars} from '../ngrx/car.reducer';
+import {Car, CarState} from '../../domain/car';
+import {cars} from '../../reducers/car.reducer';
+import {ActionFactory} from '../../actions/cars';
 
 describe('ListingComponent', () => {
   const carResponse: Car[] = [{
@@ -23,21 +20,11 @@ describe('ListingComponent', () => {
 
   beforeEach(async(() => {
 
-    const mockCarsResponse: Observable<Car[]> = new BehaviorSubject(carResponse);
-    const mockedGetCars = jasmine.createSpy('findCars');
-    mockedGetCars.and.returnValue(mockCarsResponse);
-
     TestBed.configureTestingModule({
       imports: [StoreModule.provideStore({cars})],
       declarations: [ ListingComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [{
-        provide: CarService,
-        useClass: class {
-          findCars = jasmine.createSpy('findCars');
-          getCars = mockedGetCars;
-        }
-      }]
+      providers: []
 
     })
     .compileComponents();
@@ -61,17 +48,13 @@ describe('ListingComponent', () => {
 
     beforeEach(() => {
       component.ngOnInit();
-      carStore.dispatch({
-        type: CarAction[CarAction.SET_CARS],
-        payload: carResponse
-      });
+      carStore.dispatch(ActionFactory.listCars(carResponse));
     });
 
     it('will define options', () => {
         expect(component.searchOptions).toEqual({
           name: 'cars',
-          target: './search',
-          store: carStore
+          target: './search'
         });
     });
 

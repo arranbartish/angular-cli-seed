@@ -1,10 +1,14 @@
 import {Action} from '@ngrx/store';
-import {SearchAction} from '../domain/search-event';
+import {CarAction} from '../actions/cars';
+
+const types: string[] = [];
 
 export const term = (state: string = '', action: Action ) => {
 
-  switch (SearchAction[action.type]) {
-    case SearchAction.CHANGE_TERM:
+  types.push(action.type);
+
+  switch (action.type) {
+    case CarAction.SEARCH:
       return action.payload;
     default:
       return state;

@@ -1,4 +1,4 @@
-import {SeachState} from '../../widgit/search-form/domain/search-event';
+
 export interface Car {
   brand: string;
   model: string;
@@ -7,11 +7,7 @@ export interface Car {
 }
 
 
-export interface CarState extends SeachState {
+export interface CarState {
+  term: string;
   cars: Car[];
-}
-
-export enum CarAction {
-  ADD_CAR,
-  SET_CARS
 }

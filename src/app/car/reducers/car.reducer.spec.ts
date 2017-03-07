@@ -1,8 +1,9 @@
-import {Car, CarAction, CarState} from '../domain/car';
+import {Car, CarState} from '../domain/car';
 import {cars} from './car.reducer';
 import {TestBed, inject} from '@angular/core/testing';
 import {CarModule} from '../car.module';
 import {StoreModule, Store, Action} from '@ngrx/store';
+import {CarAction, ActionFactory} from '../actions/cars';
 
 describe('car reducer', () => {
 
@@ -38,31 +39,27 @@ describe('car reducer', () => {
     store.select(state => state.cars).subscribe(model => subscribedCars = model);
   });
 
-  describe(CarAction[CarAction.SET_CARS], () => {
+  describe(CarAction.LIST_CARS, () => {
 
     it('will return array that is the same as the payload when the state is empty', () => {
-      const action: Action = {
-        type: CarAction[CarAction.SET_CARS],
-        payload: carsPayload
-      };
-      store.dispatch(action);
+      store.dispatch(ActionFactory.listCars(carsPayload));
       expect(subscribedCars).toEqual(carsPayload);
     });
 
-    it('will return array removes existing values when state is not empty', () => {
-      store.dispatch({
-        type: CarAction[CarAction.SET_CARS],
-        payload: [{brand: 'going',
-          model: 'to',
-          year: 'be',
-          condition: 'removed'}]
-      });
+    it('will be the same as when a search is complete', () => {
+      const listCarsAction: Action = ActionFactory.listCars(carsPayload);
+      const searchCarsComplete: Action = ActionFactory.searchComplete(carsPayload);
+      expect(searchCarsComplete).toEqual(listCarsAction);
+    });
 
-      const action: Action = {
-        type: CarAction[CarAction.SET_CARS],
-        payload: carsPayload
-      };
-      store.dispatch(action);
+
+    it('will return array removes existing values when state is not empty', () => {
+      store.dispatch(ActionFactory.listCars([{brand: 'going',
+        model: 'to',
+        year: 'be',
+        condition: 'removed'}]));
+
+      store.dispatch(ActionFactory.listCars(carsPayload));
 
       expect(subscribedCars).toEqual(carsPayload);
     });
@@ -72,11 +69,7 @@ describe('car reducer', () => {
   describe('Some random string', () => {
 
     it('will not do anything to the state', () => {
-      const initialState: Action = {
-        type: CarAction[CarAction.SET_CARS],
-        payload: carsPayload
-      };
-      store.dispatch(initialState);
+      store.dispatch(ActionFactory.listCars(carsPayload));
 
       const action: Action = {
         type: 'some random string',
@@ -89,28 +82,20 @@ describe('car reducer', () => {
 
   });
 
-  describe(CarAction[CarAction.ADD_CAR], () => {
+  describe(CarAction.ADD_CAR, () => {
+
+    const carToAdd: Car = {
+      brand: 'going',
+      model: 'to',
+      year: 'be',
+      condition: 'added'
+    };
 
     it('Will add car to the state', () => {
-      const carToAdd: Car = {
-        brand: 'going',
-        model: 'to',
-        year: 'be',
-        condition: 'added'
-      };
 
-      const action: Action = {
-        type: CarAction[CarAction.ADD_CAR],
-        payload: carToAdd
-      };
+      store.dispatch(ActionFactory.listCars(carsPayload));
 
-      const initialState: Action = {
-        type: CarAction[CarAction.SET_CARS],
-        payload: carsPayload
-      };
-      store.dispatch(initialState);
-
-      store.dispatch(action);
+      store.dispatch(ActionFactory.addCar(carToAdd));
 
       expect(subscribedCars).toEqual([...carsPayload, carToAdd]);
     });
