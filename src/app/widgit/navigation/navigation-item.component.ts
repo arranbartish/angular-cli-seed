@@ -11,7 +11,7 @@ export class NavigationItemComponent {
     @Input('treeElements')
     public treeElements: TreeElement[];
 
-    constructor(private location: Location) {
+    constructor(public location: Location) {
     }
 
     public isNode(treeElmt: TreeElement): boolean {

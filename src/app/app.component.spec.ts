@@ -38,8 +38,8 @@ describe('AppComponent', () => {
   it('will load navigation elements', async(() => {
 
     expect(component.treeElements.length).toBe(3);
-    expect(component.treeElements[0].title).toBe("Home");
-    expect(component.treeElements[1].title).toBe("Search");
+    expect(component.treeElements[0].title).toBe('Home');
+    expect(component.treeElements[1].title).toBe('Search');
   }));
 
 });

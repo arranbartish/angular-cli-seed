@@ -3,17 +3,25 @@ import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
 import { TestBed, async, ComponentFixture, inject, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Location, LocationStrategy } from '@angular/common';
+import * as _ from 'lodash';
+
+
+
+function parameters(dataArray, testCaseFunction) {
+    _.each(dataArray, function (innerArray) {
+        testCaseFunction.apply(this, innerArray);
+    });
+}
 
 describe('NavigationItemComponent', () => {
     let fixture: ComponentFixture<NavigationItemComponent>;
     let component: NavigationItemComponent;
-    let _aLink, link: any;
+    let _aLink: any;
+    let cmpLocation: Location;
 
-    this.navElements = [
-        { title: 'Home', targetUrl: '/home', imageCssClass: 'glyphicon-home' },
-        { title: 'Search', targetUrl: '/search', imageCssClass: 'glyphicon-search' },
-        { title: 'Car', targetUrl: '/car', imageCssClass: 'glyphicon-road' }
-    ];
+    const homeLink = { title: 'Home', targetUrl: '/home', imageCssClass: 'glyphicon-home' };
+    const searchLink = { title: 'Search', targetUrl: '/search', imageCssClass: 'glyphicon-search' };
+    const carLink = { title: 'Car', targetUrl: '/car', imageCssClass: 'glyphicon-road' };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -23,19 +31,38 @@ describe('NavigationItemComponent', () => {
             providers: [
                 {
                     provide: Location,
-                    useClass: class { path = jasmine.createSpy('path'); }
+                    useClass: class {
+                        path = jasmine.createSpy('path');
+                    }
                 }, LocationStrategy],
             schemas: [NO_ERRORS_SCHEMA]
         });
 
     });
 
-    beforeEach(async(() => {
+    beforeEach(async(inject([Location], (loc: Location) => {
         TestBed.compileComponents().then(() => {
             fixture = TestBed.createComponent(NavigationItemComponent);
             component = fixture.componentInstance;
         });
-    }));
+        cmpLocation = loc;
+    })));
+
+
+     parameters([
+        [homeLink, '/home'],
+        [searchLink, '/search'],
+        [carLink, '/car']
+    ], function (elmt, expected) {
+        it('will generate link for' + expected, async(function () {
+            component.treeElements = [elmt];
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                _aLink = fixture.debugElement.nativeElement.querySelector('a');
+                expect(_aLink.href).toContain(expected);
+            });
+        }));
+    });
 
 
     it('should create', () => {
@@ -43,52 +70,39 @@ describe('NavigationItemComponent', () => {
     });
 
 
-    it('will generate link for /Home if provided on treeElements', () => {
-        component.treeElements = [this.navElements[0]];
-        fixture.detectChanges();
-        _aLink = fixture.debugElement.nativeElement.querySelector('a');
-        expect(_aLink.href).toContain("/home");
-    });
-
-
-    it('will generate link for /Serach if provided on treeElements', () => {
-        component.treeElements = [this.navElements[1]];
-        fixture.detectChanges();
-        _aLink = fixture.debugElement.nativeElement.querySelector('a');
-        expect(_aLink.href).toContain("/search");
-    });
-
-
-    it('will generate link for /Car if provided on treeElements', () => {
-        component.treeElements = [this.navElements[2]];
-        fixture.detectChanges();
-        _aLink = fixture.debugElement.nativeElement.querySelector('a');
-        expect(_aLink.href).toContain("/car");
-    });
-
-
     it('will call isNode when asNode is called with same element', () => {
-        let isNode = spyOn(component, 'isNode').and.callThrough();
-        component.asNode(this.navElements[0]);
+        const isNode = spyOn(component, 'isNode').and.callThrough();
+        const asNode = component.asNode(homeLink);
         expect(isNode).toHaveBeenCalled();
+        expect(asNode).toBe(null);
     });
 
 
     it('will return false when no children element', () => {
-        expect(component.isNode(this.navElements[0])).toBe(false);
+        expect(component.isNode(homeLink)).toBe(false);
     });
 
 
     it('will return true when element has children', () => {
-        let tempo = this.navElements[0];
-        tempo.children = ['elmt'];
-        expect(component.isNode(tempo)).toBe(true);
+        const homeChildren: any = homeLink;
+        homeChildren.children = [{}];
+        expect(component.isNode(homeChildren)).toBe(true);
     });
+
 
     it('will not activate the element if it\'s not clicked', () => {
-        expect(component.isActiveNavItem(this.navElements[0])).toBe(false);
+        expect(component.isActiveNavItem(homeLink)).toBe(false);
     });
 
-  // TODO: need to handle the click to see if path === target
+
+    it('will show search as active link', () => {
+        const spyLocation: any = cmpLocation.path;
+
+        const expected = searchLink.targetUrl;
+        spyLocation.and.returnValue('/search');
+        expect(component.isActiveNavItem(searchLink)).toBe(true);
+    });
 
 });
+
+
