@@ -4,11 +4,24 @@ import { Routes, RouterModule } from '@angular/router';
 import { ListingComponent } from './containers/listing/listing.component';
 import { SearchResultComponent } from './containers/search-result/search-result.component';
 import { CarModule } from './car.module';
+import {CarsListedGuard} from './guards/car-listing';
 
 const routes: Routes = [
-  { path: 'car', redirectTo: '/car/overview', pathMatch: 'full' },
-  { path: 'overview', component: ListingComponent },
-  { path: 'search', component: SearchResultComponent }
+  {
+    path: 'car', 
+    redirectTo: '/car/overview', 
+    pathMatch: 'full'
+  },
+  { 
+    path: 'overview', 
+    canActivate: [ CarsListedGuard ],
+    component: ListingComponent 
+  }, 
+  {
+    path: 'search',
+    //canActivate: [ SearchCompletedGuard ],
+    component: SearchResultComponent
+  }
 ];
 
 @NgModule({

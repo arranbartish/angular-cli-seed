@@ -9,6 +9,8 @@ import {WidgitModule} from '../widgit/widgit.module';
 import {UtilitiesModule} from '../utilities/utilities.module';
 // import {RouterModule, Routes} from '@angular/router';
 import { AddComponent } from './components/add/add.component';
+import {CarsListedGuard} from './guards/car-listing';
+import {EffectsModule} from '@ngrx/effects';
 
 // const routes: Routes = [
 //   { path: 'home', component: ListingComponent },
@@ -20,7 +22,8 @@ import { AddComponent } from './components/add/add.component';
     CommonModule,
     WidgitModule,
     UtilitiesModule,
-    NgbModule
+    NgbModule//,
+    //EffectsModule.run(BookEffects)
   ],
   exports: [
     CarListComponent,
@@ -28,6 +31,6 @@ import { AddComponent } from './components/add/add.component';
     SearchResultComponent
   ],
   declarations: [CarListComponent, ListingComponent, SearchResultComponent, AddComponent],
-  providers: [CarService]
+  providers: [CarService, CarsListedGuard]
 })
 export class CarModule { }

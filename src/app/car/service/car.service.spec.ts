@@ -2,11 +2,8 @@ import {fakeAsync, inject, TestBed} from '@angular/core/testing';
 import {HttpModule, XHRBackend, ResponseOptions, Response, RequestMethod, ConnectionBackend} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing/mock_backend';
 import {CarService} from './car.service';
-import {StoreModule, Store, Action} from '@ngrx/store';
-import {cars} from '../reducers/car.reducer';
+import {Car} from '../domain/car';
 import {CarModule} from '../car.module';
-import {Car, CarState} from '../domain/car';
-import {ActionFactory} from '../actions/cars';
 
 // potential example
 // https://angular-2-training-book.rangle.io/handout/testing/services/mockbackend.html
@@ -16,7 +13,6 @@ describe('CarService', () => {
 
   let service: CarService;
   let mockBackend: MockBackend;
-  let store: Store<CarState>;
 
   const mockResponse = [{
     'brand': 'Toyota',
@@ -30,12 +26,11 @@ describe('CarService', () => {
     year: '2011',
     condition: 'Awesome'
   };
-  let result: Car[] = [];
 
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [CarModule, HttpModule, StoreModule.provideStore({cars})],
+      imports: [CarModule, HttpModule],
       providers: [
         {
           provide: XHRBackend,
@@ -45,16 +40,11 @@ describe('CarService', () => {
     });
   });
 
-  beforeEach(inject([XHRBackend, CarService, Store], (backend: ConnectionBackend, carService: CarService, _store: Store<CarState>) => {
+  beforeEach(inject([XHRBackend, CarService], (backend: ConnectionBackend, carService: CarService) => {
     service = carService;
     mockBackend = backend as MockBackend;
-    store = _store;
   }));
 
-  beforeEach(() => {
-    store.select(state => state.cars).subscribe(cars => result = cars);
-    store.dispatch(ActionFactory.listCars([]));
-  });
 
   describe('getCars', () => {
 
@@ -65,7 +55,12 @@ describe('CarService', () => {
     });
 
     it('will get cars from http request', fakeAsync(function () {
-        service.getCars();
+
+        let result: Car[] = [];
+        service.getCars()
+          .subscribe(res => {
+            result = res;
+          });
         expect(result[0]).toEqual(expectedCar);
       }
     ));
@@ -83,31 +78,14 @@ describe('CarService', () => {
 
     it('will find cars from http request', fakeAsync(function () {
 
-        service.findCars(term);
+        let result: Car[] = [];
+        service.findCars(term)
+          .subscribe(res => {
+            result = res;
+          });
         expect(result[0]).toEqual(expectedCar);
       }
     ));
-
-    describe('store', () => {
-
-      const expectedAction: Action = ActionFactory.listCars([expectedCar]);
-
-      it('will generate a dispatch with the payload', fakeAsync(() => {
-        let cars: Car[];
-
-        store.select(state => state.cars).subscribe(
-          model => cars = model
-        );
-
-        service.findCars(term);
-
-        expect(cars).toEqual(expectedAction.payload);
-      }));
-
-      it('will be defined', () => {
-          expect(store).toBeDefined();
-      });
-    });
 
   });
 
