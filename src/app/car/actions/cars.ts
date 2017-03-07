@@ -11,6 +11,10 @@ export const CarAction = {
 
 export class ActionFactory {
 
+  static clearCars(): Action {
+    return new ListCarsAction([]);
+  }
+
   static search(searchTerm: string): Action {
     return new SearchAction(searchTerm);
   }
