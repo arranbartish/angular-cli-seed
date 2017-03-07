@@ -2,10 +2,11 @@ import {fakeAsync, inject, TestBed} from '@angular/core/testing';
 import {HttpModule, XHRBackend, ResponseOptions, Response, RequestMethod, ConnectionBackend} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing/mock_backend';
 import {CarService} from './car.service';
-import {Car, CarState, CarAction} from '../domain/car';
 import {StoreModule, Store, Action} from '@ngrx/store';
-import {cars} from '../ngrx/car.reducer';
+import {cars} from '../reducers/car.reducer';
 import {CarModule} from '../car.module';
+import {Car, CarState} from '../domain/car';
+import {ActionFactory} from '../actions/cars';
 
 // potential example
 // https://angular-2-training-book.rangle.io/handout/testing/services/mockbackend.html
@@ -52,10 +53,7 @@ describe('CarService', () => {
 
   beforeEach(() => {
     store.select(state => state.cars).subscribe(cars => result = cars);
-    store.dispatch({
-      type: CarAction[CarAction.SET_CARS],
-      payload: []
-    });
+    store.dispatch(ActionFactory.listCars([]));
   });
 
   describe('getCars', () => {
@@ -92,10 +90,7 @@ describe('CarService', () => {
 
     describe('store', () => {
 
-      const expectedAction: Action = {
-        type: CarAction[CarAction.SET_CARS],
-        payload: [expectedCar]
-      };
+      const expectedAction: Action = ActionFactory.listCars([expectedCar]);
 
       it('will generate a dispatch with the payload', fakeAsync(() => {
         let cars: Car[];

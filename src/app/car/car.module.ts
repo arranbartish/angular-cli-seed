@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {CarListComponent} from './list/car-list.component';
+import {CarListComponent} from './components/list/car-list.component';
 import {CarService} from './service/car.service';
-import {ListingComponent} from './listing/listing.component';
-import {SearchResultComponent} from './search-result/search-result.component';
+import {ListingComponent} from './containers/listing/listing.component';
+import {SearchResultComponent} from './containers/search-result/search-result.component';
 import {WidgitModule} from '../widgit/widgit.module';
 import {UtilitiesModule} from '../utilities/utilities.module';
 // import {RouterModule, Routes} from '@angular/router';
-import { AddComponent } from './add/add.component';
+import { AddComponent } from './components/add/add.component';
 
 // const routes: Routes = [
 //   { path: 'home', component: ListingComponent },

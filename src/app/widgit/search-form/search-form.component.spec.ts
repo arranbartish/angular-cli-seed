@@ -1,13 +1,12 @@
 import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {SearchFormComponent, UNDEFINED_NAME, DEFAULT_TARGET} from './search-form.component';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {NO_ERRORS_SCHEMA, EventEmitter} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
 import {UtilitiesModule} from '../../utilities/utilities.module';
 import {SearchOptions} from './search-options';
 import {StoreModule, Store} from '@ngrx/store';
-import {term} from './ngrx/term.reducer';
-import {SeachState} from './domain/search-event';
+import {term} from '../../car/reducers/term.reducer';
 
 
 describe('SearchFormComponent', () => {
@@ -16,7 +15,6 @@ describe('SearchFormComponent', () => {
   let fixture: ComponentFixture<SearchFormComponent>;
 
   let mockRouter: Router;
-  let store: Store<SeachState>;
   let subscribedTerm: string;
 
   const undefinedDefaultConfigurtion: SearchOptions = {
@@ -52,10 +50,8 @@ describe('SearchFormComponent', () => {
     fixture.detectChanges();
   });
 
-  beforeEach(inject([Router, Store], ( router: Router,
-                                       _store: Store<SeachState>) => {
+  beforeEach(inject([Router], ( router: Router) => {
     mockRouter = router;
-    store = _store;
   }));
 
 
@@ -76,7 +72,6 @@ describe('SearchFormComponent', () => {
     });
 
     it('will apply configuration provided as options', () => {
-      expectedOptions.store = store;
       component.options = expectedOptions;
 
       component.ngOnInit();
@@ -95,10 +90,8 @@ describe('SearchFormComponent', () => {
   describe('search', () => {
 
     beforeEach(() => {
-      expectedOptions.store = store;
       component.options = expectedOptions;
       component.ngOnInit();
-      store.select(state => state.term).subscribe(term => subscribedTerm = term);
     });
 
     describe('when no valid input is provided', () => {
@@ -111,7 +104,7 @@ describe('SearchFormComponent', () => {
 
       it('will not change the subscribed term', () => {
         component.search();
-        expect(subscribedTerm).toEqual('');
+        expect(subscribedTerm).not.toBeDefined();
       });
 
     });
@@ -123,6 +116,7 @@ describe('SearchFormComponent', () => {
 
       beforeEach(() => {
         component.terms = searchTerm;
+        component.searchedTerms = new EventEmitter<string>();
         fixture.detectChanges();
       });
 
@@ -137,6 +131,7 @@ describe('SearchFormComponent', () => {
       });
 
       it('will update a subscribed term', () => {
+        component.searchedTerms.subscribe(event => subscribedTerm = event);
         component.search();
         expect(subscribedTerm).toEqual(searchTerm);
       });

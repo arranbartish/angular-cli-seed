@@ -5,10 +5,11 @@ import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Car, CarState, CarAction} from '../domain/car';
-import {SearchOptions} from '../../widgit/search-form/search-options';
 import {StoreModule, Store} from '@ngrx/store';
-import {cars} from '../ngrx/car.reducer';
+import {Car, CarState} from '../../domain/car';
+import {SearchOptions} from '../../../widgit/search-form/search-options';
+import {cars} from '../../reducers/car.reducer';
+import {ActionFactory} from '../../actions/cars';
 
 describe('SearchResultComponent', () => {
   const carResponse: Car[] = [{
@@ -82,12 +83,8 @@ describe('SearchResultComponent', () => {
     }));
 
     beforeEach(() => {
-      expectedSearchOptions.store = carStore;
       component.ngOnInit();
-      carStore.dispatch({
-        type: CarAction[CarAction.SET_CARS],
-        payload: carResponse
-      });
+      carStore.dispatch(ActionFactory.listCars(carResponse));
     });
 
     it('will be defined', () => {

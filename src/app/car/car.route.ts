@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { ListingComponent } from './listing/listing.component';
-import { SearchResultComponent } from './search-result/search-result.component';
+import { ListingComponent } from './containers/listing/listing.component';
+import { SearchResultComponent } from './containers/search-result/search-result.component';
 import { CarModule } from './car.module';
 
 const routes: Routes = [
