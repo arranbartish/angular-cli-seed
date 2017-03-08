@@ -7,10 +7,10 @@ import {ListingComponent} from './containers/listing/listing.component';
 import {SearchResultComponent} from './containers/search-result/search-result.component';
 import {WidgitModule} from '../widgit/widgit.module';
 import {UtilitiesModule} from '../utilities/utilities.module';
-// import {RouterModule, Routes} from '@angular/router';
-import { AddComponent } from './components/add/add.component';
+import {AddComponent} from './components/add/add.component';
 import {CarsListedGuard} from './guards/car-listing';
 import {EffectsModule} from '@ngrx/effects';
+import {CarEffects} from './effects/cars.';
 
 // const routes: Routes = [
 //   { path: 'home', component: ListingComponent },
@@ -22,8 +22,7 @@ import {EffectsModule} from '@ngrx/effects';
     CommonModule,
     WidgitModule,
     UtilitiesModule,
-    NgbModule//,
-    //EffectsModule.run(BookEffects)
+    NgbModule
   ],
   exports: [
     CarListComponent,

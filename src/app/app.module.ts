@@ -11,6 +11,8 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './404/pageNotFound.component';
 import {StoreModule, ActionReducer, combineReducers} from '@ngrx/store';
 import {cars} from './car/reducers/car.reducer';
+import {EffectsModule} from '@ngrx/effects';
+import {CarEffects} from './car/effects/cars.';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -35,6 +37,7 @@ const routes: Routes = [
     WidgitModule,
     NgbModule.forRoot(),
     StoreModule.provideStore({cars})
+
   ],
   providers: [],
   bootstrap: [AppComponent]

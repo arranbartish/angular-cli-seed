@@ -12,7 +12,7 @@ export const CarAction = {
 export class ActionFactory {
 
   static clearCars(): Action {
-    return new ListCarsAction([]);
+    return this.listCars([]);
   }
 
   static search(searchTerm: string): Action {
@@ -20,7 +20,7 @@ export class ActionFactory {
   }
 
   static searchComplete(results: Car[]): Action {
-    return new ListCarsAction(results);
+    return this.listCars(results);
   }
 
   static addCar(car: Car): Action {

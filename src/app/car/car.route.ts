@@ -5,6 +5,8 @@ import { ListingComponent } from './containers/listing/listing.component';
 import { SearchResultComponent } from './containers/search-result/search-result.component';
 import { CarModule } from './car.module';
 import {CarsListedGuard} from './guards/car-listing';
+import {EffectsModule} from '@ngrx/effects';
+import {CarEffects} from './effects/cars.';
 
 const routes: Routes = [
   {
@@ -30,7 +32,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CarModule,
-    CommonModule
+    CommonModule//,
+    // EffectsModule.run(CarEffects)
   ], declarations: []
 })
 export class CarRouteModule { }
