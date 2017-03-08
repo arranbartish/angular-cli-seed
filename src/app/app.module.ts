@@ -5,19 +5,25 @@ import {HttpModule} from '@angular/http';
 import {AppComponent} from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {RouterModule, Routes} from '@angular/router';
+import {WidgitModule} from './widgit/widgit.module';
 import {CarRouteModule} from './car/car.route';
+import {HomeComponent} from './home/home.component';
+import {PageNotFoundComponent} from './404/pageNotFound.component';
 import {StoreModule, ActionReducer, combineReducers} from '@ngrx/store';
 import {cars} from './car/ngrx/car.reducer';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
-  { path: 'home', loadChildren: './car/car.route#CarRouteModule' }
+  { path: 'home', component: HomeComponent },
+  { path: 'car', loadChildren: './car/car.route#CarRouteModule' },
+  { path: '**', component: PageNotFoundComponent }
 ];
-
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    PageNotFoundComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -26,6 +32,7 @@ const routes: Routes = [
     HttpModule,
     RouterModule,
     CarRouteModule,
+    WidgitModule,
     NgbModule.forRoot(),
     StoreModule.provideStore({cars})
   ],
