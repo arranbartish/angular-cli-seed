@@ -42,23 +42,61 @@ describe('NavigationItemComponent', () => {
         cmpLocation = loc;
     })));
 
+    function createComparableElement (element: any) {
+      let _comparableElmt = _.cloneDeep(element);
+      delete _comparableElmt.children;
+      delete _comparableElmt.imageCssClass;
+      return _comparableElmt;
+    }
+
+    function representElementNode (elementNode: any, elementLink: any) {
+      return {
+        title: elementLink.title,
+        href: elementLink.href,
+      }
+    }
+
+    function representLink (elementLink: any, elementSpan: any) {
+      //let childElement : any = elementLink.nativeElement;
+      console.log(elementSpan.ngClass);
+      console.log(elementLink.children[0].class);
+      console.log(elementLink.children);
+      return {
+        title: _.replace(elementLink.id, 'nav-link-', ''),
+        targetUrl : _.replace(elementLink.href, /^http:\/\/.+:[0-9]+/ ,'')//,
+        //isNode: false//,
+        //imageCssClass: childElement.ngClass
+      };
+    }
+
+    function findLinkByName(name: string) {
+      const links = _.filter(fixture.debugElement.children, (element: DebugElement) => {
+        let elementId = element.children[0].nativeElement.attributes.id.value;
+        return _.endsWith( elementId, 'nav-node-'+name ) || _.endsWith( elementId, 'nav-link-'+name );
+      });
+      if (!!console.log(links[0].nativeElement.querySelector('ul'))) {
+        return representElementNode(links[0].nativeElement.querySelector('ul'), links[0].nativeElement.querySelector('a'));
+      } else {
+        return representLink(links[0].nativeElement.querySelector('a'), links[0].nativeElement.querySelector('span'));
+      }
+    }
 
     parameters([
         [navMenu[0], expected[0]],
         [navMenu[1], expected[1]],
-        [navMenu[2], expected[2]]],
+        [navMenu[2], expected[2]]
+         ],
         (elmt: TreeElement, result) => {
 
-            it('will generate link for ' + elmt.targetUrl, async(() => {
+            it('will generate link for ' + elmt.title, async(() => {
                 fixture.whenStable().then(() => {
-                    const links = _.filter(fixture.debugElement.children, (del: DebugElement) => {
-                        return del.children[0].nativeElement.attributes.id.value === elmt.title;
-                    });
-                    const _aLink = links[0].nativeElement.querySelector('a');
-                    expect(_aLink.href).toContain(elmt.targetUrl);
+                    const _comparableElmt = createComparableElement(elmt);
+                    const _aLink = findLinkByName(elmt.title);
+                    expect(_aLink).toEqual(_comparableElmt);
                 });
             }));
 
+            // remove these
             it('will verify if  ' + elmt.title + '  is a node', async(() => {
                 fixture.whenStable().then(() => {
                     expect(component.isNode(elmt)).toBe(result.isNode);

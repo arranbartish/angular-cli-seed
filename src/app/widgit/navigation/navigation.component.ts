@@ -8,7 +8,7 @@ import { TreeElement } from './valueObject/treeElement';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent {
-    @Input('treeElements')
+    @Input()
     public treeElements: TreeElement[];
 
     constructor() {
