@@ -10,7 +10,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { CarEffects } from './cars.';
 import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
 
-fdescribe('CarEffects', () => {
+describe('CarEffects', () => {
 
   let mockCarService: CarService;
   let effect: CarEffects;
