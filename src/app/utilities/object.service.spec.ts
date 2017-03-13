@@ -37,7 +37,7 @@ describe('ObjectService', () => {
       let target  = {
       };
       target = service.shallowCopy(target, originalSomething);
-      expect(target).toEqual(originalSomething);
+      expect(target).to.equal(originalSomething);
     });
   });
 

@@ -61,7 +61,7 @@ describe('CarService', () => {
           .subscribe(res => {
             result = res;
           });
-        expect(result[0]).toEqual(expectedCar);
+        expect(result[0]).to.equal(expectedCar);
       }
     ));
 
@@ -83,7 +83,7 @@ describe('CarService', () => {
           .subscribe(res => {
             result = res;
           });
-        expect(result[0]).toEqual(expectedCar);
+        expect(result[0]).to.equal(expectedCar);
       }
     ));
 

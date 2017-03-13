@@ -1,5 +1,9 @@
 import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
-import {ListingComponent} from './listing.component';
+//import * as sinon from 'sinon';
+// import * as sinonChai from 'sinon-chai';
+// import * as chai from 'chai';
+//import * as chai from '@types/sinon-chai';
+import { ListingComponent } from './listing.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {StoreModule, Store} from '@ngrx/store';
 import {Car, CarState} from '../../domain/car';
@@ -52,14 +56,14 @@ describe('ListingComponent', () => {
     });
 
     it('will define options', () => {
-        expect(component.searchOptions).toEqual({
+        expect(component.searchOptions).to.equal({
           name: 'cars',
           target: './search'
         });
     });
 
     it('will have the car list populated', () => {
-        expect(component.carList).toEqual(carResponse);
+        expect(component.carList).to.equal(carResponse);
     });
   });
 });

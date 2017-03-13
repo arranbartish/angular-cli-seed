@@ -43,13 +43,13 @@ describe('car reducer', () => {
 
     it('will return array that is the same as the payload when the state is empty', () => {
       store.dispatch(ActionFactory.listCars(carsPayload));
-      expect(subscribedCars).toEqual(carsPayload);
+      expect(subscribedCars).to.equal(carsPayload);
     });
 
     it('will be the same as when a search is complete', () => {
       const listCarsAction: Action = ActionFactory.listCars(carsPayload);
       const searchCarsComplete: Action = ActionFactory.searchComplete(carsPayload);
-      expect(searchCarsComplete).toEqual(listCarsAction);
+      expect(searchCarsComplete).to.equal(listCarsAction);
     });
 
 
@@ -61,7 +61,7 @@ describe('car reducer', () => {
 
       store.dispatch(ActionFactory.listCars(carsPayload));
 
-      expect(subscribedCars).toEqual(carsPayload);
+      expect(subscribedCars).to.equal(carsPayload);
     });
 
   });
@@ -77,7 +77,7 @@ describe('car reducer', () => {
       };
       store.dispatch(action);
 
-      expect(subscribedCars).toEqual(carsPayload);
+      expect(subscribedCars).to.equal(carsPayload);
     });
 
   });
@@ -97,7 +97,7 @@ describe('car reducer', () => {
 
       store.dispatch(ActionFactory.addCar(carToAdd));
 
-      expect(subscribedCars).toEqual([...carsPayload, carToAdd]);
+      expect(subscribedCars).to.equal([...carsPayload, carToAdd]);
     });
   });
 
