@@ -43,7 +43,7 @@ describe('NavigationItemComponent', () => {
     })));
 
     function createComparableElement (element: any) {
-      let _comparableElmt = _.cloneDeep(element);
+      const _comparableElmt = _.cloneDeep(element);
       delete _comparableElmt.children;
       delete _comparableElmt.imageCssClass;
       return _comparableElmt;
@@ -53,26 +53,20 @@ describe('NavigationItemComponent', () => {
       return {
         title: elementLink.title,
         href: elementLink.href,
-      }
+      };
     }
 
     function representLink (elementLink: any, elementSpan: any) {
-      //let childElement : any = elementLink.nativeElement;
-      console.log(elementSpan.ngClass);
-      console.log(elementLink.children[0].class);
-      console.log(elementLink.children);
       return {
         title: _.replace(elementLink.id, 'nav-link-', ''),
-        targetUrl : _.replace(elementLink.href, /^http:\/\/.+:[0-9]+/ ,'')//,
-        //isNode: false//,
-        //imageCssClass: childElement.ngClass
+        targetUrl : _.replace(elementLink.href, /^http:\/\/.+:[0-9]+/ , '')
       };
     }
 
     function findLinkByName(name: string) {
       const links = _.filter(fixture.debugElement.children, (element: DebugElement) => {
-        let elementId = element.children[0].nativeElement.attributes.id.value;
-        return _.endsWith( elementId, 'nav-node-'+name ) || _.endsWith( elementId, 'nav-link-'+name );
+        const elementId = element.children[0].nativeElement.attributes.id.value;
+        return _.endsWith( elementId, 'nav-node-' + name ) || _.endsWith( elementId, 'nav-link-' + name );
       });
       if (!!console.log(links[0].nativeElement.querySelector('ul'))) {
         return representElementNode(links[0].nativeElement.querySelector('ul'), links[0].nativeElement.querySelector('a'));
