@@ -50,6 +50,6 @@ describe('SearchFormService', () => {
 
     searchFormService.registerMe(callMe);
     searchFormService.searchDone(expectedSearchEvent.name, expectedSearchEvent.term);
-    expect(event).toEqual(expectedSearchEvent);
+    expect(event).to.equal(expectedSearchEvent);
   });
 });

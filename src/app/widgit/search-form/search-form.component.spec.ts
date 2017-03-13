@@ -67,14 +67,14 @@ describe('SearchFormComponent', () => {
 
 
   it('will have configured options with undefined defaults', () => {
-      expect(component.configuredOptions).toEqual(undefinedDefaultConfigurtion);
+      expect(component.configuredOptions).to.equal(undefinedDefaultConfigurtion);
   });
 
   describe('initialisation', () => {
 
     it('will keep default configuration when no options are provided', () => {
       component.ngOnInit();
-      expect(component.configuredOptions).toEqual(undefinedDefaultConfigurtion);
+      expect(component.configuredOptions).to.equal(undefinedDefaultConfigurtion);
     });
 
     it('will apply configuration provided as options', () => {
@@ -82,7 +82,7 @@ describe('SearchFormComponent', () => {
 
       component.ngOnInit();
 
-      expect(component.configuredOptions).toEqual(expectedOptions);
+      expect(component.configuredOptions).to.equal(expectedOptions);
     });
 
     it('will have an invalid form by default', () => {

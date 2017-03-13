@@ -1,5 +1,8 @@
 import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
-
+//import * as sinon from 'sinon';
+// import * as sinonChai from 'sinon-chai';
+// import * as chai from 'chai';
+//import * as chai from '@types/sinon-chai';
 import { ListingComponent } from './listing.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {CarService} from '../service/car.service';
@@ -24,8 +27,10 @@ describe('ListingComponent', () => {
   beforeEach(async(() => {
 
     const mockCarsResponse: Observable<Car[]> = new BehaviorSubject(carResponse);
-    const mockedGetCars = jasmine.createSpy('findCars');
-    mockedGetCars.and.returnValue(mockCarsResponse);
+    const mockedGetCars = sinon.stub().and.return(mockCarsResponse);
+    //const mockedFindCars = sinon.stub()
+    //const mockedGetCars = jasmine.createSpy('findCars');
+    //mockedGetCars.and.returnValue(mockCarsResponse);
 
     TestBed.configureTestingModule({
       imports: [StoreModule.provideStore({cars})],
@@ -34,7 +39,7 @@ describe('ListingComponent', () => {
       providers: [{
         provide: CarService,
         useClass: class {
-          findCars = jasmine.createSpy('findCars');
+          findCars = sinon.stub();
           getCars = mockedGetCars;
         }
       }]
@@ -68,14 +73,14 @@ describe('ListingComponent', () => {
     });
 
     it('will define options', () => {
-        expect(component.searchOptions).toEqual({
+        expect(component.searchOptions).to.equal({
           name: 'cars',
           target: './search'
         });
     });
 
     it('will have the car list populated', () => {
-        expect(component.carList).toEqual(carResponse);
+        expect(component.carList).to.equal(carResponse);
     });
   });
 });

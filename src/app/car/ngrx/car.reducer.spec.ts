@@ -46,7 +46,7 @@ describe('car reducer', () => {
         payload: carsPayload
       };
       store.dispatch(action);
-      expect(subscribedCars).toEqual(carsPayload);
+      expect(subscribedCars).to.equal(carsPayload);
     });
 
     it('will return array removes existing values when state is not empty', () => {
@@ -64,7 +64,7 @@ describe('car reducer', () => {
       };
       store.dispatch(action);
 
-      expect(subscribedCars).toEqual(carsPayload);
+      expect(subscribedCars).to.equal(carsPayload);
     });
 
   });
@@ -84,7 +84,7 @@ describe('car reducer', () => {
       };
       store.dispatch(action);
 
-      expect(subscribedCars).toEqual(carsPayload);
+      expect(subscribedCars).to.equal(carsPayload);
     });
 
   });
@@ -112,7 +112,7 @@ describe('car reducer', () => {
 
       store.dispatch(action);
 
-      expect(subscribedCars).toEqual([...carsPayload, carToAdd]);
+      expect(subscribedCars).to.equal([...carsPayload, carToAdd]);
     });
   });
 

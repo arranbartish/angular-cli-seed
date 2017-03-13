@@ -124,11 +124,11 @@ describe('SearchResultComponent', () => {
     });
 
     it('will expose search results', () => {
-      expect(component.searchResults).toEqual(carResponse);
+      expect(component.searchResults).to.equal(carResponse);
     });
 
     it('will be configured with search options', () => {
-        expect(component.searchOptions).toEqual(expectedSearchOptions);
+        expect(component.searchOptions).to.equal(expectedSearchOptions);
     });
 
     it('will refresh search results on configured search event', () => {
@@ -196,7 +196,7 @@ describe('SearchResultComponent', () => {
     });
 
     it('will not expose search results', () => {
-      expect(component.searchResults).toEqual([]);
+      expect(component.searchResults).to.equal([]);
     });
 
     it('will register for search events', () => {

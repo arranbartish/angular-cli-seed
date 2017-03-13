@@ -86,7 +86,7 @@ describe('NavigationItemComponent', () => {
                 fixture.whenStable().then(() => {
                     const _comparableElmt = createComparableElement(elmt);
                     const _aLink = findLinkByName(elmt.title);
-                    expect(_aLink).toEqual(_comparableElmt);
+                    expect(_aLink).to.equal(_comparableElmt);
                 });
             }));
 

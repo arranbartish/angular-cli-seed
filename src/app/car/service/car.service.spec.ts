@@ -68,7 +68,7 @@ describe('CarService', () => {
 
     it('will get cars from http request', fakeAsync(function () {
         service.getCars();
-        expect(result[0]).toEqual(expectedCar);
+        expect(result[0]).to.equal(expectedCar);
       }
     ));
 
@@ -86,7 +86,7 @@ describe('CarService', () => {
     it('will find cars from http request', fakeAsync(function () {
 
         service.findCars(term);
-        expect(result[0]).toEqual(expectedCar);
+        expect(result[0]).to.equal(expectedCar);
       }
     ));
 
@@ -106,7 +106,7 @@ describe('CarService', () => {
 
         service.findCars(term);
 
-        expect(cars).toEqual(expectedAction.payload);
+        expect(cars).to.equal(expectedAction.payload);
       }));
 
       it('will be defined', () => {
