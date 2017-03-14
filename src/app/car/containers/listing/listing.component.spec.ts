@@ -1,10 +1,7 @@
 import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
-//import * as sinon from 'sinon';
-// import * as sinonChai from 'sinon-chai';
-// import * as chai from 'chai';
-//import * as chai from '@types/sinon-chai';
-import { ListingComponent } from './listing.component';
+import {ListingComponent} from './listing.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {CarService} from '../service/car.service';
 import {StoreModule, Store} from '@ngrx/store';
 import {Car, CarState} from '../../domain/car';
 import {cars} from '../../reducers/car.reducer';
@@ -45,7 +42,7 @@ describe('ListingComponent', () => {
   }));
 
   it('will be defined', () => {
-    expect(component).toBeDefined();
+    expect(component).to.exist;
   });
 
   describe('ngOnInit', () => {
@@ -56,14 +53,14 @@ describe('ListingComponent', () => {
     });
 
     it('will define options', () => {
-        expect(component.searchOptions).to.equal({
+        expect(component.searchOptions).to.eql({
           name: 'cars',
           target: './search'
         });
     });
 
     it('will have the car list populated', () => {
-        expect(component.carList).to.equal(carResponse);
+        expect(component.carList).to.eql(carResponse);
     });
   });
 });
