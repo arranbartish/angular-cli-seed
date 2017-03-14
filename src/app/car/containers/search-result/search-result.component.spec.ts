@@ -32,19 +32,19 @@ describe('SearchResultComponent', () => {
 
   function mockQueryStringBehaviour (term: string) {
     const mockTermResponse: Observable<string> = new BehaviorSubject(term);
-    mockedQueryParams = jasmine.createSpyObj('queryParams', ['map']);
-    mockedQueryParams.map.and.returnValue(mockTermResponse);
-  }
+    //mockedQueryParams = jasmine.createSpyObj('queryParams', ['map']);
+    //mockedQueryParams.map.and.returnValue(mockTermResponse);
 
-  function setupMocks(term: string) {
-
-    mockQueryStringBehaviour(term);
+    //mockedFindCars = jasmine.createSpy('findCars');
+    if (!!term) {
+      //mockedFindCars.and.returnValue(mockCarsResponse);
+    }
 
     mockProviders = [
       {
         provide: ActivatedRoute,
         useClass: class {
-          queryParams = mockedQueryParams;
+          queryParams = sinon.stub();
         }
       }
     ];

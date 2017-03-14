@@ -23,6 +23,7 @@ module.exports = function (config) {
     files: [
       { pattern: 'node_modules/sinon/pkg/sinon.js', instrument: false },
       { pattern: 'node_modules/chai/chai.js', instrument: false },
+      { pattern: 'node_modules/sinon-chai/lib/sinon-chai.js', instrument: false },
       { pattern: './src/test.ts', watched: false }
     ],
     preprocessors: {

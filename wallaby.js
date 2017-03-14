@@ -40,7 +40,7 @@ module.exports = function (wallaby) {
     ],
 
     tests: [
-      {pattern: 'src/**/listing.component.spec.ts', load: false}
+      {pattern: 'src/**/*spec.ts', load: false}
     ],
 
     testFramework: 'mocha',

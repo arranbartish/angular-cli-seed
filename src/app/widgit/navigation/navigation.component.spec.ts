@@ -21,11 +21,11 @@ describe('NavigationComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('will be created', () => {
+    expect(component).to.exist;
   });
 
   it('will init tree element array', () => {
-    expect(component.treeElements.length).toBe(0);
+    expect(component.treeElements.length).to.equal(0);
   });
 });
