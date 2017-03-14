@@ -39,6 +39,7 @@ module.exports = function (config) {
     istanbulThresholdReporter: {
       src: 'coverage/coverage-final.json',
       reporters: ['text'],
+      excludes: ['src/test.ts'],
       thresholds: {
         global: {
           statements: 98,
