@@ -68,7 +68,7 @@ describe('NavigationItemComponent', () => {
         const elementId = element.children[0].nativeElement.attributes.id.value;
         return _.endsWith( elementId, 'nav-node-' + name ) || _.endsWith( elementId, 'nav-link-' + name );
       });
-      if (!!console.log(links[0].nativeElement.querySelector('ul'))) {
+      if (!_.isEmpty(links[0].nativeElement.querySelector('ul'))) {
         return representElementNode(links[0].nativeElement.querySelector('ul'), links[0].nativeElement.querySelector('a'));
       } else {
         return representLink(links[0].nativeElement.querySelector('a'), links[0].nativeElement.querySelector('span'));
