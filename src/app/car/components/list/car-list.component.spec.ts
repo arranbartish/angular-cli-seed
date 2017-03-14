@@ -20,8 +20,8 @@ describe('CarListComponent', () => {
   });
 
 
-  it('will be defined', () => {
-    expect(component).toBeDefined();
-  });
+  it('will be defined', sinon.test(() => {
+    expect(component).to.exist;
+  }));
 
 });

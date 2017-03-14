@@ -19,7 +19,7 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it('will be injectable', sinon.test(() => {
+    expect(component).to.exist;
+  }));
 });

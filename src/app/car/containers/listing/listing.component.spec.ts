@@ -41,9 +41,9 @@ describe('ListingComponent', () => {
     carStore = _carStore;
   }));
 
-  it('will be defined', () => {
+  it('will be defined', sinon.test(() => {
     expect(component).to.exist;
-  });
+  }));
 
   describe('ngOnInit', () => {
 
@@ -52,15 +52,15 @@ describe('ListingComponent', () => {
       carStore.dispatch(ActionFactory.listCars(carResponse));
     });
 
-    it('will define options', () => {
+    it('will define options', sinon.test(() => {
         expect(component.searchOptions).to.eql({
           name: 'cars',
           target: './search'
         });
-    });
+    }));
 
-    it('will have the car list populated', () => {
+    it('will have the car list populated', sinon.test(() => {
         expect(component.carList).to.eql(carResponse);
-    });
+    }));
   });
 });

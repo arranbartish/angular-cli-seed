@@ -41,19 +41,19 @@ describe('car reducer', () => {
 
   describe(CarAction.LIST_CARS, () => {
 
-    it('will return array that is the same as the payload when the state is empty', () => {
+    it('will return array that is the same as the payload when the state is empty', sinon.test(() => {
       store.dispatch(ActionFactory.listCars(carsPayload));
-      expect(subscribedCars).to.equal(carsPayload);
-    });
+      expect(subscribedCars).to.eql(carsPayload);
+    }));
 
-    it('will be the same as when a search is complete', () => {
+    it('will be the same as when a search is complete', sinon.test(() => {
       const listCarsAction: Action = ActionFactory.listCars(carsPayload);
       const searchCarsComplete: Action = ActionFactory.searchComplete(carsPayload);
       expect(searchCarsComplete).to.equal(listCarsAction);
-    });
+    }));
 
 
-    it('will return array removes existing values when state is not empty', () => {
+    it('will return array removes existing values when state is not empty', sinon.test(() => {
       store.dispatch(ActionFactory.listCars([{brand: 'going',
         model: 'to',
         year: 'be',
@@ -61,14 +61,14 @@ describe('car reducer', () => {
 
       store.dispatch(ActionFactory.listCars(carsPayload));
 
-      expect(subscribedCars).to.equal(carsPayload);
-    });
+      expect(subscribedCars).to.eql(carsPayload);
+    }));
 
   });
 
   describe('Some random string', () => {
 
-    it('will not do anything to the state', () => {
+    it('will not do anything to the state', sinon.test(() => {
       store.dispatch(ActionFactory.listCars(carsPayload));
 
       const action: Action = {
@@ -77,13 +77,14 @@ describe('car reducer', () => {
       };
       store.dispatch(action);
 
-      expect(subscribedCars).to.equal(carsPayload);
-    });
+      expect(subscribedCars).to.eql(carsPayload);
+    }));
 
   });
 
   describe(CarAction.ADD_CAR, () => {
 
+    it('Will add car to the state', sinon.test(() => {
     const carToAdd: Car = {
       brand: 'going',
       model: 'to',
@@ -91,14 +92,13 @@ describe('car reducer', () => {
       condition: 'added'
     };
 
-    it('Will add car to the state', () => {
 
       store.dispatch(ActionFactory.listCars(carsPayload));
 
       store.dispatch(ActionFactory.addCar(carToAdd));
 
-      expect(subscribedCars).to.equal([...carsPayload, carToAdd]);
-    });
+      expect(subscribedCars).to.eql([...carsPayload, carToAdd]);
+    }));
   });
 
 });

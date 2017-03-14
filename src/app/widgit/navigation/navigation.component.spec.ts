@@ -1,6 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NavigationComponent } from './navigation.component';
-import { NavigationItemComponent } from './navigation-item.component';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {NavigationComponent} from './navigation.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 
 describe('NavigationComponent', () => {
@@ -21,11 +20,11 @@ describe('NavigationComponent', () => {
     fixture.detectChanges();
   });
 
-  it('will be created', () => {
+  it('will be created', sinon.test(() => {
     expect(component).to.exist;
-  });
+  }));
 
-  it('will init tree element array', () => {
+  it('will init tree element array', sinon.test(() => {
     expect(component.treeElements.length).to.equal(0);
-  });
+  }));
 });

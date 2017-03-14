@@ -1,11 +1,11 @@
-import { NavigationItemComponent } from './navigation-item.component';
-import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
-import { TestBed, async, ComponentFixture, inject, fakeAsync } from '@angular/core/testing';
-import { Location, LocationStrategy } from '@angular/common';
+import {NavigationItemComponent} from './navigation-item.component';
+import {NO_ERRORS_SCHEMA, DebugElement} from '@angular/core';
+import {TestBed, async, ComponentFixture, inject} from '@angular/core/testing';
+import {Location, LocationStrategy} from '@angular/common';
 import * as _ from 'lodash';
-import { TreeNode } from './valueObject/treeNode';
-import { TreeLeaf } from './valueObject/treeLeaf';
-import { TreeElement } from './valueObject/treeElement';
+import {TreeNode} from './valueObject/treeNode';
+import {TreeLeaf} from './valueObject/treeLeaf';
+import {TreeElement} from './valueObject/treeElement';
 
 describe('NavigationItemComponent', () => {
     let fixture: ComponentFixture<NavigationItemComponent>;
@@ -24,7 +24,7 @@ describe('NavigationItemComponent', () => {
                 {
                     provide: Location,
                     useClass: class {
-                        path = jasmine.createSpy('path');
+                        path = sinon.stub();
                     }
                 }, LocationStrategy],
             schemas: [NO_ERRORS_SCHEMA]
@@ -82,39 +82,39 @@ describe('NavigationItemComponent', () => {
          ],
         (elmt: TreeElement, result) => {
 
-            it('will generate link for ' + elmt.title, async(() => {
+            it('will generate link for ' + elmt.title, sinon.test(async(() => {
                 fixture.whenStable().then(() => {
                     const _comparableElmt = createComparableElement(elmt);
                     const _aLink = findLinkByName(elmt.title);
-                    expect(_aLink).to.equal(_comparableElmt);
+                    expect(_aLink).to.eql(_comparableElmt);
                 });
-            }));
+            })));
 
             // remove these
-            it('will verify if  ' + elmt.title + '  is a node', async(() => {
+            it('will verify if  ' + elmt.title + '  is a node', sinon.test(async(() => {
                 fixture.whenStable().then(() => {
-                    expect(component.isNode(elmt)).toBe(result.isNode);
+                    expect(component.isNode(elmt)).to.eql(result.isNode);
                 });
-            }));
+            })));
 
 
-            it('will verify if  ' + elmt.title + '  is as node', async(() => {
+            it('will verify if  ' + elmt.title + '  is as node', sinon.test(async(() => {
                 fixture.whenStable().then(() => {
-                    expect(component.asNode(elmt)).toBe(result.asNode);
+                    expect(component.asNode(elmt)).to.eql(result.asNode);
                 });
-            }));
+            })));
 
 
-            it('will verify if  ' + elmt.title + '  is active', async(() => {
+            it('will verify if  ' + elmt.title + '  is active', sinon.test(async(() => {
                 fixture.whenStable().then(() => {
-                    const spyLocation: jasmine.Spy = <jasmine.Spy>cmpLocation.path;
+                    //const spyLocation: jasmine.Spy = <jasmine.Spy>cmpLocation.path;
                     const isActive: boolean = result.isActive;
                     if (isActive) {
-                        spyLocation.and.returnValue(elmt.targetUrl);
+                        cmpLocation.path.returns(elmt.targetUrl);
                     }
-                    expect(component.isActiveNavItem(elmt)).toBe(result.isActive);
+                    expect(component.isActiveNavItem(elmt)).to.equal(result.isActive);
                 });
-            }));
+            })));
         });
 
 });
