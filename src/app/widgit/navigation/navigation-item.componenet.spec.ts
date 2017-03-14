@@ -107,7 +107,6 @@ describe('NavigationItemComponent', () => {
 
             it('will verify if  ' + elmt.title + '  is active', sinon.test(async(() => {
                 fixture.whenStable().then(() => {
-                    //const spyLocation: jasmine.Spy = <jasmine.Spy>cmpLocation.path;
                     const isActive: boolean = result.isActive;
                     if (isActive) {
                         cmpLocation.path.returns(elmt.targetUrl);

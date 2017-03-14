@@ -29,7 +29,7 @@ describe('SearchResultComponent', () => {
   let fixture: ComponentFixture<SearchResultComponent>;
   let mockProviders;
   let carStore: Store<CarState>;
-  let params : Params;
+  let params: Params;
 
   function mockQueryStringBehaviour (term: string) {
     params = { q: term};
@@ -46,7 +46,7 @@ describe('SearchResultComponent', () => {
       {
         provide: ActivatedRoute,
         useClass: class {
-          queryParams : Observable<Params> = new BehaviorSubject(params);
+          queryParams: Observable<Params> = new BehaviorSubject(params);
         }
       }
     ];
@@ -73,7 +73,6 @@ describe('SearchResultComponent', () => {
     }));
 
     beforeEach(() => {
-      //mockedQueryParams.returns(new BehaviorSubject(params));
       fixture = TestBed.createComponent(SearchResultComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
