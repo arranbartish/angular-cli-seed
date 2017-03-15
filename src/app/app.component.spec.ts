@@ -1,9 +1,9 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
-import { CarRouteModule } from './car/car.route';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
-import { cars } from './car/ngrx/car.reducer';
+import {TestBed, async} from '@angular/core/testing';
+import {AppComponent} from './app.component';
+import {CarRouteModule} from './car/car.route';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {StoreModule} from '@ngrx/store';
+import {cars} from './car/reducers/car.reducer';
 
 describe('AppComponent', () => {
   let fixture;

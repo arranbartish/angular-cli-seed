@@ -10,7 +10,10 @@ import { CarRouteModule } from './car/car.route';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './404/pageNotFound.component';
 import {StoreModule, ActionReducer, combineReducers} from '@ngrx/store';
-import {cars} from './car/ngrx/car.reducer';
+import {cars} from './car/reducers/car.reducer';
+import {EffectsModule} from '@ngrx/effects';
+import {CarEffects} from './car/effects/cars.';
+
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'home', component: HomeComponent },
@@ -33,7 +36,9 @@ const routes: Routes = [
     CarRouteModule,
     WidgitModule,
     NgbModule.forRoot(),
-    StoreModule.provideStore({cars})
+    StoreModule.provideStore({cars}),
+    EffectsModule.run(CarEffects)
+
   ],
   providers: [],
   bootstrap: [AppComponent]

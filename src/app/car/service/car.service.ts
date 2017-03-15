@@ -1,31 +1,30 @@
-import {Injectable, state} from '@angular/core';
-import 'rxjs/add/operator/map';
-import {Car, CarAction, CarState} from '../domain/car';
+import { Injectable } from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {Car} from '../domain/car';
 import {Response, Http} from '@angular/http';
-import {Store} from '@ngrx/store';
 
 @Injectable()
 export class CarService {
 
-  constructor(private http: Http, private _store: Store<CarState>) {
+  constructor(private http: Http) {
   }
 
-  findCars(term: string) {
-    this.getFromUrl('/assets/mock/search/cars.json?q=' + term);
+  findCars(term: string): Observable<Car[]> {
+    return this.getFromUrl('/assets/mock/search/cars.json?q=' + term);
   }
 
-  getCars() {
-    this.getFromUrl('/assets/mock/list/cars.json');
+  getCars(): Observable<Car[]> {
+    return this.getFromUrl('/assets/mock/list/cars.json');
   }
 
-  private getFromUrl(url: string) {
-
-    this.http.get(url)
-      .map((res: Response) => (
-        {
-          type: CarAction[CarAction.SET_CARS],
-          payload: res.json() || []
-        }
-      )).subscribe(action => this._store.dispatch(action));
+  private getFromUrl(url: string): Observable<Car[]> {
+    return this.http.get(url)
+      .map(this.extractData);
   }
+
+  private extractData(res: Response) {
+    const body = res.json();
+    return body || [];
+  }
+
 }

@@ -1,7 +1,6 @@
-import {Component, OnInit, Input} from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {SearchFormService} from './search-form.service';
 import {SearchOptions} from './search-options';
 import {ObjectService} from '../../utilities/object.service';
 
@@ -16,8 +15,13 @@ export const DEFAULT_TARGET = './search';
 })
 export class SearchFormComponent implements OnInit {
 
-  @Input() terms: string;
+  // this component sucks. Update it to use
+  // https://toddmotto.com/component-events-event-emitter-output-angular-2
+
+  terms: string;
   @Input() options: SearchOptions;
+  @Output() searchedTerms: EventEmitter<string>;
+
   configuredOptions: SearchOptions = {
     name: UNDEFINED_NAME,
     target: DEFAULT_TARGET
@@ -29,25 +33,23 @@ export class SearchFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
-              private searchFormService: SearchFormService,
-              private objectService: ObjectService) { }
+              private objectService: ObjectService) {
+    this.searchedTerms = new EventEmitter<string>();
+  }
 
   ngOnInit() {
 
-
     if (!!this.options) {
-       this.configuredOptions = this.objectService.shallowCopy(this.configuredOptions, this.options);
+      this.configuredOptions = this.objectService.shallowCopy(this.configuredOptions, this.options);
     }
 
-    this.configuredOptions.name = !!(this.configuredOptions.name) ? this.configuredOptions.name : UNDEFINED_NAME;
-    this.configuredOptions.target = !!(this.configuredOptions.target) ? this.configuredOptions.target : DEFAULT_TARGET;
   }
 
   search() {
     if (!this.searchForm.valid) {
       return;
     }
-    this.searchFormService.searchDone(this.configuredOptions.name, this.terms);
+    this.searchedTerms.emit(this.terms);
     this.router.navigate([this.configuredOptions.target], {queryParams: {q : this.terms}});
   }
 
