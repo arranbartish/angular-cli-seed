@@ -3,7 +3,7 @@ import {StoreModule, Store, Action} from '@ngrx/store';
 import {CarState} from '../domain/car';
 import {term} from './term.reducer';
 import {WidgitModule} from '../../widgit/widgit.module';
-import {CarAction} from '../actions/cars';
+import {CarAction, ActionFactory} from '../actions/cars';
 
 describe('search reducer', () => {
 
@@ -29,48 +29,33 @@ describe('search reducer', () => {
 
   describe(CarAction.SEARCH, () => {
 
-    it('will return a search term that is the same as the payload when the state is empty', () => {
-      const action: Action = {
-        type: CarAction.SEARCH,
-        payload: termPayload
-      };
-      store.dispatch(action);
-      expect(subscribedTerm).toEqual(termPayload);
-    });
+    it('will return a search term that is the same as the payload when the state is empty', sinon.test(() => {
+      store.dispatch(ActionFactory.search(termPayload));
+      expect(subscribedTerm).to.equal(termPayload);
+    }));
 
-    it('will return term and remove and existing term when state is not empty', () => {
-      store.dispatch({
-        type: CarAction.SEARCH,
-        payload: 'I do not want this'
-      });
+    it('will return term and remove and existing term when state is not empty', sinon.test(() => {
+      store.dispatch(ActionFactory.search('I do not want this'));
 
-      const action: Action = {
-        type: CarAction.SEARCH,
-        payload: termPayload
-      };
-      store.dispatch(action);
+      store.dispatch(ActionFactory.search(termPayload));
 
-      expect(subscribedTerm).toEqual(termPayload);
-    });
+      expect(subscribedTerm).to.equal(termPayload);
+    }));
 
   });
 
   describe('Some random string', () => {
 
-    it('will not do anything to the state', () => {
-      const initialState: Action = {
-        type: CarAction.SEARCH,
-        payload: termPayload
-      };
-      store.dispatch(initialState);
+    it('will not do anything to the state', sinon.test(() => {
+      store.dispatch(ActionFactory.search(termPayload));
 
       const action: Action = {
         type: 'some random string',
         payload: 'I do not want this'
       };
       store.dispatch(action);
-      expect(subscribedTerm).toEqual(termPayload);
-    });
+      expect(subscribedTerm).to.equal(termPayload);
+    }));
 
   });
 

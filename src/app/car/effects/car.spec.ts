@@ -35,8 +35,8 @@ describe('CarEffects', () => {
         {
           provide: CarService,
           useClass: class {
-            findCars(term: string): Observable<Car[]> { return new BehaviorSubject([]); };
-            getCars(): Observable<Car[]> { return new BehaviorSubject([]); };
+            findCars = sinon.stub();
+            getCars = sinon.stub();
           }
         }
       ]
@@ -52,65 +52,62 @@ describe('CarEffects', () => {
   })));
 
   beforeEach(() => {
+    mockCarService.findCars.returns(new BehaviorSubject([]));
     store.select(state => state.cars).subscribe(carsList => subscribedCars = carsList);
     store.dispatch(ActionFactory.clearCars());
   });
 
-  it('will always start with an empty store', () => {
-    expect(subscribedCars).toEqual([]);
-  });
+  it('will always start with an empty store', sinon.test(() => {
+    expect(subscribedCars).to.eql([]);
+  }));
 
 
-  it('will be injected with the mock car service', () => {
-    expect(mockCarService).toBeDefined();
-  });
+  it('will be injected with the mock car service', sinon.test(() => {
+    expect(mockCarService).to.exist;
+  }));
 
-  it('will be able to get the effect to test', () => {
-    expect(effect).toBeDefined();
-  });
+  it('will be able to get the effect to test', sinon.test(() => {
+    expect(effect).to.exist;
+  }));
 
-  it('will be injected with the store', () => {
-    expect(store).toBeDefined();
-  });
+  it('will be injected with the store', sinon.test(() => {
+    expect(store).to.exist;
+  }));
 
-  it('will be injected with the effect executor', () => {
-    expect(executor).toBeDefined();
-  });
+  it('will be injected with the effect executor', sinon.test(() => {
+    expect(executor).to.exist;
+  }));
 
-  it('will return same search action', (done) => {
+  it('will return same search action', sinon.test(fakeAsync(() => {
+    mockCarService.findCars.returns(new BehaviorSubject([]));
     executor.queue({ type: CarAction.SEARCH });
     effect.search$.subscribe(result => {
-      expect(result.type).toBe('Car - list cars');
-      done();
+      expect(result.type).to.equal('Car - list cars');
     });
-  });
+  }));
 
-  it('will return an empty search result by calling car service', (done) => {
+  it('will return an empty search result by calling car service', sinon.test(fakeAsync(() => {
+    mockCarService.findCars.returns(new BehaviorSubject([]));
     executor.queue({ type: CarAction.SEARCH, payload: 'Ford' });
     effect.search$.subscribe(result => {
-      expect(result.payload.length).toBe(0);
-      done();
+      expect(result.payload.length).to.equal(0);
     });
-  });
+  }));
 
-
-  it('will return a filled result', (done) => {
-    spyOn(mockCarService, 'findCars').and.returnValue(new BehaviorSubject(mockResponse));
+  it('will return a filled result', sinon.test(fakeAsync(() => {
+    mockCarService.findCars.returns(new BehaviorSubject(mockResponse));
     executor.queue({ type: CarAction.SEARCH, payload: 'Toyota' });
     effect.search$.subscribe(result => {
-      expect(result.payload).toBe(mockResponse);
-      done();
+      expect(result.payload).to.eql(mockResponse);
     });
-  });
+  }));
 
-
-  it('will return empty result when no search term provided', (done) => {
+  it('will return empty result when no search term provided', sinon.test(fakeAsync(() => {
     executor.queue({ type: CarAction.SEARCH, payload: '' });
     effect.search$.subscribe((result) => {
-      expect(result.payload.length).toBe(0);
-      done();
+      expect(result.payload.length).to.equal(0);
     });
 
-  });
+  }));
 
 });

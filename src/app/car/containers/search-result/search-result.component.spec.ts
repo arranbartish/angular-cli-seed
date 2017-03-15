@@ -34,14 +34,6 @@ describe('SearchResultComponent', () => {
   function mockQueryStringBehaviour (term: string) {
     params = { q: term};
 
-    //mockedQueryParams = jasmine.createSpyObj('queryParams', ['map']);
-    //mockedQueryParams.map.and.returnValue(mockTermResponse);
-
-    //mockedFindCars = jasmine.createSpy('findCars');
-    if (!!term) {
-      //mockedFindCars.and.returnValue(mockCarsResponse);
-    }
-
     mockProviders = [
       {
         provide: ActivatedRoute,
@@ -53,11 +45,11 @@ describe('SearchResultComponent', () => {
   }
 
   function setupMocksWithTerm() {
-    setupMocks('find-me');
+    mockQueryStringBehaviour('find-me');
   }
 
   function setupMocksWithoutTerm() {
-    setupMocks(undefined);
+    mockQueryStringBehaviour(undefined);
   }
 
   describe('when initialised and a search term is provided', () => {

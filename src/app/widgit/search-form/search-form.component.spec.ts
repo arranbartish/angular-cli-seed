@@ -102,12 +102,12 @@ describe('SearchFormComponent', () => {
 
       it('will be able to be called and navigate away', sinon.test(() => {
         component.search();
-        expect(mockRouter.navigate).not.toHaveBeenCalled();
+        sinon.assert.notCalled(mockRouter.navigate);
       }));
 
       it('will not change the subscribed term', sinon.test(() => {
         component.search();
-        expect(subscribedTerm).not.toBeDefined();
+        expect(subscribedTerm).not.to.exist;
       }));
 
     });
@@ -127,13 +127,13 @@ describe('SearchFormComponent', () => {
 
       it('will navigate to the configured target', sinon.test(() => {
         component.search();
-        expect(mockRouter.navigate).toHaveBeenCalledWith([expectedOptions.target], expectedQueryParameters);
+        sinon.assert.calledWith(mockRouter.navigate, [expectedOptions.target], expectedQueryParameters);
       }));
 
       it('will update a subscribed term', sinon.test(() => {
         component.searchedTerms.subscribe(event => subscribedTerm = event);
         component.search();
-        expect(subscribedTerm).toEqual(searchTerm);
+        expect(subscribedTerm).to.equal(searchTerm);
       }));
 
     });

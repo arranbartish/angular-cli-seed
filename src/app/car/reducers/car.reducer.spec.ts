@@ -49,7 +49,7 @@ describe('car reducer', () => {
     it('will be the same as when a search is complete', sinon.test(() => {
       const listCarsAction: Action = ActionFactory.listCars(carsPayload);
       const searchCarsComplete: Action = ActionFactory.searchComplete(carsPayload);
-      expect(searchCarsComplete).to.equal(listCarsAction);
+      expect(searchCarsComplete).to.eql(listCarsAction);
     }));
 
 

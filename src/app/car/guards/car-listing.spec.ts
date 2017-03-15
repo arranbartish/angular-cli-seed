@@ -32,8 +32,8 @@ describe('CarsListedGuard', () => {
         {
           provide: CarService,
           useClass: class {
-            findCars(term: string): Observable<Car[]> { return new BehaviorSubject([]); }
-            getCars(): Observable<Car[]> { return new BehaviorSubject([]); }
+            findCars = sinon.stub();
+            getCars = sinon.stub();
           }
         }
       ]
@@ -54,35 +54,39 @@ describe('CarsListedGuard', () => {
   });
 
 
-  it('will always start with an empty store', () => {
-    expect(subscribedCars).toEqual([]);
-  });
+  it('will always start with an empty store', sinon.test(() => {
+    expect(subscribedCars).to.eql([]);
+  }));
 
   describe('when response comes from service', () => {
 
     beforeEach(() => {
-      spyOn(mockCarService, 'getCars').and.returnValue(new BehaviorSubject(mockResponse));
+      mockCarService.getCars.returns(new BehaviorSubject(mockResponse));
     });
 
-    it('will ensure cars are updated', () => {
+    it('will ensure cars are updated', sinon.test(() => {
       guard.canActivate(null).subscribe();
-      expect(subscribedCars).toEqual(mockResponse);
-    });
+      expect(subscribedCars).to.eql(mockResponse);
+    }));
 
-    it('will allow activation', () => {
+    it('will allow activation', sinon.test(() => {
       let result: boolean;
       guard.canActivate(null).subscribe(value => result = value);
-      expect(result).toBeTruthy();
-    });
+      expect(result).to.be.ok;
+    }));
 
   });
 
   describe('when no response comes from service', () => {
 
-    it('will allow activation', () => {
+    beforeEach(() => {
+      mockCarService.getCars.returns(new BehaviorSubject([]));
+    });
+
+    it('will allow activation', sinon.test(() => {
       let result: boolean;
       guard.canActivate(null).subscribe(value => result = value);
-      expect(result).toBeTruthy();
-    });
+      expect(result).to.be.ok;
+    }));
   });
 });
