@@ -4,7 +4,7 @@ describe('type', () => {
 
   it('will have a useful description', () => {
 
-    let validAction = {
+    const validAction = {
       ALL: type(('valid - All')),
       TYPES: type(('valid - TYPES')),
       MUST: type(('valid - MUST')),
@@ -20,10 +20,10 @@ describe('type', () => {
 
     it('will throw a meaningful error', () => {
       expect(() => {
-        let invalidAction = {
+        const invalidAction = {
           DUPLICATE: type(('invalid - DUPLICATE')),
           LOOK_ALIKE: type(('invalid - DUPLICATE'))
-        }
+        };
       }).toThrow(new Error('Action type "invalid - DUPLICATE" is not unique'));
     });
   });
