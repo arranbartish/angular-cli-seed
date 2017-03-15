@@ -84,30 +84,30 @@ describe('CarEffects', () => {
     effect.search$.subscribe(result => {
       expect(result.type).to.equal('Car - list cars');
     });
-  }));
+  })));
 
   it('will return an empty search result by calling car service', sinon.test(fakeAsync(() => {
     mockCarService.findCars.returns(new BehaviorSubject([]));
-    executor.queue({ type: CarAction.SEARCH, payload: 'Ford' });
+    executor.queue(ActionFactory.search('Ford'));
     effect.search$.subscribe(result => {
       expect(result.payload.length).to.equal(0);
     });
-  }));
+  })));
 
   it('will return a filled result', sinon.test(fakeAsync(() => {
     mockCarService.findCars.returns(new BehaviorSubject(mockResponse));
-    executor.queue({ type: CarAction.SEARCH, payload: 'Toyota' });
+    executor.queue(ActionFactory.search('Toyota'));
     effect.search$.subscribe(result => {
       expect(result.payload).to.eql(mockResponse);
     });
-  }));
+  })));
 
   it('will return empty result when no search term provided', sinon.test(fakeAsync(() => {
-    executor.queue({ type: CarAction.SEARCH, payload: '' });
+    executor.queue(ActionFactory.search(''));
     effect.search$.subscribe((result) => {
       expect(result.payload.length).to.equal(0);
     });
 
-  }));
+  })));
 
 });
