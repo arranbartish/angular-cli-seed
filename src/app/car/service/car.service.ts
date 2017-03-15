@@ -19,20 +19,12 @@ export class CarService {
 
   private getFromUrl(url: string): Observable<Car[]> {
     return this.http.get(url)
-      .map(this.extractData)
-      .catch(this.handleError);
+      .map(this.extractData);
   }
 
   private extractData(res: Response) {
     const body = res.json();
     return body || [];
-  }
-
-  private handleError(error: any) {
-    const errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg); // log to console instead
-    return Observable.throw(errMsg);
   }
 
 }
