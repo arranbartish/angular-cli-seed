@@ -1,5 +1,7 @@
 
 import {HomePage} from './home.po';
+import { expect } from 'chai';
+
 describe('Home page', () => {
   let page: HomePage;
 
@@ -9,12 +11,12 @@ describe('Home page', () => {
 
   it('will display its title', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Car search POC');
+    expect(page.getParagraphText()).to.equal('Car search POC');
   });
 
-  xit('will have content', () => {
-    pending('This just does not seem to work. Will resolve later');
+  it.skip('will have content', () => {
+    // This just does not seem to work. Will resolve later
     page.navigateTo();
-    expect(page.getListingContent()).toBeDefined();
+    expect(page.getListingContent()).to.exist;
   });
 });

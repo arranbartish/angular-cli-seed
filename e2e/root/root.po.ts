@@ -7,7 +7,8 @@ export class RootPage {
   }
 
   navigateTo() {
-    return browser.get(this.uri());
+    return browser.get('http://localhost:4200/');
+    //return browser.get(this.uri());
   }
 
   getParagraphText() {

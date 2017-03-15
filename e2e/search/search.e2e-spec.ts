@@ -1,5 +1,6 @@
 
 import {SearchPage} from './search.po';
+import { expect } from 'chai';
 
 describe('search page', () => {
   let page: SearchPage;
@@ -10,6 +11,6 @@ describe('search page', () => {
 
   it('will display its title', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Car search POC');
+    expect(page.getParagraphText()).to.contain('Car search POC');
   });
 });

@@ -1,5 +1,6 @@
 
 import {browser} from 'protractor';
+import { expect } from 'chai';
 
 export const defaultWaitTime = 5000;
 
@@ -14,7 +15,7 @@ export class WaitCondition {
       return browser.getCurrentUrl().then(function(actualUrl) {
         return actualUrl.includes(url);
       }).catch(function (actualUrl) {
-        expect(actualUrl).not.toContain(url);
+        expect(actualUrl).not.to.include(url);
       });
     };
   };
