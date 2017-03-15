@@ -14,11 +14,11 @@ export class CarEffects {
   @Effect()
   search$: Observable<Action> = this.actions$
     .ofType(CarAction.SEARCH)
-    .debounceTime(300)
+    //.debounceTime(300)
     .map(toPayload)
     .switchMap(searchTerm => {
       if (searchTerm === '') {
-        return of(ActionFactory.clearCars()); //empty();
+        return of(ActionFactory.clearCars());
       }
 
       const nextSearch$ = this.actions$.ofType(CarAction.SEARCH).skip(1);
@@ -27,7 +27,7 @@ export class CarEffects {
         .takeUntil(nextSearch$)
         .map(result => ActionFactory.searchComplete(result))
         .catch(error => {
-          return of(ActionFactory.clearCars());  /*of(ActionFactory.clearCars())*/
+          return of(ActionFactory.clearCars());
         });
   });
 

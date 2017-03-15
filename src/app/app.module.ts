@@ -36,7 +36,8 @@ const routes: Routes = [
     CarRouteModule,
     WidgitModule,
     NgbModule.forRoot(),
-    StoreModule.provideStore({cars})
+    StoreModule.provideStore({cars}),
+    EffectsModule.run(CarEffects)
 
   ],
   providers: [],

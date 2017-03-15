@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import {UtilitiesModule} from '../utilities/utilities.module';
@@ -9,6 +10,7 @@ import { NavigationItemComponent } from './navigation/navigation-item.component'
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule,
     UtilitiesModule,
     ReactiveFormsModule
   ],
