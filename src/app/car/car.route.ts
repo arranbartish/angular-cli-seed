@@ -32,8 +32,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CarModule,
-    CommonModule//,
-    // EffectsModule.run(CarEffects)
+    CommonModule
   ], declarations: []
 })
 export class CarRouteModule { }

@@ -1,5 +1,5 @@
 <li *ngFor="let treeElmt of treeElements">
-    <a id="nav-link-{{treeElmt.title}}"  [href]="treeElmt.targetUrl" [ngClass]="{ 'active': isActiveNavItem(treeElmt) }">
+    <a id="nav-link-{{treeElmt.title}}"  [routerLink]="treeElmt.targetUrl" [ngClass]="{ 'active': isActiveNavItem(treeElmt) }">
         <span [ngClass]="[ 'glyphicon', treeElmt.imageCssClass ]"></span> {{treeElmt.title}}
     </a>
     <ul *ngIf="isNode(treeElmt)" id="nav-node-{{treeElmt.title}}">

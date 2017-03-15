@@ -52,14 +52,14 @@ describe('NavigationItemComponent', () => {
     function representElementNode (elementNode: any, elementLink: any) {
       return {
         title: elementLink.title,
-        href: elementLink.href,
+        routerLink: elementLink.routerLink,
       };
     }
 
     function representLink (elementLink: any, elementSpan: any) {
       return {
         title: _.replace(elementLink.id, 'nav-link-', ''),
-        targetUrl : _.replace(elementLink.href, /^http:\/\/.+:[0-9]+/ , '')
+        targetUrl : _.replace(elementLink.routerLink, /^http:\/\/.+:[0-9]+/ ,'')
       };
     }
 
