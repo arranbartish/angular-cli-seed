@@ -59,7 +59,7 @@ describe('NavigationItemComponent', () => {
     function representLink (elementLink: any, elementSpan: any) {
       return {
         title: _.replace(elementLink.id, 'nav-link-', ''),
-        targetUrl : _.replace(elementLink.routerLink, /^http:\/\/.+:[0-9]+/ ,'')
+        targetUrl : _.replace(elementLink.routerLink, /^http:\/\/.+:[0-9]+/ , '')
       };
     }
 

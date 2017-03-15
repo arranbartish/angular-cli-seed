@@ -6,7 +6,8 @@ import {CarsListedGuard} from './car-listing';
 import {StoreModule, Store} from '@ngrx/store';
 import {cars} from '../reducers/car.reducer';
 import {ActionFactory} from '../actions/cars';
-import {Observable, BehaviorSubject} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 
 describe('CarsListedGuard', () => {
@@ -31,15 +32,17 @@ describe('CarsListedGuard', () => {
         {
           provide: CarService,
           useClass: class {
-            findCars(term: string): Observable<Car[]> { return new BehaviorSubject([]) }
-            getCars(): Observable<Car[]> { return new BehaviorSubject([]) }
+            findCars(term: string): Observable<Car[]> { return new BehaviorSubject([]); }
+            getCars(): Observable<Car[]> { return new BehaviorSubject([]); }
           }
         }
       ]
     });
   });
 
-  beforeEach(inject([CarService, CarsListedGuard, Store], (carService: CarService, carsListedGuard: CarsListedGuard, _store: Store<CarState>) => {
+  beforeEach(inject([CarService, CarsListedGuard, Store], (carService: CarService,
+                                                           carsListedGuard: CarsListedGuard,
+                                                           _store: Store<CarState>) => {
     mockCarService = carService;
     guard = carsListedGuard;
     store = _store;
@@ -67,7 +70,7 @@ describe('CarsListedGuard', () => {
     });
 
     it('will allow activation', () => {
-      let result : boolean;
+      let result: boolean;
       guard.canActivate(null).subscribe(value => result = value);
       expect(result).toBeTruthy();
     });
@@ -77,7 +80,7 @@ describe('CarsListedGuard', () => {
   describe('when no response comes from service', () => {
 
     it('will allow activation', () => {
-      let result : boolean;
+      let result: boolean;
       guard.canActivate(null).subscribe(value => result = value);
       expect(result).toBeTruthy();
     });

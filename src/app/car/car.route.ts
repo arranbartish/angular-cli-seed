@@ -10,18 +10,17 @@ import {CarEffects} from './effects/cars.';
 
 const routes: Routes = [
   {
-    path: 'car', 
-    redirectTo: '/car/overview', 
+    path: 'car',
+    redirectTo: '/car/overview',
     pathMatch: 'full'
   },
-  { 
-    path: 'overview', 
+  {
+    path: 'overview',
     canActivate: [ CarsListedGuard ],
-    component: ListingComponent 
-  }, 
+    component: ListingComponent
+  },
   {
     path: 'search',
-    //canActivate: [ SearchCompletedGuard ],
     component: SearchResultComponent
   }
 ];

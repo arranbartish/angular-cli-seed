@@ -18,8 +18,7 @@ export class SearchResultComponent implements OnInit {
   searchOptions: SearchOptions;
 
   constructor(private route: ActivatedRoute,
-    private carStore: Store<CarState>) { 
-    }
+    private carStore: Store<CarState>) {}
 
   ngOnInit() {
     this.searchResults = [];
@@ -27,9 +26,6 @@ export class SearchResultComponent implements OnInit {
       name: 'cars',
       target: './search'
     };
-
-    //this.carStore.select(state => state.cars).subscribe(cars => this.searchResults = cars);
-    //this.carStore.select(state => state.term).subscribe(term => this.searchTerm = term);
 
     this.route
       .queryParams

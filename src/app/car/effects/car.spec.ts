@@ -6,7 +6,8 @@ import { CarService } from '../service/car.service';
 import { StoreModule, Store } from '@ngrx/store';
 import { cars } from '../reducers/car.reducer';
 import { ActionFactory, CarAction, ListCarsAction } from '../actions/cars';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable} from 'rxjs/Observable';
 import { CarEffects } from './cars.';
 import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
 
@@ -34,15 +35,15 @@ describe('CarEffects', () => {
         {
           provide: CarService,
           useClass: class {
-            findCars(term: string): Observable<Car[]> { return new BehaviorSubject([]) };
-            getCars(): Observable<Car[]> { return new BehaviorSubject([]) };
+            findCars(term: string): Observable<Car[]> { return new BehaviorSubject([]); };
+            getCars(): Observable<Car[]> { return new BehaviorSubject([]); };
           }
         }
       ]
     });
   });
 
-  beforeEach(fakeAsync(inject([CarService, CarEffects, Store, EffectsRunner], 
+  beforeEach(fakeAsync(inject([CarService, CarEffects, Store, EffectsRunner],
             (carService: CarService, carEffects: CarEffects, _store: Store<CarState>, _runner: EffectsRunner) => {
     mockCarService = carService;
     effect = carEffects;
