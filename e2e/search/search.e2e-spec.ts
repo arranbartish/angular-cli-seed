@@ -1,6 +1,6 @@
 
 import {SearchPage} from './search.po';
-import { expect } from 'chai';
+const expect = global['chai'].expect;
 
 describe('search page', () => {
   let page: SearchPage;
@@ -11,6 +11,8 @@ describe('search page', () => {
 
   it('will display its title', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).to.contain('Car search POC');
+
+    // change the following lines to have "eventually"
+    expect(page.getParagraphText()).to.eventually.contain('Car search POC');
   });
 });

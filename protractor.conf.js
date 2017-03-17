@@ -34,11 +34,9 @@ exports.config = {
     });
   },
   onPrepare: function() {
-    //global.chai = require('chai');
-    //chai.use(require('chai-string'));
-    //chai.use(require('chai-as-promised'));
-    //global.sinon = require('sinon');
-    //global.expect = chai.expect;
-    //jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+    var chai = require('chai');
+    var chaiAsPromised = require("chai-as-promised");
+    chai.use(chaiAsPromised);
+    global.chai = chai;
   }
 };

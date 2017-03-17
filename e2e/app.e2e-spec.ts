@@ -1,10 +1,6 @@
 
 import {RootPage} from './root/root.po';
-import * as chai from 'chai';
-import { expect } from 'chai';
-import * as chaiAsPromised from 'chai-as-promised';
-
-chai.use(chaiAsPromised);
+const expect = global['chai'].expect;
 
 describe('angular-cli-seed App', () => {
   let page: RootPage;
@@ -19,6 +15,7 @@ describe('angular-cli-seed App', () => {
 
   it('will display its title', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).to.contain('Car search POC');
+    // change the following lines to have "eventually"
+    expect(page.getParagraphText()).to.eventually.contain('Car search POC');
   });
 });
