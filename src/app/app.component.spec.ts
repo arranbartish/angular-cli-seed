@@ -25,21 +25,22 @@ describe('AppComponent', () => {
     fixture.detectChanges();
   });
 
-  it('will be defined', async(() => {
+  it('will be defined', sinon.test(async(() => {
 
-    expect(component).toBeDefined();
-  }));
+    expect(component).to.exist;
+  })));
 
-  it('demonstrate how to interrogate the DOM', async(() => {
+  it('demonstrate how to interrogate the DOM', sinon.test(async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Car search POC');
-  }));
+    const content = compiled.querySelector('h1').textContent;
+    expect(content).to.include('Car search POC');
+  })));
 
-  it('will load navigation elements', async(() => {
+  it('will load navigation elements', sinon.test(async(() => {
 
-    expect(component.treeElements.length).toBe(3);
-    expect(component.treeElements[0].title).toBe('Home');
-    expect(component.treeElements[1].title).toBe('Search');
-  }));
+    expect(component.treeElements.length).to.equal(3);
+    expect(component.treeElements[0].title).to.equal('Home');
+    expect(component.treeElements[1].title).to.equal('Search');
+  })));
 
 });

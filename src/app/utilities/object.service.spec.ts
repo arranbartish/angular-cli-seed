@@ -26,19 +26,17 @@ describe('ObjectService', () => {
   }));
 
 
-  it('will be defined', () => {
-      expect(service).toBeDefined();
-  });
+  it('will be defined', sinon.test(() => {
+      expect(service).to.exist;
+  }));
 
 
   describe('shallow copy object', () => {
 
-    it('will copy properties from original to target', () => {
-      let target  = {
-      };
-      target = service.shallowCopy(target, originalSomething);
-      expect(target).toEqual(originalSomething);
-    });
+    it('will copy properties from original to target', sinon.test(() => {
+      const target = service.shallowCopy({}, originalSomething);
+      expect(target).to.eql(originalSomething);
+    }));
   });
 
 });

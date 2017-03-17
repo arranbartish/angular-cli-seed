@@ -2,7 +2,7 @@ import {type} from './type';
 
 describe('type', () => {
 
-  it('will have a useful description', () => {
+  it('will have a useful description', sinon.test(() => {
 
     const validAction = {
       ALL: type(('valid - All')),
@@ -12,20 +12,20 @@ describe('type', () => {
       UNIQUE: type(('valid - UNIQUE'))
     };
 
-    expect(validAction.UNIQUE).toEqual('valid - UNIQUE');
-  });
+    expect(validAction.UNIQUE).to.equal('valid - UNIQUE');
+  }));
 
 
   describe('when duplicates are defined', () => {
 
-    it('will throw a meaningful error', () => {
+    it('will throw a meaningful error', sinon.test(() => {
       expect(() => {
         const invalidAction = {
           DUPLICATE: type(('invalid - DUPLICATE')),
           LOOK_ALIKE: type(('invalid - DUPLICATE'))
         };
-      }).toThrow(new Error('Action type "invalid - DUPLICATE" is not unique'));
-    });
+      }).to.throw('Action type "invalid - DUPLICATE" is not unique');
+    }));
   });
 
 });

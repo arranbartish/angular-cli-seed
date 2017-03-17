@@ -26,21 +26,24 @@ module.exports = function (wallaby) {
 
   return {
     files: [
-      {pattern: 'src/**/*.ts', load: false},
-      {pattern: 'src/**/*.d.ts', ignore: true},
-      {pattern: 'src/**/*.css', load: false},
-      {pattern: 'src/**/*.less', load: false},
-      {pattern: 'src/**/*.scss', load: false},
-      {pattern: 'src/**/*.sass', load: false},
-      {pattern: 'src/**/*.html', load: false},
-      {pattern: 'src/**/*spec.ts', ignore: true}
+      { pattern: 'node_modules/sinon/pkg/sinon.js', instrument: false },
+      { pattern: 'node_modules/chai/chai.js', instrument: false },
+      { pattern: 'node_modules/sinon-chai/lib/sinon-chai.js', instrument: false },
+      { pattern: 'src/**/*.ts', load: false },
+      { pattern: 'src/**/*.d.ts', ignore: true },
+      { pattern: 'src/**/*.css', load: false },
+      { pattern: 'src/**/*.less', load: false },
+      { pattern: 'src/**/*.scss', load: false },
+      { pattern: 'src/**/*.sass', load: false },
+      { pattern: 'src/**/*.html', load: false },
+      { pattern: 'src/**/*spec.ts', ignore: true }
     ],
 
     tests: [
       {pattern: 'src/**/*spec.ts', load: false}
     ],
 
-    testFramework: 'jasmine',
+    testFramework: 'mocha',
 
     compilers: {
       '**/*.ts': wallaby.compilers.typeScript(compilerOptions)
@@ -53,6 +56,7 @@ module.exports = function (wallaby) {
     postprocessor: webpackPostprocessor,
 
     setup: function () {
+      window.expect = chai.expect;
       window.__moduleBundler.loadTests();
     },
 

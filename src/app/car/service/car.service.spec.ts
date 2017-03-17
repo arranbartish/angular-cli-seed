@@ -54,16 +54,16 @@ describe('CarService', () => {
       mockHttpInteractionsForUrl(expectedUrl);
     });
 
-    it('will get cars from http request', fakeAsync(function () {
+    it('will get cars from http request', sinon.test(fakeAsync(function () {
 
         let result: Car[] = [];
         service.getCars()
           .subscribe(res => {
             result = res;
           });
-        expect(result[0]).toEqual(expectedCar);
+        expect(result[0]).to.eql(expectedCar);
       }
-    ));
+    )));
 
   });
 
@@ -76,24 +76,24 @@ describe('CarService', () => {
       mockHttpInteractionsForUrl(expectedUrl);
     });
 
-    it('will find cars from http request', fakeAsync(function () {
+    it('will find cars from http request', sinon.test(fakeAsync(function () {
 
         let result: Car[] = [];
         service.findCars(term)
           .subscribe(res => {
             result = res;
           });
-        expect(result[0]).toEqual(expectedCar);
+        expect(result[0]).to.eql(expectedCar);
       }
-    ));
+    )));
 
   });
 
   function mockHttpInteractionsForUrl(url: string) {
     mockBackend.connections.subscribe(
       (connection: MockConnection) => {
-        expect(connection.request.method).toBe(RequestMethod.Get);
-        expect(connection.request.url).toBe(url);
+        expect(connection.request.method).to.equal(RequestMethod.Get);
+        expect(connection.request.url).to.equal(url);
 
         connection.mockRespond(new Response(
           new ResponseOptions({ body: mockResponse })

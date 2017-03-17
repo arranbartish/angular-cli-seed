@@ -21,12 +21,12 @@ describe('AddComponent', () => {
     fixture.detectChanges();
   });
 
-  it('will be defined', () => {
-    expect(component).toBeDefined();
-  });
+  it('will be defined', sinon.test(() => {
+    expect(component).to.exist;
+  }));
 
 
-  it('will add nothing when form is not filled in', () => {
-      expect(component).toBeDefined();
-  });
+  it('will add nothing when form is not filled in', sinon.test(() => {
+      expect(component).to.exist;
+  }));
 });

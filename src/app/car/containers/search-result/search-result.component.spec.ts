@@ -1,8 +1,9 @@
 import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
-
-import { SearchResultComponent } from './search-result.component';
+import {SearchResultComponent} from './search-result.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Params} from '@angular/router';
+import {SearchFormService} from '../../widgit/search-form/search-form.service';
+import {CarService} from '../service/car.service';
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {StoreModule, Store} from '@ngrx/store';
@@ -26,36 +27,29 @@ describe('SearchResultComponent', () => {
 
   let component: SearchResultComponent;
   let fixture: ComponentFixture<SearchResultComponent>;
-  let mockedQueryParams;
   let mockProviders;
   let carStore: Store<CarState>;
+  let params: Params;
 
   function mockQueryStringBehaviour (term: string) {
-    const mockTermResponse: Observable<string> = new BehaviorSubject(term);
-    mockedQueryParams = jasmine.createSpyObj('queryParams', ['map']);
-    mockedQueryParams.map.and.returnValue(mockTermResponse);
-  }
-
-  function setupMocks(term: string) {
-
-    mockQueryStringBehaviour(term);
+    params = { q: term};
 
     mockProviders = [
       {
         provide: ActivatedRoute,
         useClass: class {
-          queryParams = mockedQueryParams;
+          queryParams: Observable<Params> = new BehaviorSubject(params);
         }
       }
     ];
   }
 
   function setupMocksWithTerm() {
-    setupMocks('find-me');
+    mockQueryStringBehaviour('find-me');
   }
 
   function setupMocksWithoutTerm() {
-    setupMocks(undefined);
+    mockQueryStringBehaviour(undefined);
   }
 
   describe('when initialised and a search term is provided', () => {
@@ -87,18 +81,18 @@ describe('SearchResultComponent', () => {
       carStore.dispatch(ActionFactory.listCars(carResponse));
     });
 
-    it('will be defined', () => {
-      expect(component).toBeDefined();
-    });
+    it('will be defined', sinon.test(() => {
+      expect(component).to.exist;
+    }));
 
 
-    it('will expose search results', () => {
-      expect(component.searchResults).toEqual(carResponse);
-    });
+    it('will expose search results', sinon.test(() => {
+      expect(component.searchResults).to.eql(carResponse);
+    }));
 
-    it('will be configured with search options', () => {
-        expect(component.searchOptions).toEqual(expectedSearchOptions);
-    });
+    it('will be configured with search options', sinon.test(() => {
+        expect(component.searchOptions).to.eql(expectedSearchOptions);
+    }));
 
 
   });
@@ -132,13 +126,14 @@ describe('SearchResultComponent', () => {
       component.ngOnInit();
     });
 
-    it('will be defined', () => {
-      expect(component).toBeDefined();
-    });
+    it('will be defined', sinon.test(() => {
+      expect(component).to.exist;
+    }));
 
-    it('will not expose search results', () => {
-      expect(component.searchResults).toEqual([]);
-    });
+    it('will not expose search results', sinon.test(() => {
+      expect(component.searchResults).to.eql([]);
+    }));
 
   });
+
 });

@@ -1,6 +1,7 @@
 import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {ListingComponent} from './listing.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {CarService} from '../service/car.service';
 import {StoreModule, Store} from '@ngrx/store';
 import {Car, CarState} from '../../domain/car';
 import {cars} from '../../reducers/car.reducer';
@@ -40,9 +41,9 @@ describe('ListingComponent', () => {
     carStore = _carStore;
   }));
 
-  it('will be defined', () => {
-    expect(component).toBeDefined();
-  });
+  it('will be defined', sinon.test(() => {
+    expect(component).to.exist;
+  }));
 
   describe('ngOnInit', () => {
 
@@ -51,15 +52,15 @@ describe('ListingComponent', () => {
       carStore.dispatch(ActionFactory.listCars(carResponse));
     });
 
-    it('will define options', () => {
-        expect(component.searchOptions).toEqual({
+    it('will define options', sinon.test(() => {
+        expect(component.searchOptions).to.eql({
           name: 'cars',
           target: './search'
         });
-    });
+    }));
 
-    it('will have the car list populated', () => {
-        expect(component.carList).toEqual(carResponse);
-    });
+    it('will have the car list populated', sinon.test(() => {
+        expect(component.carList).to.eql(carResponse);
+    }));
   });
 });
