@@ -19,7 +19,7 @@ describe('root page', () => {
   it('will display its title', () => {
     page.navigateTo();
     // change the following lines to have "eventually"
-    expect(page.getParagraphText()).to.eventually.include('Car search POC');
+    expect(page.getParagraphText()).to.eventually.include('Listing search POC');
   });
 
   it('will redirect the URL to the home page', () => {

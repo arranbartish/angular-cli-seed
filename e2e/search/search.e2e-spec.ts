@@ -13,6 +13,6 @@ describe('search page', () => {
     page.navigateTo();
 
     // change the following lines to have "eventually"
-    expect(page.getParagraphText()).to.eventually.contain('Car search POC');
+    expect(page.getParagraphText()).to.eventually.contain('Listing search POC');
   });
 });

@@ -12,7 +12,7 @@ describe('Home page', () => {
   it('will display its title', () => {
     page.navigateTo();
     // change the following lines to have "eventually"
-    expect(page.getParagraphText()).to.eventually.equal('Car search POC');
+    expect(page.getParagraphText()).to.eventually.equal('Listing search POC');
   });
 
   it.skip('will have content', () => {
