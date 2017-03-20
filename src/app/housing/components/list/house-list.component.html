@@ -1,0 +1,11 @@
+<div class="house-list">
+  <div class="row">
+    <div *ngFor="let house of houseList" class="house-list__house">
+      <div class="house-list__country col-md-3">{{house.country}}</div>
+      <div class="house-list__state col-md-3">{{house.state}}</div>
+      <div class="house-list__city col-md-2">{{house.city}}</div>
+      <div class="house-list__construction col-md-2">{{house.construction}}</div>
+      <div class="house-list__rooms col-md-2">{{house.rooms}}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+[
+  {
+    "country": "Australia",
+    "state": "Queensland",
+    "city": "Gold Coast",
+    "construction": "1981",
+    "rooms": 6
+  }, {
+  "country": "United Kingdom",
+  "state": "England",
+  "city": "London",
+  "construction": "1890",
+  "rooms": 12
+}
+]

@@ -4,6 +4,7 @@ import {CarRouteModule} from './car/car.route';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {StoreModule} from '@ngrx/store';
 import {cars} from './car/reducers/car.reducer';
+import {expect} from 'chai';
 
 describe('AppComponent', () => {
   let fixture;
