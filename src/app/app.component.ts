@@ -18,9 +18,10 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
       this.treeElements = [
-        { title: 'Home', targetUrl: '/home', imageCssClass: 'glyphicon-home' },
+        { title: 'Home', targetUrl: '/home', imageCssClass: 'glyphicon-globe' },
         { title: 'Search', targetUrl: '/search', imageCssClass: 'glyphicon-search' },
-        { title: 'Car', targetUrl: '/car', imageCssClass: 'glyphicon-road' }
+        { title: 'Car', targetUrl: '/car', imageCssClass: 'glyphicon-road' },
+        { title: 'Housing', targetUrl: '/housing', imageCssClass: 'glyphicon-home' }
       ];
     }
 }

@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable} from 'rxjs/Observable';
 import { CarEffects } from './cars.';
 import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
+import { expect } from 'chai';
 
 describe('CarEffects', () => {
 

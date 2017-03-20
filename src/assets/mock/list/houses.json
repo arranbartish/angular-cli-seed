@@ -1,0 +1,15 @@
+[
+  {
+    "country": "Australia",
+    "state": "New South Wales",
+    "city": "Sydney",
+    "construction": "1964",
+    "rooms": 5
+  }, {
+  "country": "United States",
+  "state": "Texas",
+  "city": "Austin",
+  "construction": "1974",
+  "rooms": 6
+}
+]
