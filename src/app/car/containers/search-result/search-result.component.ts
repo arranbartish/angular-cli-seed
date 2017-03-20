@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { SearchOptions } from '../../../widgit/search-form/search-options';
 import { CarState, Car } from '../../domain/car';
 import { ActionFactory } from '../../actions/cars';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-search-result',
@@ -13,7 +14,7 @@ import { ActionFactory } from '../../actions/cars';
   styleUrls: ['search-result.component.scss']
 })
 export class SearchResultComponent implements OnInit {
-  searchResults: Car[];
+  searchResults: Car[] = [];
   searchTerm: string;
   searchOptions: SearchOptions;
 
@@ -21,7 +22,6 @@ export class SearchResultComponent implements OnInit {
     private carStore: Store<CarState>) {}
 
   ngOnInit() {
-    this.searchResults = [];
     this.searchOptions = {
       name: 'cars',
       target: './search'
@@ -32,8 +32,14 @@ export class SearchResultComponent implements OnInit {
       .map(params => params['q'] || '')
       .distinctUntilChanged()
       .subscribe(q => {
-        this.setTerm(q);
+        this.termChanged(q);
       });
+
+    this.carStore.select(state => state.cars).subscribe(cars => this.searchResults = cars);
+
+    if (_.isEmpty(this.searchTerm)) {
+      this.carStore.dispatch(ActionFactory.clearCars());
+    }
   }
 
   termChanged(event) {
@@ -44,7 +50,6 @@ export class SearchResultComponent implements OnInit {
     if (!!term) {
       this.searchTerm = term;
       this.carStore.dispatch(ActionFactory.search(this.searchTerm));
-      this.carStore.select(state => state.cars).subscribe(cars => this.searchResults = cars);
     } else {
       return;
     }
