@@ -71,7 +71,7 @@ describe('HousesListedGuard', () => {
     }));
 
     it('will allow activation', sinon.test(() => {
-      let result: boolean = false;
+      let result = false;
       guard.canActivate(null).subscribe(value => result = value);
       expect(result).to.be.ok;
     }));

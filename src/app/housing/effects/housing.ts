@@ -13,8 +13,6 @@ import 'rxjs/add/operator/takeUntil';
 @Injectable()
 export class HousingEffects {
 
-  constructor(private actions$: Actions, private houseService: HouseService) { }
-
   @Effect()
   search$: Observable<Action> = this.actions$
     .ofType(HousingAction.SEARCH)
@@ -34,4 +32,5 @@ export class HousingEffects {
         });
   });
 
+  constructor(private actions$: Actions, private houseService: HouseService) { }
 }
