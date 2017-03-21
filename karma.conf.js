@@ -54,9 +54,6 @@ module.exports = function (config) {
         }
       }
     },
-    // mochaReporter: {
-    //   output: 'noFailures'
-    // },
     angularCli: {
       environment: 'dev'
     },
