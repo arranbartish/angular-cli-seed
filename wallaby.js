@@ -1,5 +1,14 @@
 var wallabyWebpack = require('wallaby-webpack');
 
+var electronParams = {};
+if(process.env.DISABLE_GPU){
+  /* if you are having issues with your GPU such as https://github.com/wallabyjs/public/issues/1076
+   * then simply defined an environment variable in the trouble environment DISABLE_GPU=true and electron will use
+   * chrome environment with the GPU disabled
+   */
+  electronParams.runner = '--disable-gpu';
+}
+
 var webpackPostprocessor = wallabyWebpack({
   entryPatterns: [
     'src/wallabyTest.js',
@@ -50,7 +59,8 @@ module.exports = function (wallaby) {
     },
 
     env: {
-      kind: 'electron'
+      kind: 'electron',
+      params: electronParams
     },
 
     postprocessor: webpackPostprocessor,
