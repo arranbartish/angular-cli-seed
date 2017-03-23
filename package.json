@@ -66,7 +66,6 @@
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
     "typescript": "~2.1.6",
-    "wallaby-webpack": "0.0.33",
-    "webdriver-manager": "^12.0.4"
+    "wallaby-webpack": "0.0.33"
   }
 }
