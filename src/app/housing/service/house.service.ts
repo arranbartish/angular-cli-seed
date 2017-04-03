@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Response, Http} from '@angular/http';
-import {House} from '../domain/housing';
-
+import { Response, Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/map';
+import { House } from '../domain/housing';
 
 @Injectable()
-export class HouseService {
+export class /*Fake*/HouseService {
+
+  private dataSet: House[];
 
   constructor(private http: Http) {
+    this.dataSet = [];
   }
 
   findHouses(term: string): Observable<House[]> {
@@ -15,7 +19,13 @@ export class HouseService {
   }
 
   getHouses(): Observable<House[]> {
-    return this.getFromUrl('/assets/mock/list/houses.json');
+    return this.getFromUrl('/assets/mock/list/houses.json')
+      .switchMap(houseList => of([...houseList, ...this.dataSet]));
+  }
+
+  addHouse(newHouse: House): Observable<House> {
+    this.dataSet = [...this.dataSet, newHouse];
+    return of(newHouse); // TODO: implement actual service call!
   }
 
   private getFromUrl(url: string): Observable<House[]> {

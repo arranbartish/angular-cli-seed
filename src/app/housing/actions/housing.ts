@@ -3,9 +3,9 @@ import {Action} from '@ngrx/store';
 import {House} from '../domain/housing';
 
 export const HousingAction = {
-  SEARCH: type(('House - Search')),
-  ADD_HOUSE: type(('House - Add house')),
-  LIST_HOUSES: type(('House - list houses')),
+  SEARCH: type('House - Search'),
+  ADD_HOUSE: type('House - Add house'),
+  LIST_HOUSES: type('House - list houses'),
 };
 
 
