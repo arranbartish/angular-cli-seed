@@ -27,6 +27,7 @@
     "@types/lodash": "4.14.50",
     "core-js": "^2.4.1",
     "lodash": "^4.17.4",
+    "ng2-validation": "^3.9.1",
     "rxjs": "^5.1.0",
     "zone.js": "^0.7.6"
   },

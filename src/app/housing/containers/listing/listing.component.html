@@ -1,3 +1,5 @@
 <app-search-form [options]="searchOptions"></app-search-form>
 
 <app-house-list [houseList]="houseList"></app-house-list>
+
+<app-house-edit (houseCreated)="houseCreated($event)"></app-house-edit>
