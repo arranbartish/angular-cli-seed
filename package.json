@@ -8,7 +8,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "pree2e": "webdriver-manager update --versions.chrome=2.28",
+    "e2e": "ng e2e --webdriver-update false"
   },
   "private": true,
   "dependencies": {
@@ -64,6 +65,7 @@
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
     "typescript": "~2.0.0",
-    "wallaby-webpack": "0.0.33"
+    "wallaby-webpack": "0.0.33",
+    "webdriver-manager": "^12.0.4"
   }
 }
