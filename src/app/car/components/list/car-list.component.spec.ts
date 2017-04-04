@@ -1,5 +1,5 @@
+import { expect } from 'chai';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CarListComponent } from './car-list.component';
 
 describe('CarListComponent', () => {
@@ -18,7 +18,6 @@ describe('CarListComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
 
   it('will be defined', sinon.test(() => {
     expect(component).to.exist;

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HouseListComponent} from './components/list/house-list.component';
 import {HouseEditComponent} from './components/edit/house-edit.component';
@@ -22,6 +22,7 @@ import {HouseService} from './service/house.service';
     WidgitModule,
     UtilitiesModule,
     NgbModule,
+    FormsModule,
     ReactiveFormsModule
   ],
   exports: [
@@ -36,6 +37,9 @@ import {HouseService} from './service/house.service';
     ListingComponent,
     SearchResultComponent
   ],
-  providers: [HouseService, HousesListedGuard]
+  providers: [
+    HouseService,
+    HousesListedGuard
+  ]
 })
 export class HousingModule { }

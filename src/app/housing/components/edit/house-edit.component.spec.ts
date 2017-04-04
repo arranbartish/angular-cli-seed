@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { expect } from 'chai';
 import { HouseEditComponent } from './house-edit.component';
-import {expect} from 'chai';
 
 describe('HouseListComponent', () => {
   let component: HouseEditComponent;
@@ -9,9 +8,8 @@ describe('HouseListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HouseEditComponent ]
-    })
-    .compileComponents();
+      declarations: [HouseEditComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +17,6 @@ describe('HouseListComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
 
   it('will be defined', sinon.test(() => {
     expect(component).to.exist;

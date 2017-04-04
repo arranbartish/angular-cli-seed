@@ -1,5 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { ObjectService } from './object.service';
+import { expect } from 'chai';
 
 describe('ObjectService', () => {
 
@@ -22,12 +23,12 @@ describe('ObjectService', () => {
   });
 
   beforeEach(inject([ObjectService], (objectService: ObjectService) => {
-      service = objectService;
+    service = objectService;
   }));
 
 
   it('will be defined', sinon.test(() => {
-      expect(service).to.exist;
+    expect(service).to.exist;
   }));
 
 

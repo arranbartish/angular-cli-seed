@@ -1,7 +1,8 @@
+import { expect } from 'chai';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddComponent } from './add.component';
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 describe('AddComponent', () => {
   let component: AddComponent;
@@ -9,10 +10,10 @@ describe('AddComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddComponent ],
+      declarations: [AddComponent],
       imports: [FormsModule, ReactiveFormsModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -27,6 +28,6 @@ describe('AddComponent', () => {
 
 
   it('will add nothing when form is not filled in', sinon.test(() => {
-      expect(component).to.exist;
+    expect(component).to.exist;
   }));
 });

@@ -1,7 +1,7 @@
+import { expect } from 'chai';
 import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {ListingComponent} from './listing.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {CarService} from '../service/car.service';
 import {StoreModule, Store} from '@ngrx/store';
 import {Car, CarState} from '../../domain/car';
 import {cars} from '../../reducers/car.reducer';

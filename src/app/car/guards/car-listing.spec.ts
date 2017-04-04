@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import {inject, TestBed} from '@angular/core/testing';
 import {Car, CarState} from '../domain/car';
 import {CarModule} from '../car.module';
@@ -61,7 +62,7 @@ describe('CarsListedGuard', () => {
   describe('when response comes from service', () => {
 
     beforeEach(() => {
-      mockCarService.getCars.returns(new BehaviorSubject(mockResponse));
+      (mockCarService.getCars as sinon.SinonStub).returns(new BehaviorSubject(mockResponse));
     });
 
     it('will ensure cars are updated', sinon.test(() => {
@@ -80,7 +81,7 @@ describe('CarsListedGuard', () => {
   describe('when no response comes from service', () => {
 
     beforeEach(() => {
-      mockCarService.getCars.returns(new BehaviorSubject([]));
+      (mockCarService.getCars as sinon.SinonStub).returns(new BehaviorSubject([]));
     });
 
     it('will allow activation', sinon.test(() => {
