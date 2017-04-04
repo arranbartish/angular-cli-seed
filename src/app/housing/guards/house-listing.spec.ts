@@ -54,7 +54,6 @@ describe('HousesListedGuard', () => {
     store.dispatch(ActionFactory.clearHouses());
   });
 
-
   it('will always start with an empty store', sinon.test(() => {
     expect(subscribedHouses).to.eql([]);
   }));
@@ -62,7 +61,7 @@ describe('HousesListedGuard', () => {
   describe('when response comes from service', () => {
 
     beforeEach(() => {
-      mockHouseService.getHouses.returns(new BehaviorSubject(mockResponse));
+      (mockHouseService.getHouses as sinon.SinonStub).returns(new BehaviorSubject(mockResponse));
     });
 
     it('will ensure houses are updated', sinon.test(() => {
@@ -81,7 +80,7 @@ describe('HousesListedGuard', () => {
   describe('when no response comes from service', () => {
 
     beforeEach(() => {
-      mockHouseService.getHouses.returns(new BehaviorSubject([]));
+      (mockHouseService.getHouses as sinon.SinonStub).returns(new BehaviorSubject([]));
     });
 
     it('will allow activation', sinon.test(() => {

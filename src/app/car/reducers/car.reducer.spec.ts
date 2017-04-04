@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import {Car, CarState} from '../domain/car';
 import {cars} from './car.reducer';
 import {TestBed, inject} from '@angular/core/testing';

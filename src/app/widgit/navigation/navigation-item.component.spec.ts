@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import {NavigationItemComponent} from './navigation-item.component';
 import {NO_ERRORS_SCHEMA, DebugElement} from '@angular/core';
 import {TestBed, async, ComponentFixture, inject} from '@angular/core/testing';
@@ -63,11 +64,12 @@ describe('NavigationItemComponent', () => {
       };
     }
 
-    function findLinkByName(name: string) {
+    function findLinkByName(name: string): any {
       const links = _.filter(fixture.debugElement.children, (element: DebugElement) => {
         const elementId = element.children[0].nativeElement.attributes.id.value;
         return _.endsWith( elementId, 'nav-node-' + name ) || _.endsWith( elementId, 'nav-link-' + name );
       });
+
       if (!_.isEmpty(links[0].nativeElement.querySelector('ul'))) {
         return representElementNode(links[0].nativeElement.querySelector('ul'), links[0].nativeElement.querySelector('a'));
       } else {
@@ -75,13 +77,13 @@ describe('NavigationItemComponent', () => {
       }
     }
 
-    parameters([
-        [navMenu[0], expected[0]],
-        [navMenu[1], expected[1]],
-        [navMenu[2], expected[2]]
-         ],
+    parameters(
+        [
+            [navMenu[0], expected[0]],
+            [navMenu[1], expected[1]],
+            [navMenu[2], expected[2]]
+        ],
         (elmt: TreeElement, result) => {
-
             it('will generate link for ' + elmt.title, sinon.test(async(() => {
                 fixture.whenStable().then(() => {
                     const _comparableElmt = createComparableElement(elmt);
@@ -97,24 +99,23 @@ describe('NavigationItemComponent', () => {
                 });
             })));
 
-
             it('will verify if  ' + elmt.title + '  is as node', sinon.test(async(() => {
                 fixture.whenStable().then(() => {
                     expect(component.asNode(elmt)).to.eql(result.asNode);
                 });
             })));
 
-
             it('will verify if  ' + elmt.title + '  is active', sinon.test(async(() => {
                 fixture.whenStable().then(() => {
                     const isActive: boolean = result.isActive;
                     if (isActive) {
-                        cmpLocation.path.returns(elmt.targetUrl);
+                        (cmpLocation.path as sinon.SinonStub).returns(elmt.targetUrl);
                     }
                     expect(component.isActiveNavItem(elmt)).to.equal(result.isActive);
                 });
             })));
-        });
+        }
+    );
 
 });
 
@@ -124,7 +125,6 @@ function parameters(inputData, execFunction) {
         execFunction.call(this, record[0], record[1]);
     });
 }
-
 
 function getData(): Array<any> {
     const homeNode: TreeElement = { title: 'Home', targetUrl: '/home', imageCssClass: 'glyphicon-home' };
@@ -141,5 +141,3 @@ function getData(): Array<any> {
     ];
     return [menu, expectedTable];
 }
-
-

@@ -52,7 +52,7 @@ describe('HousingEffects', () => {
   })));
 
   beforeEach(() => {
-    mockHouseService.findHouses.returns(new BehaviorSubject([]));
+    (mockHouseService.findHouses as sinon.SinonStub).returns(new BehaviorSubject([]));
     store.select(state => state.houses).subscribe(housesList => subscribedHouses = housesList);
     store.dispatch(ActionFactory.clearHouses());
   });
@@ -79,7 +79,7 @@ describe('HousingEffects', () => {
   }));
 
   it('will return same search action', sinon.test(fakeAsync(() => {
-    mockHouseService.findHouses.returns(new BehaviorSubject([]));
+    (mockHouseService.findHouses as sinon.SinonStub).returns(new BehaviorSubject([]));
     executor.queue({ type: HousingAction.SEARCH });
     effect.search$.subscribe(result => {
       expect(result.type).to.equal('House - list houses');
@@ -87,7 +87,7 @@ describe('HousingEffects', () => {
   })));
 
   it('will return an empty search result by calling house service', sinon.test(fakeAsync(() => {
-    mockHouseService.findHouses.returns(new BehaviorSubject([]));
+    (mockHouseService.findHouses as sinon.SinonStub).returns(new BehaviorSubject([]));
     executor.queue(ActionFactory.search('Melbourne'));
     effect.search$.subscribe(result => {
       expect(result.payload.length).to.equal(0);
@@ -95,7 +95,7 @@ describe('HousingEffects', () => {
   })));
 
   it('will return a filled result', sinon.test(fakeAsync(() => {
-    mockHouseService.findHouses.returns(new BehaviorSubject(mockResponse));
+    (mockHouseService.findHouses as sinon.SinonStub).returns(new BehaviorSubject(mockResponse));
     executor.queue(ActionFactory.search('Sydney'));
     effect.search$.subscribe(result => {
       expect(result.payload).to.eql(mockResponse);

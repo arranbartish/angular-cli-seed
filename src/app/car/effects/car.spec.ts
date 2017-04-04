@@ -53,7 +53,7 @@ describe('CarEffects', () => {
   })));
 
   beforeEach(() => {
-    mockCarService.findCars.returns(new BehaviorSubject([]));
+    (mockCarService.findCars as sinon.SinonStub).returns(new BehaviorSubject([]));
     store.select(state => state.cars).subscribe(carsList => subscribedCars = carsList);
     store.dispatch(ActionFactory.clearCars());
   });
@@ -80,7 +80,7 @@ describe('CarEffects', () => {
   }));
 
   it('will return same search action', sinon.test(fakeAsync(() => {
-    mockCarService.findCars.returns(new BehaviorSubject([]));
+    (mockCarService.findCars as sinon.SinonStub).returns(new BehaviorSubject([]));
     executor.queue({ type: CarAction.SEARCH });
     effect.search$.subscribe(result => {
       expect(result.type).to.equal('Car - list cars');
@@ -88,7 +88,7 @@ describe('CarEffects', () => {
   })));
 
   it('will return an empty search result by calling car service', sinon.test(fakeAsync(() => {
-    mockCarService.findCars.returns(new BehaviorSubject([]));
+    (mockCarService.findCars as sinon.SinonStub).returns(new BehaviorSubject([]));
     executor.queue(ActionFactory.search('Ford'));
     effect.search$.subscribe(result => {
       expect(result.payload.length).to.equal(0);
@@ -96,7 +96,7 @@ describe('CarEffects', () => {
   })));
 
   it('will return a filled result', sinon.test(fakeAsync(() => {
-    mockCarService.findCars.returns(new BehaviorSubject(mockResponse));
+    (mockCarService.findCars as sinon.SinonStub).returns(new BehaviorSubject(mockResponse));
     executor.queue(ActionFactory.search('Toyota'));
     effect.search$.subscribe(result => {
       expect(result.payload).to.eql(mockResponse);
