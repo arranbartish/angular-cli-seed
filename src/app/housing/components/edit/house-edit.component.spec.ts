@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { expect } from 'chai';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HouseEditComponent } from './house-edit.component';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import { expect } from 'chai';
 
 describe('HouseListComponent', () => {
   let component: HouseEditComponent;
@@ -8,7 +10,9 @@ describe('HouseListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HouseEditComponent]
+      imports: [FormsModule, ReactiveFormsModule],
+      declarations: [HouseEditComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
