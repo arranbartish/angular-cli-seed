@@ -19,11 +19,11 @@ export class HouseEditComponent implements OnInit {
   @Output()
   public houseUpdated: EventEmitter<House>;
 
-  protected houseForm: FormGroup;
+  public houseForm: FormGroup;
+
+  public currentYear: number;
 
   protected inEditMode: boolean;
-
-  protected currentYear: number;
 
   public constructor(private formBuilder: FormBuilder) {
     this.house = this.defaultHouseEntity();
@@ -46,15 +46,14 @@ export class HouseEditComponent implements OnInit {
                    && this.house.rooms !== -1;
   }
 
-  protected submitHouseEdit() {
+  public submitHouseEdit() {
     if (!this.houseForm.valid) {
       return;
     }
 
     if (this.inEditMode) {
       this.houseUpdated.emit(this.house);
-    }
-    else {
+    } else {
       this.houseCreated.emit(this.house);
       this.house = this.defaultHouseEntity();
     }
