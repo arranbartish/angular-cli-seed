@@ -53,7 +53,7 @@ export class HousingEffects {
         // TODO: implement the Toast-ing mechanism!
         return result;
       })
-      .switchMap(newHouse => this.houseService.getHouses())
+      .switchMap(house => this.houseService.getHouses())
       .map(houseList => ActionFactory.listHouses(houseList))
       .catch(err => {
         // TODO: implement the Toast-ing mechanism!

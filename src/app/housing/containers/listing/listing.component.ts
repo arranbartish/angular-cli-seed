@@ -27,7 +27,7 @@ export class ListingComponent implements OnInit {
     this.housingStore.select(state => state.houses).subscribe(houses => this.houseList = houses);
   }
 
-  protected houseCreated(newHouse: House) {
+  public houseCreated(newHouse: House) {
     this.housingStore.dispatch(ActionFactory.addHouse(newHouse));
   }
 
