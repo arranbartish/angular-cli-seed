@@ -10,8 +10,7 @@ import { UserService } from './services/user.service';
     providers: [AuthenticationService]
 })
 export class ProfileComponent implements OnInit {
-    currentUser: User;
-    users: User[] = [];
+    currentUser: User = new User();
     constructor(private authenticationService: AuthenticationService, private userService: UserService) {
         // get the user from state.
         // this.currentUser = state.select("userProfile-name");
