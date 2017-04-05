@@ -1,0 +1,29 @@
+<div class="col-md-6 col-md-offset-3">
+    <h2>Register</h2>
+    <form name="form" (ngSubmit)="register()" #f="ngForm" novalidate>
+        <div>
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName"/>
+        </div>
+        <div>
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" />
+        </div>
+        <div>
+            <label for="username">Username</label>
+            <input type="text" class="form-control" name="username" [(ngModel)]="model.username"/>
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="text" class="form-control" name="email" [(ngModel)]="model.email"/>
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Register</button>
+            <a [routerLink]="['/login']" class="btn btn-link">Cancel</a>
+        </div>
+    </form>
+</div>

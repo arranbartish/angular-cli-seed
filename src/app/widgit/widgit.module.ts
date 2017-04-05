@@ -6,18 +6,22 @@ import {UtilitiesModule} from '../utilities/utilities.module';
 import {SearchFormComponent} from './search-form/search-form.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { NavigationItemComponent } from './navigation/navigation-item.component';
+import { AuthenticationModule } from './authentication/authentication.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
+    AuthenticationModule,
     UtilitiesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    
   ],
   exports: [
     SearchFormComponent,
     NavigationComponent,
-    NavigationItemComponent
+    NavigationItemComponent,
   ],
   declarations: [
     SearchFormComponent,

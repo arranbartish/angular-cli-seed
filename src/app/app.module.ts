@@ -33,7 +33,7 @@ const routes: Routes = [
   ],
   imports: [
     RouterModule.forRoot(routes),
-    BrowserModule,
+    BrowserModule, 
     FormsModule,
     HttpModule,
     RouterModule,
