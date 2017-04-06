@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-import { TreeElement } from './widgit/navigation/valueObject/treeElement';
-import { TreeNode } from './widgit/navigation/valueObject/treeNode';
-import { TreeLeaf } from './widgit/navigation/valueObject/treeLeaf';
+import {TreeElement} from 'arranbartish-angular-cli-widgets';
 
 @Component({
   selector: 'app-root',

@@ -5,12 +5,12 @@ import {CarListComponent} from './components/list/car-list.component';
 import {CarService} from './service/car.service';
 import {ListingComponent} from './containers/listing/listing.component';
 import {SearchResultComponent} from './containers/search-result/search-result.component';
-import {WidgitModule} from '../widgit/widgit.module';
 import {UtilitiesModule} from '../utilities/utilities.module';
 import {AddComponent} from './components/add/add.component';
 import {CarsListedGuard} from './guards/car-listing';
 import {EffectsModule} from '@ngrx/effects';
 import {CarEffects} from './effects/cars.';
+import {WidgetModule} from 'arranbartish-angular-cli-widgets';
 
 // const routes: Routes = [
 //   { path: 'home', component: ListingComponent },
@@ -20,7 +20,7 @@ import {CarEffects} from './effects/cars.';
 @NgModule({
   imports: [
     CommonModule,
-    WidgitModule,
+    WidgetModule,
     UtilitiesModule,
     NgbModule
   ],

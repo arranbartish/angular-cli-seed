@@ -3,9 +3,9 @@ import {ActivatedRoute} from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/distinctUntilChanged';
 import {Store} from '@ngrx/store';
-import {SearchOptions} from '../../../widgit/search-form/search-options';
 import {House, HousesState} from '../../domain/housing';
 import {ActionFactory} from '../../actions/housing';
+import {SearchOptions} from 'arranbartish-angular-cli-widgets';
 
 @Component({
   selector: 'app-search-result',

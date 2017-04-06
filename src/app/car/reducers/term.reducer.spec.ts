@@ -3,7 +3,6 @@ import {TestBed, inject} from '@angular/core/testing';
 import {StoreModule, Store, Action} from '@ngrx/store';
 import {CarState} from '../domain/car';
 import {term} from './term.reducer';
-import {WidgitModule} from '../../widgit/widgit.module';
 import {CarAction, ActionFactory} from '../actions/cars';
 
 describe('search reducer', () => {
@@ -16,7 +15,7 @@ describe('search reducer', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [WidgitModule, StoreModule.provideStore({term})],
+      imports: [StoreModule.provideStore({term})],
     });
   });
 

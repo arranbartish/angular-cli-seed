@@ -7,9 +7,9 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { StoreModule, Store } from '@ngrx/store';
 import { Car, CarState } from '../../domain/car';
-import { SearchOptions } from '../../../widgit/search-form/search-options';
 import { cars } from '../../reducers/car.reducer';
 import { ActionFactory } from '../../actions/cars';
+import {SearchOptions} from 'arranbartish-angular-cli-widgets';
 
 describe('SearchResultComponent', () => {
   const carResponse: Car[] = [{
