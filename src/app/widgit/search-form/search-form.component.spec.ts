@@ -1,13 +1,13 @@
-import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
-import {SearchFormComponent, UNDEFINED_NAME, DEFAULT_TARGET} from './search-form.component';
-import {NO_ERRORS_SCHEMA, EventEmitter} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Router} from '@angular/router';
-import {UtilitiesModule} from '../../utilities/utilities.module';
-import {SearchOptions} from './search-options';
-import {StoreModule, Store} from '@ngrx/store';
-import {term} from '../../car/reducers/term.reducer';
-
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA, EventEmitter } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { StoreModule, Store } from '@ngrx/store';
+import { expect } from 'chai';
+import { SearchFormComponent, UNDEFINED_NAME, DEFAULT_TARGET } from './search-form.component';
+import { UtilitiesModule } from '../../utilities/utilities.module';
+import { SearchOptions } from './search-options';
+import { term } from '../../car/reducers/term.reducer';
 
 describe('SearchFormComponent', () => {
   let component: SearchFormComponent;
@@ -29,8 +29,8 @@ describe('SearchFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, UtilitiesModule, StoreModule.provideStore({term})],
-      declarations: [ SearchFormComponent ],
+      imports: [FormsModule, ReactiveFormsModule, UtilitiesModule, StoreModule.provideStore({ term })],
+      declarations: [SearchFormComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
@@ -41,7 +41,7 @@ describe('SearchFormComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -50,7 +50,7 @@ describe('SearchFormComponent', () => {
     fixture.detectChanges();
   });
 
-  beforeEach(inject([Router], ( router: Router) => {
+  beforeEach(inject([Router], (router: Router) => {
     mockRouter = router;
   }));
 
@@ -61,7 +61,7 @@ describe('SearchFormComponent', () => {
 
 
   it('will have configured options with undefined defaults', sinon.test(() => {
-      expect(component.configuredOptions).to.eql(undefinedDefaultConfigurtion);
+    expect(component.configuredOptions).to.eql(undefinedDefaultConfigurtion);
   }));
 
   describe('initialisation', () => {
@@ -90,7 +90,7 @@ describe('SearchFormComponent', () => {
   describe('search', () => {
 
     const searchTerm = 'find-me';
-    const expectedQueryParameters = {queryParams: {q : searchTerm}};
+    const expectedQueryParameters = { queryParams: { q: searchTerm } };
 
     beforeEach(() => {
       component.options = expectedOptions;
@@ -99,10 +99,9 @@ describe('SearchFormComponent', () => {
 
     describe('when no valid input is provided', () => {
 
-
       it('will be able to be called and navigate away', sinon.test(() => {
         component.search();
-        sinon.assert.notCalled(mockRouter.navigate);
+        sinon.assert.notCalled(mockRouter.navigate as sinon.SinonStub);
       }));
 
       it('will not change the subscribed term', sinon.test(() => {
@@ -127,7 +126,7 @@ describe('SearchFormComponent', () => {
 
       it('will navigate to the configured target', sinon.test(() => {
         component.search();
-        sinon.assert.calledWith(mockRouter.navigate, [expectedOptions.target], expectedQueryParameters);
+        sinon.assert.calledWith(mockRouter.navigate as sinon.SinonStub, [expectedOptions.target], expectedQueryParameters);
       }));
 
       it('will update a subscribed term', sinon.test(() => {

@@ -1,16 +1,15 @@
-import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
-import {SearchResultComponent} from './search-result.component';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
-import {SearchFormService} from '../../widgit/search-form/search-form.service';
-import {CarService} from '../service/car.service';
-import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {StoreModule, Store} from '@ngrx/store';
-import {Car, CarState} from '../../domain/car';
-import {SearchOptions} from '../../../widgit/search-form/search-options';
-import {cars} from '../../reducers/car.reducer';
-import {ActionFactory} from '../../actions/cars';
+import { expect } from 'chai';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { SearchResultComponent } from './search-result.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { StoreModule, Store } from '@ngrx/store';
+import { Car, CarState } from '../../domain/car';
+import { SearchOptions } from '../../../widgit/search-form/search-options';
+import { cars } from '../../reducers/car.reducer';
+import { ActionFactory } from '../../actions/cars';
 
 describe('SearchResultComponent', () => {
   const carResponse: Car[] = [{
@@ -31,8 +30,8 @@ describe('SearchResultComponent', () => {
   let carStore: Store<CarState>;
   let params: Params;
 
-  function mockQueryStringBehaviour (term: string) {
-    params = { q: term};
+  function mockQueryStringBehaviour(term: string) {
+    params = { q: term };
 
     mockProviders = [
       {
@@ -57,8 +56,8 @@ describe('SearchResultComponent', () => {
     beforeEach(async(() => {
       setupMocksWithTerm();
       TestBed.configureTestingModule({
-        imports: [StoreModule.provideStore({cars})],
-        declarations: [ SearchResultComponent ],
+        imports: [StoreModule.provideStore({ cars })],
+        declarations: [SearchResultComponent],
         schemas: [NO_ERRORS_SCHEMA],
         providers: mockProviders
       }).compileComponents();
@@ -72,9 +71,9 @@ describe('SearchResultComponent', () => {
 
 
     beforeEach(inject([Store],
-        (_carStore: Store<CarState>) => {
-      carStore = _carStore;
-    }));
+      (_carStore: Store<CarState>) => {
+        carStore = _carStore;
+      }));
 
     beforeEach(() => {
       component.ngOnInit();
@@ -91,10 +90,8 @@ describe('SearchResultComponent', () => {
     }));
 
     it('will be configured with search options', sinon.test(() => {
-        expect(component.searchOptions).to.eql(expectedSearchOptions);
+      expect(component.searchOptions).to.eql(expectedSearchOptions);
     }));
-
-
   });
 
   describe('when initialised and a search term is not provided', () => {
@@ -102,8 +99,8 @@ describe('SearchResultComponent', () => {
     beforeEach(async(() => {
       setupMocksWithoutTerm();
       TestBed.configureTestingModule({
-        imports: [StoreModule.provideStore({cars})],
-        declarations: [ SearchResultComponent ],
+        imports: [StoreModule.provideStore({ cars })],
+        declarations: [SearchResultComponent],
         schemas: [NO_ERRORS_SCHEMA],
         providers: mockProviders
       }).compileComponents();
@@ -116,11 +113,9 @@ describe('SearchResultComponent', () => {
     });
 
 
-    beforeEach(inject([Store],
-      (_carStore: Store<CarState>) => {
-        carStore = _carStore;
-      }
-    ));
+    beforeEach(
+      inject([Store], (_carStore: Store<CarState>) => { carStore = _carStore; })
+    );
 
     beforeEach(() => {
       component.ngOnInit();

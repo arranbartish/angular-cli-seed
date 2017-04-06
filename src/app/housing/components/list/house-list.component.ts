@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {House} from '../../domain/housing';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { House } from '../../domain/housing';
 
 @Component({
   selector: 'app-house-list',
@@ -8,9 +8,11 @@ import {House} from '../../domain/housing';
 })
 export class HouseListComponent implements OnInit {
 
-  @Input() public houseList: House[];
+  @Input()
+  public houseList: House[];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

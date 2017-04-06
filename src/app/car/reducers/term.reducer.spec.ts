@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import {TestBed, inject} from '@angular/core/testing';
 import {StoreModule, Store, Action} from '@ngrx/store';
 import {CarState} from '../domain/car';

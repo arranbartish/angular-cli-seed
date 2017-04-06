@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import {fakeAsync, inject, TestBed} from '@angular/core/testing';
 import {HttpModule, XHRBackend, ResponseOptions, Response, RequestMethod, ConnectionBackend} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';

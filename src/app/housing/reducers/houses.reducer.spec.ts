@@ -90,24 +90,4 @@ describe('housing reducer', () => {
 
   });
 
-  describe(HousingAction.ADD_HOUSE, () => {
-
-    it('Will add house to the state', sinon.test(() => {
-      const houseToAdd: House = {
-        country: 'going',
-        state: 'to',
-        city: 'be',
-        construction: 'added',
-        rooms: 1
-      };
-
-
-      store.dispatch(ActionFactory.listHouses(housingPayload));
-
-      store.dispatch(ActionFactory.addHouse(houseToAdd));
-
-      expect(subscribedHouses).to.eql([...housingPayload, houseToAdd]);
-    }));
-  });
-
 });

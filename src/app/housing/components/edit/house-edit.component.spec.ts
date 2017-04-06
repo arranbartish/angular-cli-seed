@@ -1,24 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA, EventEmitter } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HouseListComponent } from './house-list.component';
+import { HouseEditComponent } from './house-edit.component';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 import { expect } from 'chai';
 
 describe('HouseListComponent', () => {
-  let component: HouseListComponent;
-  let fixture: ComponentFixture<HouseListComponent>;
+  let component: HouseEditComponent;
+  let fixture: ComponentFixture<HouseEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule],
-      declarations: [HouseListComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+      declarations: [HouseEditComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HouseListComponent);
+    fixture = TestBed.createComponent(HouseEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

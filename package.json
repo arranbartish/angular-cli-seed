@@ -8,7 +8,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "pree2e": "webdriver-manager update --versions.chrome=2.28",
+    "e2e": "ng e2e --webdriver-update false"
   },
   "private": true,
   "dependencies": {
@@ -27,6 +28,7 @@
     "@types/lodash": "4.14.50",
     "core-js": "^2.4.1",
     "lodash": "^4.17.4",
+    "ng2-validation": "^3.9.1",
     "rxjs": "^5.1.0",
     "zone.js": "^0.7.6"
   },
@@ -63,6 +65,7 @@
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
     "typescript": "~2.0.0",
-    "wallaby-webpack": "0.0.33"
+    "wallaby-webpack": "0.0.33",
+    "webdriver-manager": "^12.0.4"
   }
 }

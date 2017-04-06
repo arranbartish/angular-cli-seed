@@ -3,9 +3,9 @@ import {Action} from '@ngrx/store';
 import {Car} from '../domain/car';
 
 export const CarAction = {
-  SEARCH: type(('Car - Search')),
-  ADD_CAR: type(('Car - Add car')),
-  LIST_CARS: type(('Car - list cars')),
+  SEARCH: type('Car - Search'),
+  ADD_CAR: type('Car - Add car'),
+  LIST_CARS: type('Car - list cars'),
 };
 
 
