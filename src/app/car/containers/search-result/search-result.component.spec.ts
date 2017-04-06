@@ -1,15 +1,15 @@
-import { expect } from 'chai';
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-import { SearchResultComponent } from './search-result.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { StoreModule, Store } from '@ngrx/store';
-import { Car, CarState } from '../../domain/car';
-import { cars } from '../../reducers/car.reducer';
-import { ActionFactory } from '../../actions/cars';
+import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
+import {SearchResultComponent} from './search-result.component';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {ActivatedRoute, Params} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {StoreModule, Store} from '@ngrx/store';
+import {Car, CarState} from '../../domain/car';
+import {cars} from '../../reducers/car.reducer';
+import {ActionFactory} from '../../actions/cars';
 import {SearchOptions} from 'arranbartish-angular-cli-widgets';
+import {expect} from 'chai';
 
 describe('SearchResultComponent', () => {
   const carResponse: Car[] = [{

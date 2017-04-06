@@ -8,14 +8,8 @@ import {SearchResultComponent} from './containers/search-result/search-result.co
 import {UtilitiesModule} from '../utilities/utilities.module';
 import {AddComponent} from './components/add/add.component';
 import {CarsListedGuard} from './guards/car-listing';
-import {EffectsModule} from '@ngrx/effects';
-import {CarEffects} from './effects/cars.';
 import {WidgetModule} from 'arranbartish-angular-cli-widgets';
 
-// const routes: Routes = [
-//   { path: 'home', component: ListingComponent },
-//   { path: 'search', component: SearchResultComponent }
-// ];
 
 @NgModule({
   imports: [

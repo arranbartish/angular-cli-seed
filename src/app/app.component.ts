@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TreeElement} from 'arranbartish-angular-cli-widgets';
 
 @Component({
