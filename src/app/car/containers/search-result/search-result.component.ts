@@ -3,10 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { Store } from '@ngrx/store';
-import { SearchOptions } from '../../../widgit/search-form/search-options';
 import { CarState, Car } from '../../domain/car';
 import { ActionFactory } from '../../actions/cars';
 import * as _ from 'lodash';
+import {SearchOptions} from 'arranbartish-angular-cli-widgets';
 
 @Component({
   selector: 'app-search-result',

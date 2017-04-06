@@ -5,11 +5,11 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Store, StoreModule} from '@ngrx/store';
-import {SearchOptions} from '../../../widgit/search-form/search-options';
 import {House, HousesState} from '../../domain/housing';
 import {ActionFactory} from '../../actions/housing';
 import {houses} from '../../reducers/houses.reducer';
 import {expect} from 'chai';
+import {SearchOptions} from 'arranbartish-angular-cli-widgets';
 
 describe('SearchResultComponent', () => {
   const houseResponse: House[] = [{

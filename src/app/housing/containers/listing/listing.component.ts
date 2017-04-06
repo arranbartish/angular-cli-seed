@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActionFactory } from '../../actions/housing';
 import { House, HousesState } from '../../domain/housing';
-import { SearchOptions } from '../../../widgit/search-form/search-options';
+import {SearchOptions} from 'arranbartish-angular-cli-widgets';
 
 @Component({
   selector: 'app-listing',

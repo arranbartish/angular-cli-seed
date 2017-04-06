@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {Car, CarState} from '../../domain/car';
-import {SearchOptions} from '../../../widgit/search-form/search-options';
+import {SearchOptions} from 'arranbartish-angular-cli-widgets';
 
 @Component({
   selector: 'app-listing',

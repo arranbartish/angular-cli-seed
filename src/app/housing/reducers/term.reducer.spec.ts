@@ -1,7 +1,6 @@
 import {TestBed, inject} from '@angular/core/testing';
 import {StoreModule, Store, Action} from '@ngrx/store';
 import {term} from './term.reducer';
-import {WidgitModule} from '../../widgit/widgit.module';
 import {HousingAction, ActionFactory} from '../actions/housing';
 import {expect} from 'chai';
 import {HousesState} from '../domain/housing';
@@ -16,7 +15,7 @@ describe('search reducer', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [WidgitModule, StoreModule.provideStore({term})],
+      imports: [StoreModule.provideStore({term})],
     });
   });
 
