@@ -22,12 +22,12 @@ describe('AddComponent', () => {
     fixture.detectChanges();
   });
 
-  it('will be defined', sinon.test(() => {
+  it('will be defined', () => {
     expect(component).to.exist;
-  }));
+  });
 
 
-  it('will add nothing when form is not filled in', sinon.test(() => {
+  it('will add nothing when form is not filled in', () => {
     expect(component).to.exist;
-  }));
+  });
 });

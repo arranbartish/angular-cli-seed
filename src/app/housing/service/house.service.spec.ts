@@ -57,7 +57,7 @@ describe('HouseService', () => {
       mockHttpInteractionsForUrl(expectedUrl);
     });
 
-    it('will get houses from http request', sinon.test(fakeAsync(function () {
+    it('will get houses from http request', fakeAsync(function () {
 
         let result: House[] = [];
         service.getHouses()
@@ -66,7 +66,7 @@ describe('HouseService', () => {
           });
         expect(result[0]).to.eql(expectedHouse);
       }
-    )));
+    ));
 
   });
 
@@ -79,7 +79,7 @@ describe('HouseService', () => {
       mockHttpInteractionsForUrl(expectedUrl);
     });
 
-    it('will find houses from http request', sinon.test(fakeAsync(function () {
+    it('will find houses from http request', fakeAsync(function () {
 
         let result: House[] = [];
         service.findHouses(term)
@@ -88,7 +88,7 @@ describe('HouseService', () => {
           });
         expect(result[0]).to.eql(expectedHouse);
       }
-    )));
+    ));
 
   });
 

@@ -57,57 +57,57 @@ describe('HousingEffects', () => {
     store.dispatch(ActionFactory.clearHouses());
   });
 
-  it('will always start with an empty store', sinon.test(() => {
+  it('will always start with an empty store', () => {
     expect(subscribedHouses).to.eql([]);
-  }));
+  });
 
 
-  it('will be injected with the mock house service', sinon.test(() => {
+  it('will be injected with the mock house service', () => {
     expect(mockHouseService).to.exist;
-  }));
+  });
 
-  it('will be able to get the effect to test', sinon.test(() => {
+  it('will be able to get the effect to test', () => {
     expect(effect).to.exist;
-  }));
+  });
 
-  it('will be injected with the store', sinon.test(() => {
+  it('will be injected with the store', () => {
     expect(store).to.exist;
-  }));
+  });
 
-  it('will be injected with the effect executor', sinon.test(() => {
+  it('will be injected with the effect executor', () => {
     expect(executor).to.exist;
-  }));
+  });
 
-  it('will return same search action', sinon.test(fakeAsync(() => {
+  it('will return same search action', fakeAsync(() => {
     (mockHouseService.findHouses as sinon.SinonStub).returns(new BehaviorSubject([]));
     executor.queue({ type: HousingAction.SEARCH });
     effect.search$.subscribe(result => {
       expect(result.type).to.equal('House - list houses');
     });
-  })));
+  }));
 
-  it('will return an empty search result by calling house service', sinon.test(fakeAsync(() => {
+  it('will return an empty search result by calling house service', fakeAsync(() => {
     (mockHouseService.findHouses as sinon.SinonStub).returns(new BehaviorSubject([]));
     executor.queue(ActionFactory.search('Melbourne'));
     effect.search$.subscribe(result => {
       expect(result.payload.length).to.equal(0);
     });
-  })));
+  }));
 
-  it('will return a filled result', sinon.test(fakeAsync(() => {
+  it('will return a filled result', fakeAsync(() => {
     (mockHouseService.findHouses as sinon.SinonStub).returns(new BehaviorSubject(mockResponse));
     executor.queue(ActionFactory.search('Sydney'));
     effect.search$.subscribe(result => {
       expect(result.payload).to.eql(mockResponse);
     });
-  })));
+  }));
 
-  it('will return empty result when no search term provided', sinon.test(fakeAsync(() => {
+  it('will return empty result when no search term provided', fakeAsync(() => {
     executor.queue(ActionFactory.search(''));
     effect.search$.subscribe((result) => {
       expect(result.payload.length).to.equal(0);
     });
 
-  })));
+  }));
 
 });

@@ -54,9 +54,9 @@ describe('HousesListedGuard', () => {
     store.dispatch(ActionFactory.clearHouses());
   });
 
-  it('will always start with an empty store', sinon.test(() => {
+  it('will always start with an empty store', () => {
     expect(subscribedHouses).to.eql([]);
-  }));
+  });
 
   describe('when response comes from service', () => {
 
@@ -64,16 +64,16 @@ describe('HousesListedGuard', () => {
       (mockHouseService.getHouses as sinon.SinonStub).returns(new BehaviorSubject(mockResponse));
     });
 
-    it('will ensure houses are updated', sinon.test(() => {
+    it('will ensure houses are updated', () => {
       guard.canActivate(null).subscribe();
       expect(subscribedHouses).to.eql(mockResponse);
-    }));
+    });
 
-    it('will allow activation', sinon.test(() => {
+    it('will allow activation', () => {
       let result = false;
       guard.canActivate(null).subscribe(value => result = value);
       expect(result).to.be.ok;
-    }));
+    });
 
   });
 
@@ -83,10 +83,10 @@ describe('HousesListedGuard', () => {
       (mockHouseService.getHouses as sinon.SinonStub).returns(new BehaviorSubject([]));
     });
 
-    it('will allow activation', sinon.test(() => {
+    it('will allow activation', () => {
       let result: boolean;
       guard.canActivate(null).subscribe(value => result = value);
       expect(result).to.be.ok;
-    }));
+    });
   });
 });

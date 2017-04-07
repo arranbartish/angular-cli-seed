@@ -18,7 +18,7 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('will be injectable', sinon.test(() => {
+  it('will be injectable', () => {
     expect(component).to.exist;
-  }));
+  });
 });

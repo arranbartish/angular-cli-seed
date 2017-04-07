@@ -55,9 +55,9 @@ describe('CarsListedGuard', () => {
   });
 
 
-  it('will always start with an empty store', sinon.test(() => {
+  it('will always start with an empty store', () => {
     expect(subscribedCars).to.eql([]);
-  }));
+  });
 
   describe('when response comes from service', () => {
 
@@ -65,16 +65,16 @@ describe('CarsListedGuard', () => {
       (mockCarService.getCars as sinon.SinonStub).returns(new BehaviorSubject(mockResponse));
     });
 
-    it('will ensure cars are updated', sinon.test(() => {
+    it('will ensure cars are updated', () => {
       guard.canActivate(null).subscribe();
       expect(subscribedCars).to.eql(mockResponse);
-    }));
+    });
 
-    it('will allow activation', sinon.test(() => {
+    it('will allow activation', () => {
       let result: boolean;
       guard.canActivate(null).subscribe(value => result = value);
       expect(result).to.be.ok;
-    }));
+    });
 
   });
 
@@ -84,10 +84,10 @@ describe('CarsListedGuard', () => {
       (mockCarService.getCars as sinon.SinonStub).returns(new BehaviorSubject([]));
     });
 
-    it('will allow activation', sinon.test(() => {
+    it('will allow activation', () => {
       let result: boolean;
       guard.canActivate(null).subscribe(value => result = value);
       expect(result).to.be.ok;
-    }));
+    });
   });
 });
