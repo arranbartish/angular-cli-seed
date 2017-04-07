@@ -68,11 +68,10 @@ describe('ListingComponent', () => {
       let houseState: any;
       housingStore.subscribe(event => houseState = event);
 
-      var newHouse: House = { country: 'the-country', state: 'the-state', city: 'the-city', construction: '1955', rooms: 1 };
+      const newHouse: House = { country: 'the-country', state: 'the-state', city: 'the-city', construction: '1955', rooms: 1 };
       component.houseCreated(newHouse);
 
       expect(houseState).to.be.not.undefined;
-      debugger;
       // expect(houseState).to.equal(validSampleHouseEntity);
     });
   });
