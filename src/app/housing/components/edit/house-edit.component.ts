@@ -23,7 +23,7 @@ export class HouseEditComponent implements OnInit {
 
   public currentYear: number;
 
-  protected inEditMode: boolean;
+  public inEditMode: boolean;
 
   public constructor(private formBuilder: FormBuilder) {
     this.house = this.defaultHouseEntity();
