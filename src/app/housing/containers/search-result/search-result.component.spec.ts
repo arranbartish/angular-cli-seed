@@ -81,18 +81,18 @@ describe('SearchResultComponent', () => {
       houseStore.dispatch(ActionFactory.listHouses(houseResponse));
     });
 
-    it('will be defined', sinon.test(() => {
+    it('will be defined', () => {
       expect(component).to.exist;
-    }));
+    });
 
 
-    it('will expose search results', sinon.test(() => {
+    it('will expose search results', () => {
       expect(component.searchResults).to.eql(houseResponse);
-    }));
+    });
 
-    it('will be configured with search options', sinon.test(() => {
+    it('will be configured with search options', () => {
         expect(component.searchOptions).to.eql(expectedSearchOptions);
-    }));
+    });
 
 
   });
@@ -126,13 +126,13 @@ describe('SearchResultComponent', () => {
       component.ngOnInit();
     });
 
-    it('will be defined', sinon.test(() => {
+    it('will be defined', () => {
       expect(component).to.exist;
-    }));
+    });
 
-    it('will not expose search results', sinon.test(() => {
+    it('will not expose search results', () => {
       expect(component.searchResults).to.eql([]);
-    }));
+    });
 
   });
 

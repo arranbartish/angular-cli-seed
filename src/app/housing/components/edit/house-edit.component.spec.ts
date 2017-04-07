@@ -22,8 +22,8 @@ describe('HouseListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('will be defined', sinon.test(() => {
+  it('will be defined', () => {
     expect(component).to.exist;
-  }));
+  });
 
 });

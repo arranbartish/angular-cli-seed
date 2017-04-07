@@ -55,7 +55,7 @@ describe('CarService', () => {
       mockHttpInteractionsForUrl(expectedUrl);
     });
 
-    it('will get cars from http request', sinon.test(fakeAsync(function () {
+    it('will get cars from http request', fakeAsync(function () {
 
         let result: Car[] = [];
         service.getCars()
@@ -64,7 +64,7 @@ describe('CarService', () => {
           });
         expect(result[0]).to.eql(expectedCar);
       }
-    )));
+    ));
 
   });
 
@@ -77,7 +77,7 @@ describe('CarService', () => {
       mockHttpInteractionsForUrl(expectedUrl);
     });
 
-    it('will find cars from http request', sinon.test(fakeAsync(function () {
+    it('will find cars from http request', fakeAsync(function () {
 
         let result: Car[] = [];
         service.findCars(term)
@@ -86,7 +86,7 @@ describe('CarService', () => {
           });
         expect(result[0]).to.eql(expectedCar);
       }
-    )));
+    ));
 
   });
 

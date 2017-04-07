@@ -42,9 +42,9 @@ describe('ListingComponent', () => {
     housingStore = _housingStore;
   }));
 
-  it('will be defined', sinon.test(() => {
+  it('will be defined', () => {
     expect(component).to.exist;
-  }));
+  });
 
   describe('ngOnInit', () => {
 
@@ -53,15 +53,15 @@ describe('ListingComponent', () => {
       housingStore.dispatch(ActionFactory.listHouses(houseResponse));
     });
 
-    it('will define options', sinon.test(() => {
+    it('will define options', () => {
         expect(component.searchOptions).to.eql({
           name: 'houses',
           target: './search'
         });
-    }));
+    });
 
-    it('will have the house list populated', sinon.test(() => {
+    it('will have the house list populated', () => {
         expect(component.houseList).to.eql(houseResponse);
-    }));
+    });
   });
 });

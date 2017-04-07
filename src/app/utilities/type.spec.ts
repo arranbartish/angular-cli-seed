@@ -3,7 +3,7 @@ import {type} from './type';
 
 describe('type', () => {
 
-  it('will have a useful description', sinon.test(() => {
+  it('will have a useful description', () => {
 
     const validAction = {
       ALL: type('valid - All'),
@@ -14,19 +14,19 @@ describe('type', () => {
     };
 
     expect(validAction.UNIQUE).to.equal('valid - UNIQUE');
-  }));
+  });
 
 
   describe('when duplicates are defined', () => {
 
-    it('will throw a meaningful error', sinon.test(() => {
+    it('will throw a meaningful error', () => {
       expect(() => {
         const invalidAction = {
           DUPLICATE: type('invalid - DUPLICATE'),
           LOOK_ALIKE: type('invalid - DUPLICATE')
         };
       }).to.throw('Action type "invalid - DUPLICATE" is not unique');
-    }));
+    });
   });
 
 });

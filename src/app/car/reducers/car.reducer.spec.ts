@@ -42,19 +42,19 @@ describe('car reducer', () => {
 
   describe(CarAction.LIST_CARS, () => {
 
-    it('will return array that is the same as the payload when the state is empty', sinon.test(() => {
+    it('will return array that is the same as the payload when the state is empty', () => {
       store.dispatch(ActionFactory.listCars(carsPayload));
       expect(subscribedCars).to.eql(carsPayload);
-    }));
+    });
 
-    it('will be the same as when a search is complete', sinon.test(() => {
+    it('will be the same as when a search is complete', () => {
       const listCarsAction: Action = ActionFactory.listCars(carsPayload);
       const searchCarsComplete: Action = ActionFactory.searchComplete(carsPayload);
       expect(searchCarsComplete).to.eql(listCarsAction);
-    }));
+    });
 
 
-    it('will return array removes existing values when state is not empty', sinon.test(() => {
+    it('will return array removes existing values when state is not empty', () => {
       store.dispatch(ActionFactory.listCars([{brand: 'going',
         model: 'to',
         year: 'be',
@@ -63,13 +63,13 @@ describe('car reducer', () => {
       store.dispatch(ActionFactory.listCars(carsPayload));
 
       expect(subscribedCars).to.eql(carsPayload);
-    }));
+    });
 
   });
 
   describe('Some random string', () => {
 
-    it('will not do anything to the state', sinon.test(() => {
+    it('will not do anything to the state', () => {
       store.dispatch(ActionFactory.listCars(carsPayload));
 
       const action: Action = {
@@ -79,13 +79,13 @@ describe('car reducer', () => {
       store.dispatch(action);
 
       expect(subscribedCars).to.eql(carsPayload);
-    }));
+    });
 
   });
 
   describe(CarAction.ADD_CAR, () => {
 
-    it('Will add car to the state', sinon.test(() => {
+    it('Will add car to the state', () => {
     const carToAdd: Car = {
       brand: 'going',
       model: 'to',
@@ -99,7 +99,7 @@ describe('car reducer', () => {
       store.dispatch(ActionFactory.addCar(carToAdd));
 
       expect(subscribedCars).to.eql([...carsPayload, carToAdd]);
-    }));
+    });
   });
 
 });

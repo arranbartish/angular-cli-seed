@@ -29,24 +29,24 @@ describe('search reducer', () => {
 
   describe(HousingAction.SEARCH, () => {
 
-    it('will return a search term that is the same as the payload when the state is empty', sinon.test(() => {
+    it('will return a search term that is the same as the payload when the state is empty', () => {
       store.dispatch(ActionFactory.search(termPayload));
       expect(subscribedTerm).to.equal(termPayload);
-    }));
+    });
 
-    it('will return term and remove and existing term when state is not empty', sinon.test(() => {
+    it('will return term and remove and existing term when state is not empty', () => {
       store.dispatch(ActionFactory.search('I do not want this'));
 
       store.dispatch(ActionFactory.search(termPayload));
 
       expect(subscribedTerm).to.equal(termPayload);
-    }));
+    });
 
   });
 
   describe('Some random string', () => {
 
-    it('will not do anything to the state', sinon.test(() => {
+    it('will not do anything to the state', () => {
       store.dispatch(ActionFactory.search(termPayload));
 
       const action: Action = {
@@ -55,7 +55,7 @@ describe('search reducer', () => {
       };
       store.dispatch(action);
       expect(subscribedTerm).to.equal(termPayload);
-    }));
+    });
 
   });
 
