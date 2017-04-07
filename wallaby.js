@@ -29,7 +29,7 @@ var webpackPostprocessor = wallabyWebpack({
   }
 });
 
-var compilerOptions = require('./src/tsconfig.json').compilerOptions;
+var compilerOptions = require('./src/tsconfig.spec.json').compilerOptions;
 
 module.exports = function (wallaby) {
 
