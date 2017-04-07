@@ -1,15 +1,15 @@
-import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
-import {SearchResultComponent} from './search-result.component';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Store, StoreModule} from '@ngrx/store';
-import {House, HousesState} from '../../domain/housing';
-import {ActionFactory} from '../../actions/housing';
-import {houses} from '../../reducers/houses.reducer';
-import {expect} from 'chai';
-import {SearchOptions} from 'arranbartish-angular-cli-widgets';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { SearchResultComponent } from './search-result.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Store, StoreModule } from '@ngrx/store';
+import { House, HousesState } from '../../domain/housing';
+import { ActionFactory } from '../../actions/housing';
+import { houses } from '../../reducers/houses.reducer';
+import { expect } from 'chai';
+import { SearchOptions } from 'arranbartish-angular-cli-widgets';
 
 describe('SearchResultComponent', () => {
   const houseResponse: House[] = [{
@@ -31,8 +31,8 @@ describe('SearchResultComponent', () => {
   let houseStore: Store<HousesState>;
   let params: Params;
 
-  function mockQueryStringBehaviour (term: string) {
-    params = { q: term};
+  function mockQueryStringBehaviour(term: string) {
+    params = { q: term };
 
     mockProviders = [
       {
@@ -57,11 +57,12 @@ describe('SearchResultComponent', () => {
     beforeEach(async(() => {
       setupMocksWithTerm();
       TestBed.configureTestingModule({
-        imports: [StoreModule.provideStore({houses})],
-        declarations: [ SearchResultComponent ],
+        imports: [StoreModule.provideStore({ houses })],
+        declarations: [SearchResultComponent],
         schemas: [NO_ERRORS_SCHEMA],
         providers: mockProviders
-      }).compileComponents();
+      })
+        .compileComponents();
     }));
 
     beforeEach(() => {
@@ -70,10 +71,8 @@ describe('SearchResultComponent', () => {
       fixture.detectChanges();
     });
 
-
-    beforeEach(inject([Store],
-        (_houseStore: Store<HousesState>) => {
-          houseStore = _houseStore;
+    beforeEach(inject([Store], (_houseStore: Store<HousesState>) => {
+      houseStore = _houseStore;
     }));
 
     beforeEach(() => {
@@ -85,16 +84,13 @@ describe('SearchResultComponent', () => {
       expect(component).to.exist;
     });
 
-
     it('will expose search results', () => {
       expect(component.searchResults).to.eql(houseResponse);
     });
 
     it('will be configured with search options', () => {
-        expect(component.searchOptions).to.eql(expectedSearchOptions);
+      expect(component.searchOptions).to.eql(expectedSearchOptions);
     });
-
-
   });
 
   describe('when initialised and a search term is not provided', () => {
@@ -102,8 +98,8 @@ describe('SearchResultComponent', () => {
     beforeEach(async(() => {
       setupMocksWithoutTerm();
       TestBed.configureTestingModule({
-        imports: [StoreModule.provideStore({houses})],
-        declarations: [ SearchResultComponent ],
+        imports: [StoreModule.provideStore({ houses })],
+        declarations: [SearchResultComponent],
         schemas: [NO_ERRORS_SCHEMA],
         providers: mockProviders
       }).compileComponents();
@@ -115,12 +111,9 @@ describe('SearchResultComponent', () => {
       fixture.detectChanges();
     });
 
-
-    beforeEach(inject([Store],
-      (_houseStore: Store<HousesState>) => {
-        houseStore = _houseStore;
-      }
-    ));
+    beforeEach(inject([Store], (_houseStore: Store<HousesState>) => {
+      houseStore = _houseStore;
+    }));
 
     beforeEach(() => {
       component.ngOnInit();
@@ -133,7 +126,5 @@ describe('SearchResultComponent', () => {
     it('will not expose search results', () => {
       expect(component.searchResults).to.eql([]);
     });
-
   });
-
 });
