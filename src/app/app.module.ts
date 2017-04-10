@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 import { CarRouteModule } from './car/car.route';
 import { HomeComponent } from './home/home.component';
@@ -42,7 +41,6 @@ const routes: Routes = [
     CarRouteModule,
     HousingRouteModule,
     WidgetModule,
-    NgbModule.forRoot(),
     StoreModule.provideStore({cars, houses}),
     EffectsModule.run(CarEffects),
     EffectsModule.run(HousingEffects)
