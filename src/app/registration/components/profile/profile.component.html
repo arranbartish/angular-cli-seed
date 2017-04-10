@@ -1,0 +1,13 @@
+<div class="col-md-6 col-md-offset-3">
+    <h1>Hi {{registration.user.firstName}}!</h1>
+    <p>your profile page</p>
+    {{registration.user.email}}
+    <br>
+    <div class="form-group row">
+        <div class="col-10">
+            <img height="30%" width="30%" src="{{registration.user.avatar}}" />
+        </div>
+    </div>
+    <br>
+    <a [routerLink]="['/home']" class="btn btn-primary">Logout</a>
+</div>

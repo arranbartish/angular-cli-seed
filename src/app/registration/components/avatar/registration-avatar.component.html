@@ -1,0 +1,18 @@
+<div *ngIf="registration" class="registration-form">
+  
+  <div class="form-group row">
+    <div class="col-10">
+      <image-upload [max]="1"  [buttonCaption]="'select avatar file'" [preview]="true" [dropBoxMessage]="'Drop your image here!'"
+        [fileTooLargeMessage]="'Image too large!'" (onFileUploadFinish)="upload($event)"></image-upload>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-12">
+      <button *ngIf="registration.user.avatar" type="button" class="btn btn-primary" (click)="register()">confirm</button>
+      <button type="button" class="btn btn-primary" (click)="abort()">Cancel</button>
+      
+    </div>
+  </div>
+</div>
+
