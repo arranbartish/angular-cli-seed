@@ -21,7 +21,6 @@
     "@angular/platform-browser": "^2.4.0",
     "@angular/platform-browser-dynamic": "^2.4.0",
     "@angular/router": "^3.4.0",
-    "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.20",
     "@ngrx/core": "^1.2.0",
     "@ngrx/effects": "^2.0.0",
     "@ngrx/store": "^2.2.1",
