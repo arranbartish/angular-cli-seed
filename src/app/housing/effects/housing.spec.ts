@@ -1,14 +1,15 @@
-import {inject, TestBed, fakeAsync} from '@angular/core/testing';
-import {House, HousesState} from '../domain/housing';
-import {HousingModule} from '../housing.module';
-import {HouseService} from '../service/house.service';
-import {StoreModule, Store} from '@ngrx/store';
-import {ActionFactory, HousingAction, ListHousesAction} from '../actions/housing';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {HousingEffects} from './housing';
-import {EffectsTestingModule, EffectsRunner} from '@ngrx/effects/testing';
-import {expect} from 'chai';
-import {houses} from '../reducers/houses.reducer';
+import { inject, TestBed, fakeAsync } from '@angular/core/testing';
+import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
+import { StoreModule, Store } from '@ngrx/store';
+import { expect } from 'chai';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+import { House, HousesState } from '../domain/housing';
+import { HousingModule } from '../housing.module';
+import { HouseService } from '../service/house.service';
+import { ActionFactory, HousingAction, ListHousesAction } from '../actions/housing';
+import { HousingEffects } from './housing';
+import { houses } from '../reducers/houses.reducer';
 
 describe('HousingEffects', () => {
 
@@ -25,7 +26,6 @@ describe('HousingEffects', () => {
     construction: '1990',
     rooms: 3
   }];
-
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -45,11 +45,11 @@ describe('HousingEffects', () => {
 
   beforeEach(fakeAsync(inject([HouseService, HousingEffects, Store, EffectsRunner],
             (houseService: HouseService, housingEffects: HousingEffects, _store: Store<HousesState>, _runner: EffectsRunner) => {
-    mockHouseService = houseService;
-    effect = housingEffects;
-    store = _store;
-    executor = _runner;
-  })));
+      mockHouseService = houseService;
+      effect = housingEffects;
+      store = _store;
+      executor = _runner;
+    })));
 
   beforeEach(() => {
     (mockHouseService.findHouses as sinon.SinonStub).returns(new BehaviorSubject([]));
@@ -60,7 +60,6 @@ describe('HousingEffects', () => {
   it('will always start with an empty store', () => {
     expect(subscribedHouses).to.eql([]);
   });
-
 
   it('will be injected with the mock house service', () => {
     expect(mockHouseService).to.exist;
@@ -107,7 +106,6 @@ describe('HousingEffects', () => {
     effect.search$.subscribe((result) => {
       expect(result.payload.length).to.equal(0);
     });
-
   }));
 
 });
