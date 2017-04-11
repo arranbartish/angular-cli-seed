@@ -1,11 +1,12 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-import { ListingComponent } from './listing.component';
+import { async, ComponentFixture, TestBed, inject, fakeAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule, Store } from '@ngrx/store';
+import { expect } from 'chai';
+import { of } from 'rxjs/observable/of';
+import { ListingComponent } from './listing.component';
 import { House, HousesState } from '../../domain/housing';
 import { ActionFactory } from '../../actions/housing';
 import { houses } from '../../reducers/houses.reducer';
-import { expect } from 'chai';
 
 describe('ListingComponent', () => {
   const houseResponse: House[] = [{
@@ -27,7 +28,7 @@ describe('ListingComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       providers: []
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -61,18 +62,55 @@ describe('ListingComponent', () => {
       expect(component.houseList).to.eql(houseResponse);
     });
   });
+});
 
-  describe('houseCreated', () => {
-    // to be reviewed!
-    xit('will dispatch an Action (containing the new house) to the Store', () => {
-      let houseState: any;
-      housingStore.subscribe(event => houseState = event);
+/// Mocking the Store<HousesState>
+describe('ListingComponent houseCreated', () => {
+  let fixture: ComponentFixture<ListingComponent>;
+  let component: ListingComponent;
+  let store: Store<HousesState>;
 
-      const newHouse: House = { country: 'the-country', state: 'the-state', city: 'the-city', construction: '1955', rooms: 1 };
-      component.houseCreated(newHouse);
+  const houseResponse: House[] = [{
+    country: 'Australia',
+    state: 'Victoria',
+    city: 'Melbourne',
+    construction: '1983',
+    rooms: 6
+  }];
 
-      expect(houseState).to.be.not.undefined;
-      // expect(houseState).to.equal(validSampleHouseEntity);
-    });
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [],
+      declarations: [ListingComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        {
+          provide: Store,
+          useClass: class {
+            dispatch = sinon.stub();
+            select = () => of(houseResponse);
+          }
+        }
+      ]
+    })
+      .compileComponents();
+  });
+
+  beforeEach(fakeAsync(inject([Store], (_store: Store<HousesState>) => {
+    store = _store;
+  })));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ListingComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('will dispatch an Action (containing the new house) to the Store', () => {
+    const newHouse: House = { country: 'the-country', state: 'the-state', city: 'the-city', construction: '1955', rooms: 1 };
+    component.houseCreated(newHouse);
+
+    expect((store.dispatch as sinon.SinonStub).calledOnce).to.be.true;
+    expect((store.dispatch as sinon.SinonStub).calledWith(ActionFactory.addHouse(newHouse))).to.be.true;
   });
 });

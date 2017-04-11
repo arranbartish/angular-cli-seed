@@ -1,11 +1,10 @@
-import {House, HousesState} from '../domain/housing';
-
 import {TestBed, inject} from '@angular/core/testing';
 import {StoreModule, Store, Action} from '@ngrx/store';
+import {expect} from 'chai';
+import {House, HousesState} from '../domain/housing';
 import {ActionFactory, HousingAction} from '../actions/housing';
 import {HousingModule} from '../housing.module';
 import {houses} from './houses.reducer';
-import {expect} from 'chai';
 
 describe('housing reducer', () => {
 
@@ -20,14 +19,14 @@ describe('housing reducer', () => {
       city: 'Melbourne',
       construction: '1985',
       rooms: 6
-    }, {
+    },
+    {
       country: 'Canada',
       state: 'Quebec',
       city: 'Montreal',
       construction: '1960',
       rooms: 4
     }
-
   ];
 
   beforeEach(() => {
