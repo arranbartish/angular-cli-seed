@@ -20,8 +20,8 @@ import {WidgetModule} from 'arranbartish-angular-cli-widgets';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'home', component: HomeComponent },
-  { path: 'car', loadChildren: './car/car.route#CarRouteModule' },
-  { path: 'housing', loadChildren: './housing/housing.route#HousingRouteModule' },
+  { path: 'car', loadChildren: 'app/car/car.route#CarRouteModule' },
+  { path: 'housing', loadChildren: 'app/housing/housing.route#HousingRouteModule' },
   { path: '**', component: PageNotFoundComponent }
 ];
 

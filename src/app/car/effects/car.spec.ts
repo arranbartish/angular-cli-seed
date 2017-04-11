@@ -1,16 +1,17 @@
-import { empty } from 'rxjs/observable/empty';
 import { inject, TestBed, async, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
+import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
+import { StoreModule, Store } from '@ngrx/store';
+import { expect } from 'chai';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { empty } from 'rxjs/observable/empty';
+
 import { Car, CarState } from '../domain/car';
 import { CarModule } from '../car.module';
 import { CarService } from '../service/car.service';
-import { StoreModule, Store } from '@ngrx/store';
 import { cars } from '../reducers/car.reducer';
 import { ActionFactory, CarAction, ListCarsAction } from '../actions/cars';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable} from 'rxjs/Observable';
 import { CarEffects } from './cars.';
-import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
-import { expect } from 'chai';
 
 describe('CarEffects', () => {
 
@@ -26,7 +27,6 @@ describe('CarEffects', () => {
     year: '2011',
     condition: 'Awesome'
   }];
-
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -46,11 +46,11 @@ describe('CarEffects', () => {
 
   beforeEach(fakeAsync(inject([CarService, CarEffects, Store, EffectsRunner],
             (carService: CarService, carEffects: CarEffects, _store: Store<CarState>, _runner: EffectsRunner) => {
-    mockCarService = carService;
-    effect = carEffects;
-    store = _store;
-    executor = _runner;
-  })));
+      mockCarService = carService;
+      effect = carEffects;
+      store = _store;
+      executor = _runner;
+    })));
 
   beforeEach(() => {
     (mockCarService.findCars as sinon.SinonStub).returns(new BehaviorSubject([]));
@@ -108,7 +108,6 @@ describe('CarEffects', () => {
     effect.search$.subscribe((result) => {
       expect(result.payload.length).to.equal(0);
     });
-
   }));
 
 });
