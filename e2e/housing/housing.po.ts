@@ -12,6 +12,6 @@ export class HousingPage {
 
   getInnerContent() {
     const cssClass = 'house-list';
-    return browser.executeScript("return document.getElementsByClassName('" + cssClass + "')[0].innerHTML;");
+    return browser.executeScript('return document.getElementsByClassName(\'' + cssClass + '\')[0].innerHTML;');
   }
 }
