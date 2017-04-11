@@ -111,6 +111,6 @@ describe('ListingComponent houseCreated', () => {
     component.houseCreated(newHouse);
 
     expect((store.dispatch as sinon.SinonStub).calledOnce).to.be.true;
-    expect((store.dispatch as sinon.SinonStub).calledWith(ActionFactory.addHouse(newHouse))).to.be.true;
+    expect((store.dispatch as sinon.SinonStub).calledWithExactly(ActionFactory.addHouse(newHouse))).to.be.true;
   });
 });
