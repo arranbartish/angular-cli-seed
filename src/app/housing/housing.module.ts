@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HouseListComponent} from './components/list/house-list.component';
 import {HouseEditComponent} from './components/edit/house-edit.component';
 import {ListingComponent} from './containers/listing/listing.component';
@@ -17,7 +16,6 @@ import {WidgetModule} from 'arranbartish-angular-cli-widgets';
     CommonModule,
     WidgetModule,
     UtilitiesModule,
-    NgbModule,
     FormsModule,
     ReactiveFormsModule
   ],
