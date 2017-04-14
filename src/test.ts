@@ -3,7 +3,7 @@
 import 'zone.js/dist/long-stack-trace-zone';
 import 'zone.js/dist/proxy.js';
 import 'zone.js/dist/sync-test';
-import 'zone.js/dist/jasmine-patch';
+import 'zone.js/dist/mocha-patch';
 import 'zone.js/dist/async-test';
 import 'zone.js/dist/fake-async-test';
 import { getTestBed } from '@angular/core/testing';
@@ -15,6 +15,17 @@ import {
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare var __karma__: any;
 declare var require: any;
+
+declare global {
+  /*
+   WebStorm produces a warning for Editor -> introspection -> TypeScript
+   Reference to a UMD global: Report the use of references to a UMD global if the current file is a module.
+   You can turn off this introspection to remove the weak warnings in your tests, however the this will also do the
+   same in your production code.
+   */
+  const sinon: sinon.SinonStatic;
+}
+export {};
 
 // Prevent Karma from running prematurely.
 __karma__.loaded = function () {};

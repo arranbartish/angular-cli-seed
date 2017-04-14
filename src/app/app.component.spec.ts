@@ -2,6 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {expect} from 'chai';
 
 describe('AppComponent', () => {
   let fixture;
@@ -24,15 +25,15 @@ describe('AppComponent', () => {
   });
 
   it('should create the app', async(() => {
-    expect(app).toBeTruthy();
+    expect(app).to.exist;
   }));
 
   it(`should have as title 'app works!'`, async(() => {
-    expect(app.title).toEqual('app works!');
+    expect(app.title).to.include('app works!');
   }));
 
   it('should render title in a h1 tag', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('app works!');
+    expect(compiled.querySelector('h1').textContent).to.include('app works!');
   }));
 });

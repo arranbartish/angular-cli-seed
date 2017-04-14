@@ -5,7 +5,8 @@
     "module": "commonjs",
     "target": "es5",
     "types":[
-      "jasmine",
+      "mocha",
+      "chai",
       "node"
     ]
   }

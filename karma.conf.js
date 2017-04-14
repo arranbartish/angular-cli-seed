@@ -4,11 +4,15 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular/cli'],
+    frameworks: ['mocha', 'chai', 'sinon-chai', '@angular/cli'],
     plugins: [
-      require('karma-jasmine'),
+      require('karma-mocha'),
+      require('karma-chai'),
+      require('karma-sinon'),
+      require('karma-sinon-chai'),
       require('karma-chrome-launcher'),
-      require('karma-jasmine-html-reporter'),
+      require('karma-phantomjs-launcher'),
+      require('karma-mocha-reporter'),
       require('karma-coverage-istanbul-reporter'),
       require('karma-istanbul-threshold'),
       require('@angular/cli/plugins/karma')
@@ -17,6 +21,9 @@ module.exports = function (config) {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     files: [
+      { pattern: 'node_modules/sinon/pkg/sinon.js', instrument: false },
+      { pattern: 'node_modules/chai/chai.js', instrument: false },
+      { pattern: 'node_modules/sinon-chai/lib/sinon-chai.js', instrument: false },
       { pattern: './src/test.ts', watched: false }
     ],
     preprocessors: {
@@ -52,7 +59,7 @@ module.exports = function (config) {
     },
     reporters: config.angularCli && config.angularCli.codeCoverage
               ? ['progress', 'coverage-istanbul', 'istanbul-threshold']
-              : ['progress', 'kjhtml'],
+              : ['progress', 'mocha'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

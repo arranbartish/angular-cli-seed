@@ -35,6 +35,9 @@ module.exports = function (wallaby) {
 
   return {
     files: [
+      { pattern: 'node_modules/sinon/pkg/sinon.js', instrument: false },
+      { pattern: 'node_modules/chai/chai.js', instrument: false },
+      { pattern: 'node_modules/sinon-chai/lib/sinon-chai.js', instrument: false },
       { pattern: 'src/**/*.ts', load: false },
       { pattern: 'src/**/*.d.ts', ignore: true },
       { pattern: 'src/**/*.css', load: false },
@@ -49,7 +52,7 @@ module.exports = function (wallaby) {
       {pattern: 'src/**/*spec.ts', load: false}
     ],
 
-    testFramework: 'jasmine',
+    testFramework: 'mocha',
 
     compilers: {
       '**/*.ts': wallaby.compilers.typeScript(compilerOptions)
@@ -63,6 +66,7 @@ module.exports = function (wallaby) {
     postprocessor: webpackPostprocessor,
 
     setup: function () {
+      window.expect = chai.expect;
       window.__moduleBundler.loadTests();
     },
 
