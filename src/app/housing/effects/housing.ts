@@ -9,6 +9,7 @@ import 'rxjs/add/operator/takeUntil';
 import { House } from '../domain/housing';
 import { HouseService } from '../service/house.service';
 import { ActionFactory, HousingAction } from '../actions/housing';
+import { Toaster } from './../../utilities/Toaster';
 
 @Injectable()
 export class HousingEffects {
@@ -25,13 +26,13 @@ export class HousingEffects {
     .map(toPayload)
     .switchMap(newHouse => this.performAddHouse(newHouse));
 
-  constructor(private actions$: Actions, private houseService: HouseService) {
+  constructor(private actions$: Actions, private houseService: HouseService, private toaster: Toaster) {
   }
 
   private performSearch(searchTerm: string): Observable<any> {
     if (searchTerm === '') {
+      this.toaster.info('Reseting search results.');
       return of(ActionFactory.clearHouses());
-      // TODO: implement the Toast-ing mechanism!
     }
 
     const nextSearch$ = this.actions$
@@ -42,21 +43,21 @@ export class HousingEffects {
       .takeUntil(nextSearch$)
       .map(result => ActionFactory.searchComplete(result))
       .catch(error => {
+        this.toaster.error('Something went horribly wrong while searching for "' + searchTerm + '".');
         return of(ActionFactory.clearHouses());
-        // TODO: implement the Toast-ing mechanism!
       });
   }
 
   private performAddHouse(newHouse: House): Observable<Action> {
     return this.houseService.addHouse(newHouse)
       .map(result => {
-        // TODO: implement the Toast-ing mechanism!
+        this.toaster.success('The new house has successfully been added!');
         return result;
       })
       .switchMap(house => this.houseService.getHouses())
       .map(houseList => ActionFactory.listHouses(houseList))
       .catch(err => {
-        // TODO: implement the Toast-ing mechanism!
+        this.toaster.error('Something went horribly wrong while trying to add a new house...');
         return of({ type: 'Some random string', payload: 'Nothing to do!' } as Action);
       });
   }

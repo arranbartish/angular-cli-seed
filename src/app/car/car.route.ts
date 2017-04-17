@@ -6,7 +6,7 @@ import { SearchResultComponent } from './containers/search-result/search-result.
 import { CarModule } from './car.module';
 import {CarsListedGuard} from './guards/car-listing';
 import {EffectsModule} from '@ngrx/effects';
-import {CarEffects} from './effects/cars.';
+import {CarEffects} from './effects/cars';
 
 const routes: Routes = [
   {
