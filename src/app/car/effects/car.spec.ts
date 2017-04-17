@@ -11,7 +11,7 @@ import { CarModule } from '../car.module';
 import { CarService } from '../service/car.service';
 import { cars } from '../reducers/car.reducer';
 import { ActionFactory, CarAction, ListCarsAction } from '../actions/cars';
-import { CarEffects } from './cars.';
+import { CarEffects } from './cars';
 
 describe('CarEffects', () => {
 

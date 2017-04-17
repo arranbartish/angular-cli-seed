@@ -3,14 +3,12 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ObjectService {
-
-  constructor() { }
+  constructor() {
+  }
 
   // deepCopy<T>(source: T) {
   // only does shallow cause lodash will not resolve
-
   shallowCopy<T>(target: T, source: T) {
     return Object.assign(target, source);
   }
-
 }
