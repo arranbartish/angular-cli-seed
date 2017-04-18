@@ -1,38 +1,38 @@
 <div class="registration-form">
-  <form *ngIf="registration" [formGroup]="registrationForm" (ngSubmit)="startRegistration($event)">
+  <form *ngIf="userDetails" [formGroup]="registrationForm" (ngSubmit)="registerUser($event)">
 
     <div class="form-group row">
       <label for="firstName-input" class="col-2 col-form-label">firstName</label>
       <div class="col-10">
-        <input class="form-control" type="text" id="firstName-input" placeholder="firstName" formControlName="firstName" [(ngModel)]="user.firstName"
+        <input class="form-control" type="text" id="firstName-input" placeholder="firstName" formControlName="firstName" [(ngModel)]="userDetails.firstName"
         />
       </div>
     </div>
     <div class="form-group row">
       <label for="lastName-input" class="col-2 col-form-label">lastName</label>
       <div class="col-10">
-        <input class="form-control" type="text" id="lastName-input" placeholder="lastName" formControlName="lastName" [(ngModel)]="user.lastName"
+        <input class="form-control" type="text" id="lastName-input" placeholder="lastName" formControlName="lastName" [(ngModel)]="userDetails.lastName"
         />
       </div>
     </div>
     <div class="form-group row">
       <label for="username-input" class="col-2 col-form-label">username</label>
       <div class="col-10">
-        <input class="form-control" type="text" id="username-input" placeholder="username" formControlName="username" [(ngModel)]="user.username"
+        <input class="form-control" type="text" id="username-input" placeholder="username" formControlName="username" [(ngModel)]="userDetails.username"
         />
       </div>
     </div>
     <div class="form-group row">
       <label for="email-input" class="col-2 col-form-label">email</label>
       <div class="col-10">
-        <input class="form-control" type="text" id="email-input" placeholder="email" formControlName="email" [(ngModel)]="user.email"
+        <input class="form-control" type="text" id="email-input" placeholder="email" formControlName="email" [(ngModel)]="userDetails.email"
         />
       </div>
     </div>
     <div class="form-group row">
       <label for="password-input" class="col-2 col-form-label">password</label>
       <div class="col-10">
-        <input class="form-control" type="password" id="password-input" placeholder="password" formControlName="password" [(ngModel)]="user.password"
+        <input class="form-control" type="password" id="password-input" placeholder="password" formControlName="password" [(ngModel)]="userDetails.password"
         />
       </div>
     </div>
@@ -40,9 +40,10 @@
     <div class="form-group row">
       <div class="col-12">
         <button type="submit" class="btn btn-primary">Next</button>
-        <button type="button" class="btn btn-primary" (click)="abort()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="cancel()">Cancel</button>
       </div>
     </div>
 
   </form>
 </div>
+ <router-outlet></router-outlet>

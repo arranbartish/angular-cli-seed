@@ -1,5 +1,5 @@
 
-export class User {
+export class UserDetails {
   id: number;
   username: string;
   email: string;
@@ -7,14 +7,25 @@ export class User {
   firstName: string;
   lastName: string;
   avatar: string;
-
 }
 
 export class Registration {
-  status: string;
-  user: User;
+  status: RegistrationStatus;
+  userDetails: UserDetails;
 }
 
 export interface RegistrationsState {
   registration: Registration;
+}
+
+export enum RegistrationStatus {
+  INITIATED,
+  COMPLETED,
+  CANCELED,
+  UNCOMPLETED
+}
+
+export enum RegistrationSteps {
+  DETAILS,
+  AVATAR
 }

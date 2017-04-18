@@ -21,12 +21,17 @@ export class RegistrationGuard implements CanActivate {
   }
 
   getRegistration(): Observable<boolean> {
-    return this.registrationService.getLatestRegistration()
-      .do(registration => {
-        this.store.dispatch(ActionFactory.getRegistration(registration))
-      })
-      .map(registration =>
-        ['started','created'].indexOf(registration.status) !== -1)
+    /*return this.store.select(state => state.registration.userDetails)
+      .map(userDetails => 
+      userDetails.username != null)*/
+   
+     return this.registrationService.getRegistration()
+       .do(registration => {
+         this.store.dispatch(ActionFactory.getRegistration(registration))
+       })
+       .map(registration =>  
+         [0,1].indexOf(registration.status) !== -1)
+   
   }
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {

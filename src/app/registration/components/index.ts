@@ -1,4 +1,4 @@
-export * from './avatar/registration-avatar.component'
-export * from './contact/registration-info.component'
-export * from './profile/profile.component'
+export * from './picture/registration-picture.component'
+export * from './details/registration-details.component'
+export * from './userpage/userpage.component'
 

@@ -7,45 +7,21 @@ import { of } from 'rxjs/observable/of';
 import { empty } from 'rxjs/observable/empty';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/takeUntil';
-import { StartRegistrationAction } from '../actions/registring';
 import { RegistrationService } from '../service/registration.service';
 
 @Injectable()
 export class RegistrationEffects {
 
   @Effect()
-  startRegistration$: Observable<Action> = this.actions$
-    .ofType(RegistrationAction.START_REGISTRATION)
+  updateRegistration$: Observable<Action> = this.actions$
+    .ofType(RegistrationAction.UPDATE_STATUS)
     .map(toPayload)
     .switchMap(newRegistration => {
-      return this.registrationService.startRegistration(newRegistration)
+      return this.registrationService.updateStatus(newRegistration)
         .catch(error => {
           return of(null);
         });
     });
-
-    @Effect()
-    createRegistration$: Observable<Action> = this.actions$
-    .ofType(RegistrationAction.CREATE_REGISTRATION)
-    .map(toPayload)
-    .switchMap(registration => {
-      return this.registrationService.createRegistration(registration)
-        .catch(error => {
-          return of(null);
-        });
-    });
-
-    @Effect()
-    abortRegistration$: Observable<Action> = this.actions$
-    .ofType(RegistrationAction.ABORT_REGISTRATIONS)
-    .map(toPayload)
-    .switchMap(registration => {
-      return this.registrationService.abortRegistration(registration)
-        .catch(error => {
-          return of(null);
-        });
-    });
-
 
   constructor(private actions$: Actions, private registrationService: RegistrationService) {
   }

@@ -1,37 +1,36 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { RegistrationInfoComponent } from './components/contact/registration-info.component';
-import { RegistrationAvatarComponent } from './components/avatar/registration-avatar.component';
-import { ProfileComponent } from './components/profile/profile.component';
+import { RegistrationDetailsComponent } from './components/details/registration-details.component';
+import { RegistrationPictureComponent } from './components/picture/registration-picture.component';
+import { UserPageComponent } from './components/userpage/userpage.component';
 import { RegistrationGuard } from './guards/registration.guard';
 import { RegistrationModule } from './registration.module';
 import { RegistrationComponent } from './containers/registration/registration.component';
 
-
 const routes: Routes = [
   {
-    path: 'register',
-    redirectTo: '/register/init',
+    path: 'register/:step',
+    redirectTo: '/register/init/0',
     pathMatch: 'full'
   },
   {
-    path: 'init',
+    path: 'init/:step',
     component: RegistrationComponent
   },
   {
-    path: 'contact',
-    component: RegistrationInfoComponent
+    path: 'contact/:step',
+    component: RegistrationDetailsComponent
   },
   {
-    path: 'avatar',
+    path: 'avatar/:step',
     canActivate: [RegistrationGuard],
-    component: RegistrationAvatarComponent
+    component: RegistrationPictureComponent
   },
   {
     path: 'profile',
     canActivate: [RegistrationGuard],
-    component: ProfileComponent
+    component: UserPageComponent
   }
 
 ];

@@ -1,4 +1,4 @@
-<div *ngIf="registration" class="registration-form">
+<div  class="registration-form">
   
   <div class="form-group row">
     <div class="col-10">
@@ -9,10 +9,11 @@
 
   <div class="form-group row">
     <div class="col-12">
-      <button *ngIf="registration.user.avatar" type="button" class="btn btn-primary" (click)="register()">confirm</button>
-      <button type="button" class="btn btn-primary" (click)="abort()">Cancel</button>
+      <button  type="button" class="btn btn-primary" (click)="addAvatar()">confirm</button>
+      <button type="button" class="btn btn-primary" (click)="cancel()">Cancel</button>
       
     </div>
   </div>
 </div>
+ <router-outlet></router-outlet>
 

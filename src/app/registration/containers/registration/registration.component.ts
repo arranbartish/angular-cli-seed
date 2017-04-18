@@ -1,9 +1,9 @@
-import { Router } from '@angular/router';
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActionFactory } from '../../actions/registring';
 import { SearchOptions } from '../../../widgit/search-form/search-options';
-import { RegistrationsState, Registration } from '../../domain/registration';
+import { RegistrationsState, Registration, RegistrationStatus, RegistrationSteps } from '../../domain/registration';
 
 @Component({
   selector: 'app-registration',
@@ -12,22 +12,28 @@ import { RegistrationsState, Registration } from '../../domain/registration';
 export class RegistrationComponent implements OnInit {
 
   registration: Registration;
-  constructor(private router: Router, private registringStore: Store<RegistrationsState>) {
+  constructor(private route: ActivatedRoute, private router: Router, private registringStore: Store<RegistrationsState>) {
   }
 
   ngOnInit() {
     this.registringStore.select(state => state.registration).subscribe(registration => this.registration = registration);
   }
 
-  public registrationStarted() {
-    this.registringStore.dispatch(ActionFactory.startRegistration(this.registration));
-     this.router.navigate(['/avatar']);
-  }
+  public register(userDetails: any) {
+    this.registringStore.dispatch(ActionFactory.addUserDetails(userDetails));
+    this.registringStore.dispatch(ActionFactory.updateRegistration(RegistrationStatus.INITIATED));
+    this.navigate();
 
-  public registrationAborted() {
-    this.registringStore.dispatch(ActionFactory.abortRegistration(this.registration));
-     this.router.navigate(['/home']);
+
+    //this.router.navigate(['/avatar'], );
   }
- 
+  navigate() {
+    this.registringStore.select(state => state.registration).subscribe(registration => this.registration = registration);
+
+    this.router.navigate([{ outlets: { primary: "avatar" + "/" + RegistrationSteps.AVATAR } }],
+      { relativeTo: this.route.root, preserveQueryParams: false, skipLocationChange: false });
+
+
+  }
 
 }

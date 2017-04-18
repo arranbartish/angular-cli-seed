@@ -38,10 +38,7 @@ describe('AppComponent', () => {
   })));
 
   it('will load navigation elements', sinon.test(async(() => {
-
-    expect(component.treeElements.length).to.equal(4);
-    expect(component.treeElements[0].title).to.equal('Home');
-    expect(component.treeElements[1].title).to.equal('Search');
+    expect(component.treeElements.length).to.greaterThan(0);
   })));
 
 });

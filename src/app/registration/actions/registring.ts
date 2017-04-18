@@ -2,53 +2,44 @@ import { Registration } from './../domain/registration';
 import { type } from '../../utilities/type';
 import { Action } from '@ngrx/store';
 import { of } from 'rxjs/observable/of';
+import { UserDetails, RegistrationStatus } from '../domain/registration';
 
 export const RegistrationAction = {
-  START_REGISTRATION: type('Registration - start registration'),
-  CREATE_REGISTRATION: type('Registration - Add registration'),
-  ABORT_REGISTRATIONS: type('Registration - abort registrations'),
+  ADD_USERDETAILS: type('UserDetails - Add user details'),
+  UPDATE_STATUS: type('Status - update registration status'),
 };
 
 
 export class ActionFactory {
 
 
-  static startRegistration(registration: Registration): Action {
-    return new StartRegistrationAction(registration);
+  static addUserDetails(userDetails: UserDetails): Action {
+    return new UserDetailsAction(userDetails);
   }
 
-  static createRegistration(registration: Registration): Action {
-    return new CreateRegistrationAction(registration);
-  }
-
-  static abortRegistration(registration: Registration): Action {
-    return new AbortRegistrationsAction(registration);
+  static updateRegistration(status: RegistrationStatus): Action {
+    return new UpdateStatusAction(status);
   }
 
   static getRegistration(registration) {
     return registration;
   }
-  
+ 
   static empty() {
     return new Registration();
   }
 }
 
-export class StartRegistrationAction implements Action {
-  type = RegistrationAction.START_REGISTRATION;
+export class UserDetailsAction implements Action {
+  type = RegistrationAction.ADD_USERDETAILS;
 
-  constructor(public payload: Registration) { }
+  constructor(public payload: UserDetails) { }
 }
 
 
-export class CreateRegistrationAction implements Action {
-  type = RegistrationAction.CREATE_REGISTRATION;
+export class UpdateStatusAction implements Action {
+  type = RegistrationAction.UPDATE_STATUS;
 
-  constructor(public payload: Registration) { }
+  constructor(public payload: RegistrationStatus) { }
 }
 
-export class AbortRegistrationsAction implements Action {
-  type = RegistrationAction.ABORT_REGISTRATIONS;
-
-  constructor(public payload: Registration) { }
-}

@@ -7,7 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WidgitModule } from '../widgit/widgit.module';
 import { UtilitiesModule } from '../utilities/utilities.module';
 import { RegistrationComponent } from './containers/registration/registration.component';
-import { ProfileComponent, RegistrationInfoComponent, RegistrationAvatarComponent } from './components/index';
+import { UserPageComponent, RegistrationPictureComponent, RegistrationDetailsComponent } from './components/index';
 import { RegistrationService } from './service/registration.service';
 import { RegistrationGuard } from './guards/registration.guard';
 
@@ -24,15 +24,15 @@ import { RegistrationGuard } from './guards/registration.guard';
     ReactiveFormsModule
   ],
   exports: [
-    ProfileComponent,
-    RegistrationAvatarComponent,
-    RegistrationInfoComponent,
+    UserPageComponent,
+    RegistrationPictureComponent,
+    RegistrationDetailsComponent,
     RegistrationComponent,
   ],
   declarations: [
-    ProfileComponent,
-    RegistrationAvatarComponent,
-    RegistrationInfoComponent,
+    UserPageComponent,
+    RegistrationPictureComponent,
+    RegistrationDetailsComponent,
     RegistrationComponent,
   ],
   providers: [
