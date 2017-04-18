@@ -2,7 +2,7 @@ import { inject, TestBed, fakeAsync } from '@angular/core/testing';
 import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
 import { StoreModule, Store } from '@ngrx/store';
 import { expect } from 'chai';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { of } from 'rxjs/observable/of';
 import { _throw } from 'rxjs/observable/throw';
 
 import { House, HousesState } from '../domain/housing';
@@ -22,13 +22,23 @@ describe('HousingEffects', () => {
   let subscribedHouses: House[];
   let executor: EffectsRunner;
 
-  const mockResponse = [{
-    country: 'Canada',
-    state: 'Ontario',
-    city: 'Toronto',
-    construction: '1990',
-    rooms: 3
-  }];
+  const mockResponse: House[] = [
+    {
+      country: 'Canada',
+      state: 'Ontario',
+      city: 'Toronto',
+      construction: '1990',
+      rooms: 3
+    }
+  ];
+
+  const newHouse: House = {
+    country: 'United States of America',
+    state: 'Orange County',
+    city: 'Irvine',
+    construction: '1960',
+    rooms: 4
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,6 +50,7 @@ describe('HousingEffects', () => {
           useClass: class {
             findHouses = sinon.stub();
             getHouses = sinon.stub();
+            addHouse = sinon.stub();
           }
         },
         {
@@ -55,8 +66,8 @@ describe('HousingEffects', () => {
   });
 
   beforeEach(fakeAsync(inject([HouseService, Toaster, HousingEffects, Store, EffectsRunner],
-            (houseService: HouseService, toaster: Toaster, housingEffects: HousingEffects,
-             _store: Store<HousesState>, _runner: EffectsRunner) => {
+    (houseService: HouseService, toaster: Toaster, housingEffects: HousingEffects,
+      _store: Store<HousesState>, _runner: EffectsRunner) => {
       mockHouseService = houseService;
       mockToaster = toaster;
       effect = housingEffects;
@@ -65,7 +76,7 @@ describe('HousingEffects', () => {
     })));
 
   beforeEach(() => {
-    (mockHouseService.findHouses as sinon.SinonStub).returns(new BehaviorSubject([]));
+    (mockHouseService.findHouses as sinon.SinonStub).returns(of<House[]>([]));
     store.select(state => state.houses).subscribe(housesList => subscribedHouses = housesList);
     store.dispatch(ActionFactory.clearHouses());
   });
@@ -94,16 +105,18 @@ describe('HousingEffects', () => {
     expect(executor).to.exist;
   });
 
-  it('will return same search action', fakeAsync(() => {
-    (mockHouseService.findHouses as sinon.SinonStub).returns(new BehaviorSubject([]));
+  // -- HousingAction.SEARCH --
+
+  it('will return a different action (from SEARCH to LIST_HOUSES)', fakeAsync(() => {
+    (mockHouseService.findHouses as sinon.SinonStub).returns(of<House[]>([]));
     executor.queue({ type: HousingAction.SEARCH });
     effect.search$.subscribe(result => {
-      expect(result.type).to.equal('House - list houses');
+      expect(result.type).to.equal(HousingAction.LIST_HOUSES.toString());
     });
   }));
 
   it('will return an empty search result by calling house service', fakeAsync(() => {
-    (mockHouseService.findHouses as sinon.SinonStub).returns(new BehaviorSubject([]));
+    (mockHouseService.findHouses as sinon.SinonStub).returns(of<House[]>([]));
     executor.queue(ActionFactory.search('Melbourne'));
     effect.search$.subscribe(result => {
       expect(result.payload.length).to.equal(0);
@@ -111,7 +124,7 @@ describe('HousingEffects', () => {
   }));
 
   it('will return a filled result', fakeAsync(() => {
-    (mockHouseService.findHouses as sinon.SinonStub).returns(new BehaviorSubject(mockResponse));
+    (mockHouseService.findHouses as sinon.SinonStub).returns(of(mockResponse));
     executor.queue(ActionFactory.search('Sydney'));
     effect.search$.subscribe(result => {
       expect(result.payload).to.eql(mockResponse);
@@ -128,14 +141,55 @@ describe('HousingEffects', () => {
     });
   }));
 
-  it('will gracefully handle an error that occurred in the house service', fakeAsync(() => {
+  it('will gracefully handle an error that occurred in houseService.findHouses', fakeAsync(() => {
     (mockHouseService.findHouses as sinon.SinonStub).returns(_throw('ka-BOOM!'));
-    const searchTerm = 'needle';
-    const toastMessage = 'Something went horribly wrong while searching for "needle".';
+    const toastMessage = 'Something went horribly wrong while searching for "let\'s break things!".';
 
-    executor.queue(ActionFactory.search(searchTerm));
+    /* tslint:disable-next-line:quotemark */
+    executor.queue(ActionFactory.search("let's break things!"));
     effect.search$.subscribe((result) => {
       expect(result.payload.length).to.equal(0);
+      expect((mockToaster.error as sinon.SinonStub).calledWithExactly(toastMessage)).to.be.true;
+    });
+  }));
+
+  // -- HousingAction.ADD_HOUSE --
+
+  it('will return a different action (from ADD_HOUSE to LIST_HOUSES)', fakeAsync(() => {
+    (mockHouseService.addHouse as sinon.SinonStub).returns(of(newHouse));
+    (mockHouseService.getHouses as sinon.SinonStub).returns(of([...mockResponse, newHouse]));
+
+    executor.queue({ type: HousingAction.ADD_HOUSE });
+    effect.addHouse$.subscribe(result => {
+      expect(result.type).to.equal(HousingAction.LIST_HOUSES.toString());
+    });
+  }));
+
+  it('will return list of House when done adding the new record', fakeAsync(() => {
+    const returnValue: House[] = [...mockResponse, newHouse];
+    const toastMessage = 'The new house has successfully been added!';
+    (mockHouseService.addHouse as sinon.SinonStub).returns(of(newHouse));
+    (mockHouseService.getHouses as sinon.SinonStub).returns(of(returnValue));
+
+    executor.queue(ActionFactory.addHouse(newHouse));
+    effect.addHouse$.subscribe((result) => {
+      expect(result.payload.length).to.equal(returnValue.length);
+      expect((mockHouseService.addHouse as sinon.SinonStub).calledWithExactly(newHouse)).to.be.true;
+      expect((mockToaster.success as sinon.SinonStub).calledWithExactly(toastMessage)).to.be.true;
+      expect((mockHouseService.getHouses as sinon.SinonStub).called).to.be.true;
+      expect((mockToaster.error as sinon.SinonStub).neverCalledWithMatch('.*')).to.be.true;
+    });
+  }));
+
+  it('will gracefully handle an error that occurred in houseService.addHouse', fakeAsync(() => {
+    (mockHouseService.addHouse as sinon.SinonStub).returns(_throw('ka-BOOM!'));
+    const toastMessage = 'Something went horribly wrong while trying to add a new house...';
+
+    executor.queue(ActionFactory.addHouse(newHouse));
+    effect.addHouse$.subscribe((result) => {
+      expect(result.type).to.equal('Error while adding a new House');
+      expect(result.payload).to.equal('.');
+      expect((mockToaster.success as sinon.SinonStub).neverCalledWithMatch('.*')).to.be.true;
       expect((mockToaster.error as sinon.SinonStub).calledWithExactly(toastMessage)).to.be.true;
     });
   }));
