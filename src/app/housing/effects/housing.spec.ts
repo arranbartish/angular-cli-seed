@@ -3,6 +3,7 @@ import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
 import { StoreModule, Store } from '@ngrx/store';
 import { expect } from 'chai';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { _throw } from 'rxjs/observable/throw';
 
 import { House, HousesState } from '../domain/housing';
 import { HousingModule } from '../housing.module';
@@ -10,10 +11,12 @@ import { HouseService } from '../service/house.service';
 import { ActionFactory, HousingAction, ListHousesAction } from '../actions/housing';
 import { HousingEffects } from './housing';
 import { houses } from '../reducers/houses.reducer';
+import { Toaster } from 'app/utilities/Toaster';
 
 describe('HousingEffects', () => {
 
   let mockHouseService: HouseService;
+  let mockToaster: Toaster;
   let effect: HousingEffects;
   let store: Store<HousesState>;
   let subscribedHouses: House[];
@@ -38,14 +41,24 @@ describe('HousingEffects', () => {
             findHouses = sinon.stub();
             getHouses = sinon.stub();
           }
+        },
+        {
+          provide: Toaster,
+          useClass: class {
+            info = sinon.stub();
+            success = sinon.stub();
+            error = sinon.stub();
+          }
         }
       ]
     });
   });
 
-  beforeEach(fakeAsync(inject([HouseService, HousingEffects, Store, EffectsRunner],
-            (houseService: HouseService, housingEffects: HousingEffects, _store: Store<HousesState>, _runner: EffectsRunner) => {
+  beforeEach(fakeAsync(inject([HouseService, Toaster, HousingEffects, Store, EffectsRunner],
+            (houseService: HouseService, toaster: Toaster, housingEffects: HousingEffects,
+             _store: Store<HousesState>, _runner: EffectsRunner) => {
       mockHouseService = houseService;
+      mockToaster = toaster;
       effect = housingEffects;
       store = _store;
       executor = _runner;
@@ -63,6 +76,10 @@ describe('HousingEffects', () => {
 
   it('will be injected with the mock house service', () => {
     expect(mockHouseService).to.exist;
+  });
+
+  it('will be injected with the mock toaster', () => {
+    expect(mockToaster).to.exist;
   });
 
   it('will be able to get the effect to test', () => {
@@ -102,9 +119,24 @@ describe('HousingEffects', () => {
   }));
 
   it('will return empty result when no search term provided', fakeAsync(() => {
+    const toastMessage = 'Reseting search results.';
+
     executor.queue(ActionFactory.search(''));
     effect.search$.subscribe((result) => {
       expect(result.payload.length).to.equal(0);
+      expect((mockToaster.info as sinon.SinonStub).calledWithExactly(toastMessage)).to.be.true;
+    });
+  }));
+
+  it('will gracefully handle an error that occurred in the house service', fakeAsync(() => {
+    (mockHouseService.findHouses as sinon.SinonStub).returns(_throw('ka-BOOM!'));
+    const searchTerm = 'needle';
+    const toastMessage = 'Something went horribly wrong while searching for "needle".';
+
+    executor.queue(ActionFactory.search(searchTerm));
+    effect.search$.subscribe((result) => {
+      expect(result.payload.length).to.equal(0);
+      expect((mockToaster.error as sinon.SinonStub).calledWithExactly(toastMessage)).to.be.true;
     });
   }));
 

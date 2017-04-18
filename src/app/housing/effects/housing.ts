@@ -39,13 +39,13 @@ export class HousingEffects {
       .ofType(HousingAction.SEARCH)
       .skip(1);
 
-    return this.houseService.findHouses(searchTerm)
-      .takeUntil(nextSearch$)
-      .map(result => ActionFactory.searchComplete(result))
-      .catch(error => {
-        this.toaster.error('Something went horribly wrong while searching for "' + searchTerm + '".');
-        return of(ActionFactory.clearHouses());
-      });
+      return this.houseService.findHouses(searchTerm)
+        .takeUntil(nextSearch$)
+        .map(result => ActionFactory.searchComplete(result))
+        .catch((error, caught) => {
+          this.toaster.error('Something went horribly wrong while searching for "' + searchTerm + '".');
+          return of(ActionFactory.clearHouses());
+        });
   }
 
   private performAddHouse(newHouse: House): Observable<Action> {

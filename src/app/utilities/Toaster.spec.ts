@@ -120,6 +120,14 @@ describe('Toaster', () => {
         expect((passedOptions as ToastOptions).title).to.equal('Error!');
     });
 
+    it('calls "default" method with null', () => {
+        sut.default(null);
+
+        expect((mockedToastyService.default as sinon.SinonStub).calledOnce).to.be.true;
+        expect((passedOptions as ToastOptions).msg).to.equal('');
+        expect((passedOptions as ToastOptions).title).to.equal('');
+    });
+
     it('propagates the "jumped" callback methods when defined', () => {
         sut.jumped = (toast: ToastData) => { /* do nothing */ };
 
