@@ -3,7 +3,6 @@ import { Effect, Actions, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { empty } from 'rxjs/observable/empty';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/takeUntil';
 import { House } from '../domain/housing';
@@ -39,13 +38,13 @@ export class HousingEffects {
       .ofType(HousingAction.SEARCH)
       .skip(1);
 
-      return this.houseService.findHouses(searchTerm)
-        .takeUntil(nextSearch$)
-        .map(result => ActionFactory.searchComplete(result))
-        .catch((error, caught) => {
-          this.toaster.error('Something went horribly wrong while searching for "' + searchTerm + '".');
-          return of(ActionFactory.clearHouses());
-        });
+    return this.houseService.findHouses(searchTerm)
+      .takeUntil(nextSearch$)
+      .map(result => ActionFactory.searchComplete(result))
+      .catch((error, caught) => {
+        this.toaster.error('Something went horribly wrong while searching for "' + searchTerm + '".');
+        return of(ActionFactory.clearHouses());
+      });
   }
 
   private performAddHouse(newHouse: House): Observable<Action> {
@@ -58,7 +57,7 @@ export class HousingEffects {
       .map(houseList => ActionFactory.listHouses(houseList))
       .catch(err => {
         this.toaster.error('Something went horribly wrong while trying to add a new house...');
-        return of({ type: 'Some random string', payload: 'Nothing to do!' } as Action);
+        return of({ type: 'Error while adding a new House', payload: '.' } as Action);
       });
   }
 }
