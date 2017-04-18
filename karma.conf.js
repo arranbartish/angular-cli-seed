@@ -4,7 +4,7 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['mocha', 'chai', 'sinon-chai', '@angular/cli'],
+    frameworks: ['mocha', '@angular/cli'],
     plugins: [
       require('karma-mocha'),
       require('karma-chai'),
