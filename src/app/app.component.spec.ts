@@ -1,9 +1,9 @@
-import {TestBed, async} from '@angular/core/testing';
-import {AppComponent} from './app.component';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {StoreModule} from '@ngrx/store';
-import {cars} from './car/reducers/car.reducer';
-import {expect} from 'chai';
+import { TestBed, async } from '@angular/core/testing';
+import { AppComponent } from './app.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
+import { cars } from './car/reducers/car.reducer';
+import { expect } from 'chai';
 
 describe('AppComponent', () => {
   let fixture;
@@ -26,7 +26,6 @@ describe('AppComponent', () => {
   });
 
   it('will be defined', async(() => {
-
     expect(component).to.exist;
   }));
 
