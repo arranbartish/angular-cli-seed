@@ -14,18 +14,18 @@ import { Toaster } from './../../utilities/Toaster';
 export class HousingEffects {
 
   @Effect()
-  search$: Observable<Action> = this.actions$
+  search: Observable<Action> = this.actions
     .ofType(HousingAction.SEARCH)
     .map(toPayload)
     .switchMap(searchTerm => this.performSearch(searchTerm));
 
   @Effect()
-  addHouse$: Observable<Action> = this.actions$
+  addHouse: Observable<Action> = this.actions
     .ofType(HousingAction.ADD_HOUSE)
     .map(toPayload)
     .switchMap(newHouse => this.performAddHouse(newHouse));
 
-  constructor(private actions$: Actions, private houseService: HouseService, private toaster: Toaster) {
+  constructor(private actions: Actions, private houseService: HouseService, private toaster: Toaster) {
   }
 
   private performSearch(searchTerm: string): Observable<any> {
@@ -34,12 +34,12 @@ export class HousingEffects {
       return of(ActionFactory.clearHouses());
     }
 
-    const nextSearch$ = this.actions$
+    const nextSearch = this.actions
       .ofType(HousingAction.SEARCH)
       .skip(1);
 
     return this.houseService.findHouses(searchTerm)
-      .takeUntil(nextSearch$)
+      .takeUntil(nextSearch)
       .map(result => ActionFactory.searchComplete(result))
       .catch((error, caught) => {
         this.toaster.error('Something went horribly wrong while searching for "' + searchTerm + '".');

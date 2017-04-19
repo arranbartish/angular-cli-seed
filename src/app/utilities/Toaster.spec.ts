@@ -24,108 +24,120 @@ describe('Toaster', () => {
         sut = new Toaster(mockedToastyService);
     });
 
-    it('calls "default" method with provided message and title', () => {
-        sut.default('the-message', 'the-title');
+    describe('When calling the "default" method', () => {
+        it('will be provided with a message and a title', () => {
+            sut.default('the-message', 'the-title');
 
-        expect((mockedToastyService.default as sinon.SinonStub).calledOnce).to.be.true;
-        expect((passedOptions as ToastOptions).msg).to.equal('the-message');
-        expect((passedOptions as ToastOptions).title).to.equal('the-title');
+            expect((mockedToastyService.default as sinon.SinonStub).calledOnce).to.be.true;
+            expect((passedOptions as ToastOptions).msg).to.equal('the-message');
+            expect((passedOptions as ToastOptions).title).to.equal('the-title');
+        });
+
+        it('will be provided with a message but no title', () => {
+            sut.default('the-message');
+
+            expect((mockedToastyService.default as sinon.SinonStub).calledOnce).to.be.true;
+            expect((passedOptions as ToastOptions).msg).to.equal('the-message');
+            expect((passedOptions as ToastOptions).title).to.equal('');
+        });
+
+        it('will be provided with a null message, and no title', () => {
+            sut.default(null);
+
+            expect((mockedToastyService.default as sinon.SinonStub).calledOnce).to.be.true;
+            expect((passedOptions as ToastOptions).msg).to.equal('');
+            expect((passedOptions as ToastOptions).title).to.equal('');
+        });
     });
 
-    it('calls "default" method with provided message but default title', () => {
-        sut.default('the-message');
+    describe('When calling the "info" method', () => {
+        it('will be provided with a message and a title', () => {
+            sut.info('the-message', 'the-title');
 
-        expect((mockedToastyService.default as sinon.SinonStub).calledOnce).to.be.true;
-        expect((passedOptions as ToastOptions).msg).to.equal('the-message');
-        expect((passedOptions as ToastOptions).title).to.equal('');
+            expect((mockedToastyService.info as sinon.SinonStub).calledOnce).to.be.true;
+            expect((passedOptions as ToastOptions).msg).to.equal('the-message');
+            expect((passedOptions as ToastOptions).title).to.equal('the-title');
+        });
+
+        it('will be provided with a message but no title, defaulting it to "Info"', () => {
+            sut.info('the-message');
+
+            expect((mockedToastyService.info as sinon.SinonStub).calledOnce).to.be.true;
+            expect((passedOptions as ToastOptions).msg).to.equal('the-message');
+            expect((passedOptions as ToastOptions).title).to.equal('Info');
+        });
     });
 
-    it('calls "info" method with provided message and title', () => {
-        sut.info('the-message', 'the-title');
+    describe('When calling the "success" method', () => {
+        it('will be provided with a message and a title', () => {
+            sut.success('the-message', 'the-title');
 
-        expect((mockedToastyService.info as sinon.SinonStub).calledOnce).to.be.true;
-        expect((passedOptions as ToastOptions).msg).to.equal('the-message');
-        expect((passedOptions as ToastOptions).title).to.equal('the-title');
+            expect((mockedToastyService.success as sinon.SinonStub).calledOnce).to.be.true;
+            expect((passedOptions as ToastOptions).msg).to.equal('the-message');
+            expect((passedOptions as ToastOptions).title).to.equal('the-title');
+        });
+
+        it('will be provided with a message but no title, defaulting it to "Success"', () => {
+            sut.success('the-message');
+
+            expect((mockedToastyService.success as sinon.SinonStub).calledOnce).to.be.true;
+            expect((passedOptions as ToastOptions).msg).to.equal('the-message');
+            expect((passedOptions as ToastOptions).title).to.equal('Success');
+        });
     });
 
-    it('calls "info" method with provided message but default title', () => {
-        sut.info('the-message');
+    describe('When calling the "wait" method', () => {
+        it('will be provided with a message and a title', () => {
+            sut.wait('the-message', 'the-title');
 
-        expect((mockedToastyService.info as sinon.SinonStub).calledOnce).to.be.true;
-        expect((passedOptions as ToastOptions).msg).to.equal('the-message');
-        expect((passedOptions as ToastOptions).title).to.equal('Info');
+            expect((mockedToastyService.wait as sinon.SinonStub).calledOnce).to.be.true;
+            expect((passedOptions as ToastOptions).msg).to.equal('the-message');
+            expect((passedOptions as ToastOptions).title).to.equal('the-title');
+        });
+
+        it('will be provided with a message but no title, defaulting it to "Please wait..."', () => {
+            sut.wait('the-message');
+
+            expect((mockedToastyService.wait as sinon.SinonStub).calledOnce).to.be.true;
+            expect((passedOptions as ToastOptions).msg).to.equal('the-message');
+            expect((passedOptions as ToastOptions).title).to.equal('Please wait...');
+        });
     });
 
-    it('calls "success" method with provided message and title', () => {
-        sut.success('the-message', 'the-title');
+    describe('When calling the "warning" method', () => {
+        it('will be provided with a message and a title', () => {
+            sut.warning('the-message', 'the-title');
 
-        expect((mockedToastyService.success as sinon.SinonStub).calledOnce).to.be.true;
-        expect((passedOptions as ToastOptions).msg).to.equal('the-message');
-        expect((passedOptions as ToastOptions).title).to.equal('the-title');
+            expect((mockedToastyService.warning as sinon.SinonStub).calledOnce).to.be.true;
+            expect((passedOptions as ToastOptions).msg).to.equal('the-message');
+            expect((passedOptions as ToastOptions).title).to.equal('the-title');
+        });
+
+        it('will be provided with a message but no title, defaulting it to "Warning!"', () => {
+            sut.warning('the-message');
+
+            expect((mockedToastyService.warning as sinon.SinonStub).calledOnce).to.be.true;
+            expect((passedOptions as ToastOptions).msg).to.equal('the-message');
+            expect((passedOptions as ToastOptions).title).to.equal('Warning!');
+        });
     });
 
-    it('calls "success" method with provided message but default title', () => {
-        sut.success('the-message');
+    describe('When calling the "error" method', () => {
+        it('will be provided with a message and a title', () => {
+            sut.error('the-message', 'the-title');
 
-        expect((mockedToastyService.success as sinon.SinonStub).calledOnce).to.be.true;
-        expect((passedOptions as ToastOptions).msg).to.equal('the-message');
-        expect((passedOptions as ToastOptions).title).to.equal('Success');
-    });
+            expect((mockedToastyService.error as sinon.SinonStub).calledOnce).to.be.true;
+            expect((passedOptions as ToastOptions).msg).to.equal('the-message');
+            expect((passedOptions as ToastOptions).title).to.equal('the-title');
+        });
 
-    it('calls "wait" method with provided message and title', () => {
-        sut.wait('the-message', 'the-title');
+        it('will be provided with a message but no title, defaulting it to "Error!"', () => {
+            sut.error('the-message');
 
-        expect((mockedToastyService.wait as sinon.SinonStub).calledOnce).to.be.true;
-        expect((passedOptions as ToastOptions).msg).to.equal('the-message');
-        expect((passedOptions as ToastOptions).title).to.equal('the-title');
-    });
-
-    it('calls "wait" method with provided message but default title', () => {
-        sut.wait('the-message');
-
-        expect((mockedToastyService.wait as sinon.SinonStub).calledOnce).to.be.true;
-        expect((passedOptions as ToastOptions).msg).to.equal('the-message');
-        expect((passedOptions as ToastOptions).title).to.equal('Please wait...');
-    });
-
-    it('calls "warning" method with provided message and title', () => {
-        sut.warning('the-message', 'the-title');
-
-        expect((mockedToastyService.warning as sinon.SinonStub).calledOnce).to.be.true;
-        expect((passedOptions as ToastOptions).msg).to.equal('the-message');
-        expect((passedOptions as ToastOptions).title).to.equal('the-title');
-    });
-
-    it('calls "warning" method with provided message but default title', () => {
-        sut.warning('the-message');
-
-        expect((mockedToastyService.warning as sinon.SinonStub).calledOnce).to.be.true;
-        expect((passedOptions as ToastOptions).msg).to.equal('the-message');
-        expect((passedOptions as ToastOptions).title).to.equal('Warning!');
-    });
-
-    it('calls "error" method with provided message and title', () => {
-        sut.error('the-message', 'the-title');
-
-        expect((mockedToastyService.error as sinon.SinonStub).calledOnce).to.be.true;
-        expect((passedOptions as ToastOptions).msg).to.equal('the-message');
-        expect((passedOptions as ToastOptions).title).to.equal('the-title');
-    });
-
-    it('calls "error" method with provided message but default title', () => {
-        sut.error('the-message');
-
-        expect((mockedToastyService.error as sinon.SinonStub).calledOnce).to.be.true;
-        expect((passedOptions as ToastOptions).msg).to.equal('the-message');
-        expect((passedOptions as ToastOptions).title).to.equal('Error!');
-    });
-
-    it('calls "default" method with null', () => {
-        sut.default(null);
-
-        expect((mockedToastyService.default as sinon.SinonStub).calledOnce).to.be.true;
-        expect((passedOptions as ToastOptions).msg).to.equal('');
-        expect((passedOptions as ToastOptions).title).to.equal('');
+            expect((mockedToastyService.error as sinon.SinonStub).calledOnce).to.be.true;
+            expect((passedOptions as ToastOptions).msg).to.equal('the-message');
+            expect((passedOptions as ToastOptions).title).to.equal('Error!');
+        });
     });
 
     it('propagates the "jumped" callback methods when defined', () => {
