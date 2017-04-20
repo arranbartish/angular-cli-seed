@@ -1,50 +1,79 @@
 <div class="house-form">
-  <form *ngIf="house" [formGroup]="houseForm" (ngSubmit)="submitHouseEdit($event)">
+  <form *ngIf="house" [formGroup]="houseFrmGrp" (ngSubmit)="submitHouseEdit($event)">
 
     <div class="form-group row">
       <label for="country-input" class="col-2 col-form-label">Country</label>
       <div class="col-10">
         <input class="form-control" type="text" id="country-input" placeholder="Country"
-               formControlName="country" [(ngModel)]="house.country" />
+               formControlName="countryCtrlName" [(ngModel)]="house.country" />
+        <div class="alert alert-danger"
+             *ngIf="countryCtrl.errors && (countryCtrl.dirty || countryCtrl.touched)">
+          <div [hidden]="!countryCtrl.errors.required">Country is required.</div>
+          <div [hidden]="!countryCtrl.errors.minlength">Country must be at least 4 characters long.</div>
+          <div [hidden]="!countryCtrl.errors.maxlength">Name cannot be more than 200 characters long.</div>
+        </div>
       </div>
     </div>
     <div class="form-group row">
       <label for="state-input" class="col-2 col-form-label">State</label>
       <div class="col-10">
         <input class="form-control" type="text" id="state-input" placeholder="State"
-               formControlName="state" [(ngModel)]="house.state" />
+               formControlName="stateCtrlName" [(ngModel)]="house.state" />
+        <div class="alert alert-danger"
+             *ngIf="stateCtrl.errors && (stateCtrl.dirty || stateCtrl.touched)">
+          <div [hidden]="!stateCtrl.errors.required">State is required.</div>
+        </div>
       </div>
     </div>
     <div class="form-group row">
       <label for="city-input" class="col-2 col-form-label">City</label>
       <div class="col-10">
         <input class="form-control" type="text" id="city-input" placeholder="City"
-               formControlName="city" [(ngModel)]="house.city" />
+               formControlName="cityCtrlName" [(ngModel)]="house.city" />
+        <div class="alert alert-danger"
+             *ngIf="cityCtrl.errors && (cityCtrl.dirty || cityCtrl.touched)">
+          <div [hidden]="!cityCtrl.errors.required">City is required.</div>
+        </div>
       </div>
     </div>
     <div class="form-group row">
       <label for="construction-input" class="col-2 col-form-label">Construction</label>
       <div class="col-10">
-        <input class="form-control" type="number" id="construction-input" placeholder="YYYY" min="1900" max={{currentYear}}
-               formControlName="construction" [(ngModel)]="house.construction" />
+        <input class="form-control" type="text" id="construction-input" placeholder="YYYY"
+               formControlName="constructionCtrlName" [(ngModel)]="house.construction" />
+        <div class="alert alert-danger"
+             *ngIf="constructionCtrl.errors && (constructionCtrl.dirty || constructionCtrl.touched)">
+          <div [hidden]="!constructionCtrl.errors.required">
+              Construction is required.</div>
+          <div [hidden]="!constructionCtrl.errors.number && !constructionCtrl.errors.range">
+              Construction must be a numeric value ranging between 1900 and {{currentYear}}.</div>
+        </div>
       </div>
     </div>
     <div class="form-group row">
       <label for="rooms-input" class="col-2 col-form-label"># of rooms</label>
       <div class="col-10">
         <select class="form-control" id="rooms-input"
-               formControlName="rooms" [(ngModel)]="house.rooms">
+               formControlName="roomsCtrlName" [(ngModel)]="house.rooms">
           <option>1</option>
           <option>2</option>
           <option>3</option>
           <option>4</option>
           <option>5</option>
         </select>
+        <div class="alert alert-danger"
+             *ngIf="roomsCtrl.errors && (roomsCtrl.dirty || roomsCtrl.touched)">
+          <div [hidden]="!roomsCtrl.errors.required">
+              # of rooms is required.</div>
+          <div [hidden]="!roomsCtrl.errors.number && !roomsCtrl.errors.range">
+              # of rooms must be a numeric value ranging between 1 and 5.</div>
+        </div>
       </div>
     </div>
     <div class="form-group row">
       <div class="col-12">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary btn-default"
+             [disabled]="!houseFrmGrp.valid">Submit</button>
       </div>
     </div>
 

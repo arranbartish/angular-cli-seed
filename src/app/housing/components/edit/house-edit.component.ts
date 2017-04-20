@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 import { House } from '../../domain/housing';
 
@@ -19,9 +19,14 @@ export class HouseEditComponent implements OnInit {
   @Output()
   public houseUpdated: EventEmitter<House>;
 
-  public houseForm: FormGroup;
-
   public currentYear: number;
+
+  public countryCtrl: FormControl;
+  public stateCtrl: FormControl;
+  public cityCtrl: FormControl;
+  public constructionCtrl: FormControl;
+  public roomsCtrl: FormControl;
+  public houseFrmGrp: FormGroup;
 
   public inEditMode: boolean;
 
@@ -32,12 +37,18 @@ export class HouseEditComponent implements OnInit {
 
     this.currentYear = new Date().getFullYear();
 
-    this.houseForm = this.formBuilder.group({
-      country: [this.house.country, [Validators.required, Validators.minLength(4), Validators.maxLength(200)]],
-      state: [this.house.state, Validators.required],
-      city: [this.house.city, Validators.required],
-      construction: [this.house.construction, [Validators.required, CustomValidators.range([1900, this.currentYear])]],
-      rooms: [this.house.rooms, [Validators.required, CustomValidators.range([1, 5])]]
+    this.countryCtrl = new FormControl(this.house.country, [Validators.required, Validators.minLength(4), Validators.maxLength(200)]);
+    this.stateCtrl = new FormControl(this.house.state, Validators.required);
+    this.cityCtrl = new FormControl(this.house.city, Validators.required);
+    this.constructionCtrl = new FormControl(this.house.construction,
+                                         [Validators.required, CustomValidators.number, CustomValidators.range([1900, this.currentYear])]);
+    this.roomsCtrl = new FormControl(this.house.rooms, [Validators.required, CustomValidators.number, CustomValidators.range([1, 5])]);
+    this.houseFrmGrp = this.formBuilder.group({
+      countryCtrlName: this.countryCtrl,
+      stateCtrlName: this.stateCtrl,
+      cityCtrlName: this.cityCtrl,
+      constructionCtrlName: this.constructionCtrl,
+      roomsCtrlName: this.roomsCtrl
     });
   }
 
@@ -47,7 +58,7 @@ export class HouseEditComponent implements OnInit {
   }
 
   public submitHouseEdit() {
-    if (!this.houseForm.valid) {
+    if (!this.houseFrmGrp.valid) {
       return;
     }
 
@@ -62,5 +73,4 @@ export class HouseEditComponent implements OnInit {
   private defaultHouseEntity(): House {
     return { country: '', state: '', city: '', construction: '', rooms: -1 };
   }
-
 }

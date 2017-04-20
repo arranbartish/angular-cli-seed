@@ -11,7 +11,7 @@ describe('HouseListComponent', () => {
   let fixture: ComponentFixture<HouseEditComponent>;
   const defaultHouseEntity: House = { country: '', state: '', city: '', construction: '', rooms: -1 };
   const validSampleHouseEntity: House = { country: 'the-country', state: 'the-state', city: 'the-city', construction: '1955', rooms: 1 };
-  const invalidSampleHouseEntity: House = { country: '.', state: '', city: '', construction: '1', rooms: 11111 };
+  const invalidSampleHouseEntity: House = { country: '.', state: '', city: '', construction: 'abc', rooms: 11111 };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -59,7 +59,7 @@ describe('HouseListComponent', () => {
     });
 
     it('will define the form to be valid', () => {
-      expect(component.houseForm.valid).to.be.ok;
+      expect(component.houseFrmGrp.valid).to.be.ok;
     });
 
     it('will raise a houseCreated event', () => {
@@ -82,7 +82,32 @@ describe('HouseListComponent', () => {
     });
 
     it('will define the form to be invalid', () => {
-      expect(component.houseForm.valid).to.be.not.ok;
+      expect(component.houseFrmGrp.valid).to.be.not.ok;
+    });
+
+    it('will define the countryCtrl to be invalid', () => {
+      expect(component.countryCtrl.valid).to.be.not.ok;
+      expect(component.countryCtrl.errors.minlength).to.be.ok;
+    });
+
+    it('will define the stateCtrl to be invalid', () => {
+      expect(component.stateCtrl.valid).to.be.not.ok;
+      expect(component.stateCtrl.errors.required).to.be.ok;
+    });
+
+    it('will define the cityCtrl to be invalid', () => {
+      expect(component.cityCtrl.valid).to.be.not.ok;
+      expect(component.cityCtrl.errors.required).to.be.ok;
+    });
+
+    it('will define the constructionCtrl to be invalid', () => {
+      expect(component.constructionCtrl.valid).to.be.not.ok;
+      expect(component.constructionCtrl.errors.number).to.be.ok;
+    });
+
+    it('will define the roomsCtrl to be invalid', () => {
+      expect(component.roomsCtrl.valid).to.be.not.ok;
+      expect(component.roomsCtrl.errors.range).to.be.ok;
     });
 
     it('will not raise a houseCreated event', () => {
