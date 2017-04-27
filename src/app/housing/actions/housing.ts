@@ -1,18 +1,17 @@
-import {type} from '../../utilities/type';
-import {Action} from '@ngrx/store';
-import {House} from '../domain/housing';
+import { Action } from '@ngrx/store';
+
+import { House } from '../domain/housing';
+import { type } from "../../utilities/type";
 
 export const HousingAction = {
   SEARCH: type('House - Search'),
   ADD_HOUSE: type('House - Add house'),
-  LIST_HOUSES: type('House - list houses'),
+  LIST_HOUSES: type('House - list houses')
 };
 
-
 export class ActionFactory {
-
   static clearHouses(): Action {
-    return this.listHouses([]);
+    return ActionFactory.listHouses([]);
   }
 
   static search(searchTerm: string): Action {
@@ -20,7 +19,7 @@ export class ActionFactory {
   }
 
   static searchComplete(results: House[]): Action {
-    return this.listHouses(results);
+    return ActionFactory.listHouses(results);
   }
 
   static addHouse(house: House): Action {
@@ -30,23 +29,34 @@ export class ActionFactory {
   static listHouses(list: House[]): Action {
     return new ListHousesAction(list);
   }
-
 }
 
 export class SearchAction implements Action {
-  type = HousingAction.SEARCH;
+  type: string;
+  payload?: any;
 
-  constructor(public payload: string) { }
+  constructor(payload: string) {
+    this.type = HousingAction.SEARCH;
+    this.payload = payload;
+  }
 }
 
 export class AddHouseAction implements Action {
-  type = HousingAction.ADD_HOUSE;
+  type: string;
+  payload?: any;
 
-  constructor(public payload: House) { }
+  constructor(payload: House) {
+    this.type = HousingAction.ADD_HOUSE;
+    this.payload = payload;
+  }
 }
 
 export class ListHousesAction implements Action {
-  type = HousingAction.LIST_HOUSES;
+  type: string;
+  payload?: any;
 
-  constructor(public payload: House[]) { }
+  constructor(payload: House[]) {
+    this.type = HousingAction.LIST_HOUSES;
+    this.payload = payload;
+  }
 }
