@@ -5,6 +5,7 @@ import { ListingComponent } from './containers/listing/listing.component';
 import { SearchResultComponent } from './containers/search-result/search-result.component';
 import { HousingModule } from './housing.module';
 import {HousesListedGuard} from './guards/house-listing';
+import { HousesLazyMenuGuard } from './guards/house-lazy-menu';
 
 const routes: Routes = [
   {
@@ -14,11 +15,12 @@ const routes: Routes = [
   },
   {
     path: 'overview',
-    canActivate: [ HousesListedGuard ],
+    canActivate: [ HousesListedGuard, HousesLazyMenuGuard ],
     component: ListingComponent
   },
   {
     path: 'search',
+    canActivate: [ HousesLazyMenuGuard ],
     component: SearchResultComponent
   }
 ];

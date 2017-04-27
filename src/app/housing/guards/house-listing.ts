@@ -1,17 +1,13 @@
-import {Injectable} from '@angular/core';
-import {CanActivate, Router, ActivatedRouteSnapshot} from '@angular/router';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/filter';
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
+import { Store } from '@ngrx/store';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/let';
-import {HousesState} from '../domain/housing';
-import {HouseService} from '../service/house.service';
-import {ActionFactory} from '../actions/housing';
+import { Observable } from 'rxjs/Observable';
+
+import { HousesState } from '../domain/housing';
+import { HouseService } from '../service/house.service';
+import { ActionFactory } from '../actions/housing';
 
 @Injectable()
 export class HousesListedGuard implements CanActivate {
@@ -24,7 +20,6 @@ export class HousesListedGuard implements CanActivate {
     return this.houseService.getHouses()
       .do(houses => this.store.dispatch(ActionFactory.listHouses(houses)))
       .map(houses => !!houses);
-
   }
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {

@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule, ActionReducer, combineReducers } from '@ngrx/store';
-import { WidgetModule } from 'arranbartish-angular-cli-widgets';
+import { WidgetModule, treeElements } from 'arranbartish-angular-cli-widgets';
 import { ToastyModule } from 'ng2-toasty';
 
 import { AppComponent } from './app.component';
@@ -17,6 +17,7 @@ import { HousingRouteModule } from './housing/housing.route';
 import { houses } from './housing/reducers/houses.reducer';
 import { HousingEffects } from './housing/effects/housing';
 import { PageNotFoundComponent } from './404/pageNotFound.component';
+import { AppNavigationComponent } from './navigation/navigation.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -30,7 +31,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    AppNavigationComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -43,11 +45,12 @@ const routes: Routes = [
     CarRouteModule,
     HousingRouteModule,
     WidgetModule,
-    StoreModule.provideStore({ cars, houses }),
+    StoreModule.provideStore({ cars, houses, treeElements }),
     EffectsModule.run(CarEffects),
     EffectsModule.run(HousingEffects)
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
