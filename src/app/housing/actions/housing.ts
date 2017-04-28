@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
 import { House } from '../domain/housing';
-import { type } from "../../utilities/type";
+import { type } from '../../utilities/type';
 
 export const HousingAction = {
   SEARCH: type('House - Search'),
