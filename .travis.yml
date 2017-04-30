@@ -19,8 +19,20 @@ install:
   - npm install
   - npm install codecov
 script:
-  - npm run test -- --single-run=true --browsers Chrome --code-coverage
+  - npm run ng test -- --single-run=true --browsers Chrome --code-coverage
   - ./node_modules/codecov/bin/codecov
   - npm run e2e
   - npm run lint
   - npm run build
+deploy:
+  - provider: s3
+    access_key_id:
+      secure: IrQWCmvMX9pk+GcRt0yRsPjuYIWXm/T0AZNx9SBaNDqOZF+HZmjKFB4YbziMQTi4e8zDCT/9k3uhsY2QWN1PlS6FieEwD90im5eUxecHEzLVZpc9fWDC491OMAxILG+2pDqaMh6L46RgxKA6EJ8dLThCP7dn5zGZY2PXW2wBONEckW1WG3cc1mqLG5liDJqjCIsgv5E7luYGzBzHZK57ChfzLam0BmLZhOnam0K6B8E1S0/8kLl8YWPZn8yOBynFvJ61OkXWJ+jm3sysFeQ8ws+Sco8y1ZUCaFWEFTK9qB4HGoiaZBVYyIeWS9ZtX9C34smA8sq3qv4A7/vZ0BK/dn1Rv7dFJQzteBE1xjFVIgJBpn+BCdRZu0O6FEP81vRcY64DQ3f01nO8RZIBTEdoNw8Mwg+2DGAezdMcDgV/22SYTLvM6Uyo47nECcJVLmez4Ktbcx+ZLxv4brgX4Cmw3HonYaomurnBAw/rM4qCcKw4E+sHbdnIqHeo6nLcJwsxnK+KuYBIuNLZjUN2ZdJ49EdD3xXgcgCD5muO7Nj/OphZB35bHaEi+3dGIX4RkN/2jIa3sBT8DFj0bExUY9EvPPajhWwmrXPlax+fRVG3u3kkzLVGFKWqb4qmc1JajpoQ+V+77r30PHiUrGFpG4fNg+LZ2LpHMDaBuumyDkdEnsk=
+    secret_access_key:
+      secure: VgU2OUOR7MW6Rc4eKIbWq58nxMpDJyhBRA8TdwL8h83o+hDq+DD2eBsSSPyoVfySms8m44wbwZ5atcgmpWVd0ISEMMe9k66cZyNj7ieEw38tosi0EC+xdIJYA22VnuJ2fxM3trHfZJRwTw0rfQRUZl/Ukgrx/pKF0oKFLA8Is2q84qjob9tVOPqy+zXIhzl21MVOcYPp76feoBd+253aXWYCGGwNtq4XHaQ//FvoWDzCecc2AhlmzqbW8K2cNbeQn9sQuJyA64oFzka65WkSzX5nSwq/6Mu8R41Vmv3mhbNeuS4iwXpyKZKFjIfGjFayTu+r8XughGUT4TKkhKdHnI5UV/ocagCPxYxP7jJ4Khc4+CvhxGOJ5gIVI52/AvgNE6dWOBYu04NUx87vflq2GF+Ez8E72lohsLispNUaIoONZC1J7Z2MFwxRHZfgp8kYpPAzkI3B7aB0ml+mGkiP1JoqfhD5j1frRLH6vwoalUwhpeiy8Q6fbx2JXNxaXZH0dFdbcqM1bSWrkPVcZKn9Rn3TOHLCZ2rNz3ggbn4ZSdqvpHfXdC1vk3/KF9TvC1Fviy91Rloyze3GlbuI8Uy3fm3EecqycBpG6bdxe33NOGcBoHcs9R3r/MN3dIf/LVHzeFGLX+X+CeRxv4z9enWBJYWe6HbHY207xif5lCj4Jx4=
+    bucket: project.styleguide.online
+    skip_cleanup: true
+    local-dir: dist
+    acl: public_read
+    on:
+      branch: master
