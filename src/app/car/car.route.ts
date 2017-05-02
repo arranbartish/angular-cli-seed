@@ -1,12 +1,14 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { EffectsModule } from '@ngrx/effects';
+
+import { CarModule } from './car.module';
 import { ListingComponent } from './containers/listing/listing.component';
 import { SearchResultComponent } from './containers/search-result/search-result.component';
-import { CarModule } from './car.module';
-import {CarsListedGuard} from './guards/car-listing';
-import {EffectsModule} from '@ngrx/effects';
-import {CarEffects} from './effects/cars';
+import { CarEffects } from './effects/cars';
+import { CarsLazyMenuGuard } from './guards/car-lazy-menu';
+import { CarsListedGuard } from './guards/car-listing';
 
 const routes: Routes = [
   {
@@ -16,11 +18,12 @@ const routes: Routes = [
   },
   {
     path: 'overview',
-    canActivate: [ CarsListedGuard ],
+    canActivate: [CarsListedGuard, CarsLazyMenuGuard],
     component: ListingComponent
   },
   {
     path: 'search',
+    canActivate: [CarsLazyMenuGuard],
     component: SearchResultComponent
   }
 ];

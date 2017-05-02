@@ -6,49 +6,49 @@ import 'rxjs/add/operator/do';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
-import { House, HousesState } from '../domain/housing';
+import { Car, CarState } from '../domain/car';
 
 @Injectable()
-export class HousesLazyMenuGuard implements CanActivate {
+export class CarsLazyMenuGuard implements CanActivate {
 
   constructor(private menuStore: Store<MenuState>,
-              private housesStore: Store<HousesState>) {
+              private carStore: Store<CarState>) {
   }
 
   initializeMenu(): Observable<boolean> {
-    this.housesStore.select(state => state.houses).subscribe((housingItems: House[]) => {
-      const newMenuItems = housingItems
-        .map(house => house.country) // Linq: .Select(house => house.country)
+    this.carStore.select(state => state.cars).subscribe((carItems: Car[]) => {
+      const newMenuItems = carItems
+        .map(car => car.brand) // Linq: .Select(car => car.brand)
         .filter((value, index, array) => array.indexOf(value) === index) // Linq: .Distinct()
-        .map(country => <TreeElement>{
-          title: country,
-          targetUrl: '/housing/search?q=' + country,
+        .map(brand => <TreeElement> {
+          title: brand,
+          targetUrl: '/car/search?q=' + brand,
           imageCssClass: 'glyphicon glyphicon-list'
         })
         .sort((treeElmA, treeElmB) => treeElmA.title > treeElmB.title ? 1 : 0);
 
-      const housingMenuTitle = 'Housing';
-      const housingMenu = {
-        title: housingMenuTitle,
-        targetUrl: '/housing',
-        imageCssClass: 'glyphicon-home',
+      const carMenuTitle = 'Car';
+      const carMenu = {
+        title: carMenuTitle,
+        targetUrl: '/car',
+        imageCssClass: 'glyphicon-road',
         children: [
-          { title: 'Search houses', targetUrl: '/housing/search', imageCssClass: 'glyphicon glyphicon-search' },
+          { title: 'Search cars', targetUrl: '/car/search', imageCssClass: 'glyphicon glyphicon-search' },
           ...newMenuItems
         ]
       };
 
       this.menuStore.select(state => state.treeElements).subscribe((menuItems: TreeElement[]) => {
-        let theHousingItemIndex = -1;
+        let theCarItemIndex = -1;
         menuItems.filter((value: TreeElement, index: number) => {
-          theHousingItemIndex = value.title === housingMenuTitle ? index : theHousingItemIndex;
-          return value.title === housingMenuTitle;
+          theCarItemIndex = value.title === carMenuTitle ? index : theCarItemIndex;
+          return value.title === carMenuTitle;
         });
 
-        if (theHousingItemIndex === -1) {
-          this.menuStore.dispatch(MenuActionFactory.addMenuItems([housingMenu]));
+        if (theCarItemIndex === -1) {
+          this.menuStore.dispatch(MenuActionFactory.addMenuItems([carMenu]));
         } else {
-          menuItems[theHousingItemIndex] = housingMenu;
+          menuItems[theCarItemIndex] = carMenu;
           this.menuStore.dispatch(MenuActionFactory.setMenuItems(menuItems));
         }
       });
