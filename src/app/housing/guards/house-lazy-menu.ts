@@ -17,6 +17,13 @@ export class HousesLazyMenuGuard implements CanActivate {
 
   initializeMenu(): Observable<boolean> {
     this.housesStore.select(state => state.houses).subscribe((housingItems: House[]) => {
+      const newMenuItems = housingItems
+        .map(house => <TreeElement> {
+          title: house.country,
+          targetUrl: '/housing/search?q=' + house.country,
+          imageCssClass: 'glyphicon glyphicon-list'
+        })
+        .sort((treeElmA, treeElmB) => treeElmA.title > treeElmB.title ? 1 : 0);
 
       const housingMenuTitle = 'Housing';
       const housingMenu = {
@@ -25,29 +32,24 @@ export class HousesLazyMenuGuard implements CanActivate {
         imageCssClass: 'glyphicon-home',
         children: [
           { title: 'Search houses', targetUrl: '/housing/search', imageCssClass: 'glyphicon glyphicon-search' },
-          ...(
-            housingItems.map(house => <TreeElement>
-              { title: house.country, targetUrl: '/housing/search?q=' + house.country, imageCssClass: 'glyphicon glyphicon-list' })
-              .sort((treeElmA, treeElmB) => treeElmA.title > treeElmB.title ? 1 : 0)
-          )
+          ...newMenuItems
         ]
       };
 
-      let menuItems: TreeElement[] = [];
-      this.menuStore.select(state => state.treeElements).subscribe((value: TreeElement[]) => menuItems = value);
+      this.menuStore.select(state => state.treeElements).subscribe((menuItems: TreeElement[]) => {
+        let theHousingItemIndex = -1;
+        menuItems.filter((value: TreeElement, index: number) => {
+          theHousingItemIndex = value.title === housingMenuTitle ? index : theHousingItemIndex;
+          return value.title === housingMenuTitle;
+        });
 
-      let theHousingItemIndex = -1;
-      menuItems.filter((value: TreeElement, index: number) => {
-        theHousingItemIndex = value.title === housingMenuTitle ? index : theHousingItemIndex;
-        return value.title === housingMenuTitle;
+        if (theHousingItemIndex === -1) {
+          this.menuStore.dispatch(MenuActionFactory.addMenuItems([housingMenu]));
+        } else {
+          menuItems[theHousingItemIndex] = housingMenu;
+          this.menuStore.dispatch(MenuActionFactory.setMenuItems(menuItems));
+        }
       });
-
-      if (theHousingItemIndex === -1) {
-        this.menuStore.dispatch(MenuActionFactory.addMenuItems([housingMenu]));
-      } else {
-        menuItems[theHousingItemIndex] = housingMenu;
-        this.menuStore.dispatch(MenuActionFactory.setMenuItems(menuItems));
-      }
     });
 
     return of(true);
