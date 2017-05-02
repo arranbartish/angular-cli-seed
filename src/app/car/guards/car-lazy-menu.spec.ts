@@ -1,98 +1,98 @@
-// import { inject, TestBed } from '@angular/core/testing';
-// import { Store, StoreModule } from '@ngrx/store';
-// import { MenuState, MenuActionFactory, TreeElement, treeElements } from 'arranbartish-angular-cli-widgets';
-// import { expect } from 'chai';
-// import { of } from 'rxjs/observable/of';
-// import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { inject, TestBed } from '@angular/core/testing';
+import { Store, StoreModule } from '@ngrx/store';
+import { MenuState, MenuActionFactory, TreeElement, treeElements } from 'arranbartish-angular-cli-widgets';
+import { expect } from 'chai';
+import { of } from 'rxjs/observable/of';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-// import { HousesLazyMenuGuard } from './house-lazy-menu';
-// import { ActionFactory } from '../actions/housing';
-// import { House, HousesState } from '../domain/housing';
-// import { HousingModule } from '../housing.module';
-// import { houses } from '../reducers/houses.reducer';
+import { CarsLazyMenuGuard } from './car-lazy-menu';
+import { ActionFactory } from '../actions/cars';
+import { Car, CarState } from '../domain/car';
+import { CarModule } from '../car.module';
+import { cars } from '../reducers/car.reducer';
 
-// describe('HousesLazyMenuGuard', () => {
-//   class MenuStore extends Store<MenuState> {
-//   }
+describe('HousesLazyMenuGuard', () => {
+  class MenuStore extends Store<MenuState> {
+  }
 
-//   class HousesStore extends Store<HousesState> {
-//   }
+  class CarStore extends Store<CarState> {
+  }
 
-//   let guard: HousesLazyMenuGuard;
-//   let menuStore: Store<MenuState>;
-//   let subscribedMenuItems: TreeElement[];
+  let guard: CarsLazyMenuGuard;
+  let menuStore: Store<MenuState>;
+  let subscribedMenuItems: TreeElement[];
 
-//   let housesStore: Store<HousesState>;
-//   let subscribedHouses: House[];
+  let carStore: Store<CarState>;
+  let subscribedCars: Car[];
 
-//   const mockResponseMenu: TreeElement[] = [
-//       { title: 'Search root', targetUrl: '/something/overview', imageCssClass: 'glyphicon glyphicon-home' },
-//       { title: 'Search something', targetUrl: '/something/search', imageCssClass: 'glyphicon glyphicon-search' },
-//   ];
+  const mockResponseMenu: TreeElement[] = [
+      { title: 'Search root', targetUrl: '/something/overview', imageCssClass: 'glyphicon glyphicon-home' },
+      { title: 'Search something', targetUrl: '/something/search', imageCssClass: 'glyphicon glyphicon-search' },
+  ];
 
-//   const mockResponseHouse: House[] = [
-//     { country: 'Australia', state: 'Victoria', city: 'Melbourne', construction: '1983', rooms: 6 }
-//   ];
+  const mockResponseCar: Car[] = [
+    { brand: 'Toyota', model: 'Camery', year: '2011', condition: 'Awesome' }
+  ];
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//       imports: [HousingModule, StoreModule.provideStore({ houses, treeElements })],
-//       providers: [
-//         {
-//           provide: MenuStore,
-//           useClass: class <Store> { dispatch = sinon.stub(); select = () => of(mockResponseMenu); }
-//         },
-//         {
-//           provide: HousesStore,
-//           useClass: class <Store> { dispatch = sinon.stub(); select = () => of(mockResponseHouse); }
-//         }
-//       ]
-//     });
-//   });
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [CarModule, StoreModule.provideStore({ cars, treeElements })],
+      providers: [
+        {
+          provide: MenuStore,
+          useClass: class <Store> { dispatch = sinon.stub(); select = () => of(mockResponseMenu); }
+        },
+        {
+          provide: CarStore,
+          useClass: class <Store> { dispatch = sinon.stub(); select = () => of(mockResponseCar); }
+        }
+      ]
+    });
+  });
 
-//   beforeEach(inject([HousesLazyMenuGuard, MenuStore, HousesStore],
-//                    (housesLazyMenuGuard: HousesLazyMenuGuard, _menuStore: MenuStore, _housesStore: HousesStore) => {
-//     guard = housesLazyMenuGuard;
-//     menuStore = _menuStore;
-//     housesStore = _housesStore;
-//   }));
+  beforeEach(inject([CarsLazyMenuGuard, MenuStore, CarStore],
+                   (carsLazyMenuGuard: CarsLazyMenuGuard, _menuStore: MenuStore, _carStore: CarStore) => {
+    guard = carsLazyMenuGuard;
+    menuStore = _menuStore;
+    carStore = _carStore;
+  }));
 
-//   beforeEach(() => {
-//     menuStore.select(state => state.treeElements)
-//              .subscribe(menuItemList => subscribedMenuItems = menuItemList);
-//     menuStore.dispatch(MenuActionFactory.setMenuItems([]));
+  beforeEach(() => {
+    menuStore.select(state => state.treeElements)
+             .subscribe(menuItemList => subscribedMenuItems = menuItemList);
+    menuStore.dispatch(MenuActionFactory.setMenuItems([]));
 
-//     housesStore.select(state => state.houses)
-//                .subscribe(houseList => subscribedHouses = houseList);
-//     housesStore.dispatch(ActionFactory.clearHouses());
-//   });
+    carStore.select(state => state.cars)
+               .subscribe(carList => subscribedCars = carList);
+    carStore.dispatch(ActionFactory.clearCars());
+  });
 
-//   describe('when response comes from Store<HousesState>', () => {
-//     it('will ensure menu items are inserted', () => {
-//       const expected = [
-//         {
-//           title: 'Housing',
-//           targetUrl: '/housing',
-//           imageCssClass: 'glyphicon-home',
-//           children: [
-//             { title: 'Search houses', targetUrl: '/housing/search', imageCssClass: 'glyphicon glyphicon-search' },
-//             { title: mockResponseHouse[0].country,
-//               targetUrl: '/housing/search?q=' + mockResponseHouse[0].country,
-//               imageCssClass: 'glyphicon glyphicon-list' }
-//           ]
-//         }
-//       ];
+  describe('when response comes from Store<CarState>', () => {
+    it('will ensure menu items are inserted', () => {
+      const expected = [
+        {
+          title: 'Car',
+          targetUrl: '/car',
+          imageCssClass: 'glyphicon-road',
+          children: [
+            { title: 'Search cars', targetUrl: '/car/search', imageCssClass: 'glyphicon glyphicon-search' },
+            { title: mockResponseCar[0].brand,
+              targetUrl: '/housing/search?q=' + mockResponseCar[0].brand,
+              imageCssClass: 'glyphicon glyphicon-list' }
+          ]
+        }
+      ];
 
-//       guard.canActivate(null).subscribe();
-//       expect((menuStore.dispatch as sinon.SinonStub).called).to.be.true;
-//       // expect((menuStore.dispatch as sinon.SinonStub).calledWithExactly(
-//       //   MenuActionFactory.addMenuItems(expected))).to.be.true;
-//     });
+      guard.canActivate(null).subscribe();
+      expect((menuStore.dispatch as sinon.SinonStub).called).to.be.true;
+      // expect((menuStore.dispatch as sinon.SinonStub).calledWithExactly(
+      //   MenuActionFactory.addMenuItems(expected))).to.be.true;
+    });
 
-//     it('will allow activation', () => {
-//       let result = false;
-//       guard.canActivate(null).subscribe(value => result = value);
-//       expect(result).to.be.ok;
-//     });
-//   });
-// });
+    it('will allow activation', () => {
+      let result = false;
+      guard.canActivate(null).subscribe(value => result = value);
+      expect(result).to.be.ok;
+    });
+  });
+});
