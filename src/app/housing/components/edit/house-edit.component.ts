@@ -67,6 +67,7 @@ export class HouseEditComponent implements OnInit {
     } else {
       this.houseCreated.emit(this.house);
       this.house = this.defaultHouseEntity();
+      this.houseFrmGrp.reset();
     }
   }
 
