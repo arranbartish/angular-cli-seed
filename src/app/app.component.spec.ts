@@ -1,9 +1,10 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed, async } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
-import { cars } from './car/reducers/car.reducer';
 import { expect } from 'chai';
+
+import { AppComponent } from './app.component';
+import { cars } from './car/reducers/car.reducer';
 
 describe('AppComponent', () => {
   let fixture;
@@ -33,12 +34,6 @@ describe('AppComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     const content = compiled.querySelector('h1').textContent;
     expect(content).to.include('Listing search POC');
-  }));
-
-  xit('will load navigation elements', async(() => {
-    expect(component.treeElements.length).to.equal(4);
-    expect(component.treeElements[0].title).to.equal('Home');
-    expect(component.treeElements[1].title).to.equal('Search');
   }));
 
 });
